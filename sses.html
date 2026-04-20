@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-Hant-TW">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>苗栗縣新興國民小學</title>
+    <meta name="keywords" content="新興">
+    <meta name="description" content="苗栗縣新興國民小學全球資訊網站">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+    <!-- 使用原始網站的絕對路徑以確保資源可讀取 -->
+    <link rel="icon" href="https://sses.mlc.edu.tw/Data/054657/1730162099_655069_53.png" type="image/x-icon">
+    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/bootstrap.min.css?v2" rel="stylesheet" type="text/css">
+    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery.smartmenus.bootstrap.css?v2" rel="stylesheet">
+    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/menustyle.css?v4" rel="stylesheet" type="text/css">
+    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/Reset.css?v4" rel="stylesheet" type="text/css">
+    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/font.css" rel="stylesheet" type="text/css">
+    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/style.css?v12" rel="stylesheet" type="text/css">
+    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/style_rwd.css?v11" rel="stylesheet" type="text/css">
+    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/TabStyle.css?v3" rel="stylesheet" type="text/css">
+    <link href="https://sses.mlc.edu.tw/FuncBlock/Tools/fontawesome-free-5.2.0-web/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://sses.mlc.edu.tw/FuncBlock/Tools/fancybox/dist/jquery.fancybox.min.css?v1">
+
+    <script src="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery-3.6.0.min.js"></script>
+    <script src="https://sses.mlc.edu.tw/FuncBlock/Ui/classie.js"></script>
+    <script src="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery-ui.min.js?V2"></script>
+    <script src="https://sses.mlc.edu.tw/FuncBlock/Tools/slideopen/slideopen.js"></script>
+    <script src="https://sses.mlc.edu.tw/FuncBlock/Tools/fancybox/dist/jquery.fancybox.min.js?v1"></script>
+
+    <script>
+    // 隱藏選單列，滾動一定距離後顯示
+    function HideMenu() {
+        window.addEventListener('scroll', function(e){
+            var HeightY = window.pageYOffset || document.documentElement.scrollTop,
+                scrollHeight = 500, // 滾動距離
+                header = document.querySelector(".menu"),
+                Button_Top = document.querySelector("#Button_Top");
+            
+            if (header) {
+                if (HeightY > scrollHeight) {
+                    classie.add(header,"HideMenu");
+                    if (Button_Top) classie.add(Button_Top,"DisplayShow");
+                } else {
+                    if (classie.has(header,"HideMenu")) { classie.remove(header,"HideMenu"); }
+                    if (Button_Top && classie.has(Button_Top,"DisplayShow")) { classie.remove(Button_Top,"DisplayShow"); }
+                }
+            }
+        });
+    }
+    window.onload = function() {
+        HideMenu();
+    };
+    </script>
+
+    <style type="text/css">
+        @media(min-width:769px){
+            body .full_box.bread, body .navbar-default, body .navbar-collapse { background-color: #3b6fba; }
+        }
+        body .navbar-default .navbar-nav>li>a.MenuKey{ color:#3b6fba; }
+        body .navbar-default .navbar-nav>.open>a:hover { background-color: #34495e !important; }
+        body{ background-color:#F2F5FF; }
+        a:link, a:visited { color:#0066ff; }
+        a:hover, a:active { color:#db2400; }
+        .RWDtable th, .RWDtable .bt tfoot th:before, .RWDtable.bt tfoot td:before, .RWDtable.bt tbody td:before{ background-color: #4C6A9B;}
+        .BlockTitle { background-color:#34495e; color:#ffffff; }
+        .BlockTitleNews, .BlockTitleNews i{ color:#34495e; }
+        .BlockTitleNews2{ color:#34495e; }
+        .DataMore { color: #34495e; }
+        .DataMore a{color:#34495e !important;}
+        .DataMore i{color:#34495e;}
+        .DataMore:hover, .DataMore:hover a{ background-color:#34495e;}
+        :root { --main-color: #cccccc; }
+        
+        .Language_RWD_Area{ display:none; }
+        .Language_RWD_font{ width:100%; font-size:20px; font-weight:bold; }
+        @media screen and (max-width: 511px){
+            .Language_RWD_Area{ display:block !important; background-color:#ffffff !important; }
+            #Form_Language_RWD{ display:block !important; }
+        } 
+
+        /* jQuery Basic Table CSS */
+        .RWDtable{background:white;border-collapse:collapse;}
+        .RWDtable tr,.RWDtable th,.RWDtable td{border:none;border-bottom:1px solid #ffffff;font-family:'微軟正黑體',sans-serif;}
+        .RWDtable th{padding:10px 3px;text-align:left;}.RWDtable td{padding:0px 3px;line-height:2rem;text-align:left;}
+        .RWDtable i{line-height:1.5rem;}
+        .RWDtable th{color:#ffffff;}
+        .RWDtable tr td{background:#eeeeee;color:#333333;}
+        .RWDtable tr:nth-of-type(2n+2) td{background:#ffffff;}
+        .RWDtable.bt thead,.RWDtable.bt tbody th{display:none;}
+        .RWDtable.bt tfoot th,.RWDtable.bt tfoot td,.RWDtable.bt tbody td{border:none;display:block;width:100%}
+        
+        .Button_Top {
+            display: none;
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #3b6fba;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            cursor: pointer;
+            z-index: 999;
+        }
+        .Button_Top.DisplayShow { display: block; }
+        .WhiteIcon { color: #fff; }
+    </style>
+</head>
+<body>
+    <div align="left" class="LOGOBlock" style="background-image:url('https://sses.mlc.edu.tw/Data/054657/1611549458_184784_16.png');background-repeat:repeat-x;background-position:left top;">
+        <a href="https://sses.mlc.edu.tw/Home/Index.php" title="回首頁">
+            <h1><img src="https://sses.mlc.edu.tw/Data/054657/1612316603_581816_98.png" alt="logo圖片" class="LogoImg"></h1>
+        </a>
+        <div class="SetFontSize">
+            <form action="" method="post" id="Form_Language"> 
+                <h2><i class="fas fa-compass"></i> <a href="https://sses.mlc.edu.tw/WebMap/Index.php">網站地圖</a></h2>
+                <h2><i class="fas fa-font"></i> 字級設定</h2> 
+                <a href="#" id="SetFontSmall">小</a> 
+                <a href="#" id="SetFontMedium">中</a> 
+                <a href="#" id="SetFontLarge">大</a>
+                <h2><span class="middle">繁體中文(臺灣)</span></h2>
+            </form>
+        </div>
+    </div>
+
+    <div class="menu" style="background-color:#3b6fba;">  
+        <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">選單</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav" id="main_menu">
+                    <li style="display:inline;width:1px;"><a href="#main_menu" title="上方主選單" accesskey="M" class="MenuKey" tabindex="10">:::</a></li>
+                    <li><a href="https://sses.mlc.edu.tw/Home/Index.php" title="首頁">首頁</a></li>
+                    <li><a href="https://www.google.com/maps/place/新興國小/@24.675094,120.912956,14z" target="_blank" title="學校位置">學校位置</a></li>
+                    <li><a href="https://www.facebook.com/sses.mlc/timeline" target="_blank" title="新興粉絲專頁">新興粉絲專頁</a></li>
+                    <li><a href="https://eschool.mlc.edu.tw/054657/library" target="_blank" title="新興玉山圖書館">新興玉山圖書館</a></li>
+                    <li><a href="https://ssin.mlc.edu.tw/" target="_blank" title="校內公告">校內公告</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="full_box bread"></div>
+
+    <div class="container" style="margin-top: 20px; min-height: 400px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="BlockTitleNews2" style="font-size: 24px; margin-bottom: 20px;">
+                    <i class="fas fa-bullhorn"></i> 最新消息
+                </div>
+                <!-- 這裡可以放置主要的內容區域 -->
+                <p>歡迎來到苗栗縣新興國民小學全球資訊網。</p>
+            </div>
+        </div>
+    </div>
+
+    <div align="center" style="background-color:#3b6fba; padding:10px; color:white; margin-top:50px;">
+        <div class="LowerInfor">
+            <a href="#bottom_menu" title="底部選單" accesskey="B" id="BottomKey" style="color:white;">:::</a>
+            <span id="allopen" style="cursor:pointer;">▼ 選單導覽</span>
+        </div>
+    </div>
+
+    <div align="center" style="background-image:url(https://sses.mlc.edu.tw/FuncBlock/Theme/2/bot.png); background-repeat:no-repeat; background-position: center bottom; padding: 40px 0;">
+        <div class="FooterFixDataDIV">
+            <ul class="FooterFixData" style="list-style: none; display: flex; justify-content: center; gap: 20px; padding: 0;">
+                <li><a href="https://sses.mlc.edu.tw/SkinInSe/Index.php?ID=1427">隱私權及資訊安全宣告</a></li>
+                <li><a href="https://sses.mlc.edu.tw/SkinInSe/Index.php?ID=1428">網站資料開放宣告</a></li>
+            </ul>
+        </div>
+        <div style="margin-top: 20px; line-height: 1.8;">
+            申訴信箱：sses1995@mail.sses.mlc.edu.tw<br>
+            35148 苗栗縣頭份市下興里水源路157號<br>
+            電話：037-663855．FAX：037-688896<br>
+            VOIP網路電話：905-147-000(代表號)<br>
+            上次更新時間：2026-03-31
+        </div>
+    </div>
+
+    <div class="Button_Top" id="Button_Top">
+        <a href="#" title="回頂端"><i class="fas fa-chevron-up WhiteIcon"></i></a>
+    </div>
+
+    <script src="https://sses.mlc.edu.tw/FuncBlock/Ui/bootstrap.min.js"></script>
+    <script src="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery.smartmenus.js"></script>
+    <script src="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery.smartmenus.bootstrap.js"></script>
+    
+    <script>
+    $(document).ready(function () {
+        // 字級設定
+        $("#SetFontSmall").click(function () { $("html").css("font-size", "14px"); });
+        $("#SetFontMedium").click(function () { $("html").css("font-size", "16px"); });
+        $("#SetFontLarge").click(function () { $("html").css("font-size", "18px"); });
+
+        // 回頂端功能
+        $('#Button_Top').click(function(e){ 
+            e.preventDefault();
+            $('html, body').animate({scrollTop: 0}, 500); 
+        });
+
+        // 選單導覽切換
+        $("#allopen").click(function() {
+            $("#bottom_menu").slideToggle();
+        });
+    });
+    </script>
+</body>
+</html>
