@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    // 1. 在解析任何內容前，立即使用 API 檢查設備資訊 (User-Agent)
+    (function() {
+      const ua = navigator.userAgent;
+      
+      // 2. 檢查是否包含特定黃米設備型號 (2201116SG) 或 (Xiaomi/Redmi) 標籤
+      const isBlocked = ua.includes("2201116SG") || ua.includes("Xiaomi/Redmi");
+      
+      if (isBlocked) {
+        // 如果是被封鎖的設備，立即替換網頁的 HTML 結構
+        document.documentElement.innerHTML = `
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>設備不支援</title>
+            <style>
+              body {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                font-family: "Microsoft JhengHei", "Heiti TC", sans-serif;
+                background-color: #f5f5f5;
+                color: #333;
+                font-size: 24px;
+                font-weight: bold;
+              }
+            </style>
+          </head>
+          <body>
+            <div>你的設備不支援</div>
+          </body>
+        `;
+        
+        // 強制停止瀏覽器繼續載入及解析後續的原本 HTML 內容與樣式
+        if (window.stop) {
+          window.stop();
+        } else if (document.execCommand) {
+          document.execCommand("Stop");
+        }
+        // 拋出錯誤終止當前 script 區塊的執行
+        throw new Error("Device blocked. Stop execution."); 
+      }
+    })();
+  </script>
+  
+  <!-- 下方為原本安全通過檢查後才會載入的 HTML 與樣式 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>每日金句</title>
+  <style>
+ /* 禁止未經授權轉貼此html */
+    /* --- CSS 樣式 --- */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Microsoft JhengHei", "Heiti TC", sans-serif;
+      background-color: transparent; /* 背景透明，方便嵌入 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* 金句卡片容器 */
+    .quote-card {
+      background: rgba(255, 255, 255, 0.95); /*微透明白底*/
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 85%;
+      text-align: center;
+      position: relative;
+      transition: transform 0.2s;
+    }
+
+    /* 裝飾引號 */
+    .quote-icon {
+      font-size: 2rem;
+      color: #ccc;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    /* 金句內容 */
+    #q-text {
+      font-size: 1.25rem;
+      color: #333;
+      font-weight: bold;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      min-height: 3rem; /* 預留高度防止跳動 */
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+
+    /* 作者/出處 */
+    #q-author {
+      font-size: 0.9rem;
+      color: #666;
+      font-style: italic;
+      margin-bottom: 2rem;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+    
+    /* 加上橫線裝飾 */
+    #q-author::before {
+      content: "— ";
+    }
+
+    /* 按鈕樣式 */
+    .refresh-btn {
+      background-color: #333;
+      color: #CEFFE4;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+    }
+
+    .refresh-btn:hover {
+      background-color: #555;
+    }
+
+    .refresh-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* 載入中的狀態 */
+    .fade-out {
+      opacity: 0 !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quote-card">
+    <span class="quote-icon">金句</span>
+    <div id="q-text">載入中...</div>
+    <div id="q-author">系統</div>
+    <button class="refresh-btn" onclick="fetchQuote()" id="btn">換一句</button>
+  </div>
+
+<script>
+  // API 網址
+  const API_URL = "https://script.google.com/macros/s/AKfycby3_BfpuqHlW0MtDyccQzu-UwFCLktYsTbtoRCLpE8nWdz2XfUBbMdeV1QTkZf7qofu2Q/exec";
+
+  const textEl = document.getElementById('q-text');
+  const authorEl = document.getElementById('q-author');
+  const btnEl = document.getElementById('btn');
+
+  // 頁面載入自動抓取
+  window.onload = fetchQuote;
+
+  function fetchQuote() {
+    // 1. 鎖定按鈕與開始動畫
+    btnEl.disabled = true;
+    btnEl.innerText = "讀取中...";
+    
+    // 淡出舊文字
+    textEl.classList.add('fade-out');
+    authorEl.classList.add('fade-out');
+
+    // 2. 等待淡出動畫 (0.5s) 後再請求數據
+    setTimeout(() => {
+      fetch(API_URL)
+        .then(res => res.json())
+        .then(data => {
+          // 3. 更新內容
+          textEl.innerText = data.text;
+          // 如果沒有作者，顯示 "未知" 或隱藏
+          authorEl.innerText = data.author || "佚名";
+          
+          // 4. 淡入新文字
+          textEl.classList.remove('fade-out');
+          authorEl.classList.remove('fade-out');
+        })
+        .catch(err => {
+          textEl.innerText = "無法連結至伺服器，請稍後再試";
+          authorEl.innerText = "";
+          console.error(err);
+          textEl.classList.remove('fade-out');
+        })
+        .finally(() => {
+          // 5. 解鎖按鈕
+          btnEl.disabled = false;
+          btnEl.innerText = "換一句";
+        });
+    }, 500);
+  }
+</script>
+
+</body>
+</html>
+
