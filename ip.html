@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ip地址測試工具</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .info-group {
+            text-align: left;
+            margin-bottom: 1rem;
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .info-label {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 1.1rem;
+            margin-top: 4px;
+            word-break: break-all;
+        }
+
+        .status-loading {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        button {
+            margin-top: 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.2s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* 自適應比例調整 */
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+            h2 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>網路連線資訊</h2>
+    
+    <div class="info-group">
+        <div class="info-label">公網 IP 地址 (Public IP)</div>
+        <div id="ip" class="info-value status-loading">查詢中...</div>
+    </div>
+
+    <div class="info-group">
+        <div class="info-label">國家 (Country)</div>
+        <div id="country" class="info-value status-loading">查詢中...</div>
+    </div>
+
+    <div class="info-group">
+        <div class="info-label">地區 / 城市 (Region / City)</div>
+        <div id="location" class="info-value status-loading">查詢中...</div>
+    </div>
+
+    <div class="info-group">
+        <div class="info-label">網際網路服務供應商 (ISP)</div>
+        <div id="isp" class="info-value status-loading">查詢中...</div>
+    </div>
+
+    <button onclick="fetchIPInfo()">重新整理資訊</button>
+</div>
+
+<script>
+    async function fetchIPInfo() {
+        // 重置顯示狀態
+        const fields = ['ip', 'country', 'location', 'isp'];
+        fields.forEach(id => {
+            document.getElementById(id).innerText = '讀取中...';
+            document.getElementById(id).classList.add('status-loading');
+        });
+
+        try {
+            // 使用 ip-api.com 的 JSON 接口
+            const response = await fetch('http://ip-api.com/json/?lang=zh-TW');
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                document.getElementById('ip').innerText = data.query;
+                document.getElementById('country').innerText = `${data.country} (${data.countryCode})`;
+                document.getElementById('location').innerText = `${data.regionName} / ${data.city}`;
+                document.getElementById('isp').innerText = data.isp;
+                
+                fields.forEach(id => {
+                    document.getElementById(id).classList.remove('status-loading');
+                });
+            } else {
+                throw new Error('無法獲取 IP 資料');
+            }
+        } catch (error) {
+            console.error('Error fetching IP data:', error);
+            document.getElementById('ip').innerText = '獲取失敗，請檢查網路連線';
+        }
+    }
+
+    // 頁面加載時自動執行
+    window.onload = fetchIPInfo;
+</script>
+
+</body>
+</html>
+
