@@ -1,214 +1,2183 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-Hant-TW">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>苗栗縣新興國民小學</title>
-    <meta name="keywords" content="新興">
-    <meta name="description" content="苗栗縣新興國民小學全球資訊網站">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    
-    <!-- 使用原始網站的絕對路徑以確保資源可讀取 -->
-    <link rel="icon" href="https://sses.mlc.edu.tw/Data/054657/1730162099_655069_53.png" type="image/x-icon">
-    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/bootstrap.min.css?v2" rel="stylesheet" type="text/css">
-    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery.smartmenus.bootstrap.css?v2" rel="stylesheet">
-    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/menustyle.css?v4" rel="stylesheet" type="text/css">
-    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/Reset.css?v4" rel="stylesheet" type="text/css">
-    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/font.css" rel="stylesheet" type="text/css">
-    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/style.css?v12" rel="stylesheet" type="text/css">
-    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/style_rwd.css?v11" rel="stylesheet" type="text/css">
-    <link href="https://sses.mlc.edu.tw/FuncBlock/Ui/TabStyle.css?v3" rel="stylesheet" type="text/css">
-    <link href="https://sses.mlc.edu.tw/FuncBlock/Tools/fontawesome-free-5.2.0-web/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://sses.mlc.edu.tw/FuncBlock/Tools/fancybox/dist/jquery.fancybox.min.css?v1">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-Hant-TW"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>苗栗縣新興國民小學</title>
+<meta name="keywords" content="新興">
+<meta name="description" content="苗栗縣新興國民小學全球資訊網站">
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+<script src="https://connect.facebook.net/zh_TW/bundle/sdk.js/" async="" crossorigin="anonymous"></script><script src="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery-3.6.0.min.js"></script>
+<script src="https://sses.mlc.edu.tw/FuncBlock/Ui/classie.js"></script>
+<script src="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery-ui.min.js?V2"></script>
+<link rel="icon" href="https://sses.mlc.edu.tw/Data/054657/1730162099_655069_53.png" type="image/x-icon">
+<link href="https://sses.mlc.edu.tw/FuncBlock/Ui/bootstrap.min.css?v2" rel="stylesheet" type="text/css">
+<link href="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery.smartmenus.bootstrap.css?v2" rel="stylesheet">
+<link href="https://sses.mlc.edu.tw/FuncBlock/Ui/menustyle.css?v4" rel="stylesheet" type="text/css">
+<link href="https://sses.mlc.edu.tw/FuncBlock/Ui/Reset.css?v4" rel="stylesheet" type="text/css">
+<link href="https://sses.mlc.edu.tw/FuncBlock/Ui/font.css" rel="stylesheet" type="text/css">
+<link href="https://sses.mlc.edu.tw/FuncBlock/Ui/style.css?v12" rel="stylesheet" type="text/css">
+<link href="https://sses.mlc.edu.tw/FuncBlock/Ui/style_rwd.css?v11" rel="stylesheet" type="text/css">
+<link href="https://sses.mlc.edu.tw/FuncBlock/Ui/TabStyle.css?v3" rel="stylesheet" type="text/css">
+<link href="https://sses.mlc.edu.tw/FuncBlock/Tools/fontawesome-free-5.2.0-web/css/all.css" rel="stylesheet">
+<!--link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet"-->
+<script src="https://sses.mlc.edu.tw/FuncBlock/Tools/slideopen/slideopen.js"></script>
+<link rel="stylesheet" href="https://sses.mlc.edu.tw/FuncBlock/Tools/fancybox/dist/jquery.fancybox.min.css?v1">
+<script src="https://sses.mlc.edu.tw/FuncBlock/Tools/fancybox/dist/jquery.fancybox.min.js?v1"></script>
+<script>
+//隱藏選單列，滾動一定距離後顯示
+function HideMenu() {
+  window.addEventListener('scroll', function(e){
+	  var HeightY = window.pageYOffset || document.documentElement.scrollTop,
+		  scrollHeight = 500, //滾動距離
+		  
+		  header = document.querySelector(".menu");
+		  Button_Top = document.querySelector("#Button_Top");
+		  
+	  if (HeightY > scrollHeight) {
+		  classie.add(header,"HideMenu");
+		  classie.add(Button_Top,"DisplayShow");
+	  } else {
+		  if (classie.has(header,"HideMenu")) {  classie.remove(header,"HideMenu"); }
+		  if (classie.has(Button_Top,"DisplayShow")) {  classie.remove(Button_Top,"DisplayShow"); }
+	  }
+  });
+}
+window.onload = HideMenu();
+</script>
+ 
+<style type="text/css">
+@media(min-width:769px){
+body .full_box.bread,body .navbar-default, body .navbar-collapse { background-color: #3b6fba;/*RWD選單列底色*/ }
+}
+body .navbar-default .navbar-nav>li>a.MenuKey{ color:#3b6fba; }
 
-    <script src="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery-3.6.0.min.js"></script>
-    <script src="https://sses.mlc.edu.tw/FuncBlock/Ui/classie.js"></script>
-    <script src="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery-ui.min.js?V2"></script>
-    <script src="https://sses.mlc.edu.tw/FuncBlock/Tools/slideopen/slideopen.js"></script>
-    <script src="https://sses.mlc.edu.tw/FuncBlock/Tools/fancybox/dist/jquery.fancybox.min.js?v1"></script>
+body .navbar-default .navbar-nav>.open>a:hover { background-color: #34495e !important; /*L1選單底色滑過*/ }
+body{ background-color:#F2F5FF; }
 
-    <script>
-    // 隱藏選單列，滾動一定距離後顯示
-    function HideMenu() {
-        window.addEventListener('scroll', function(e){
-            var HeightY = window.pageYOffset || document.documentElement.scrollTop,
-                scrollHeight = 500, // 滾動距離
-                header = document.querySelector(".menu"),
-                Button_Top = document.querySelector("#Button_Top");
-            
-            if (header) {
-                if (HeightY > scrollHeight) {
-                    classie.add(header,"HideMenu");
-                    if (Button_Top) classie.add(Button_Top,"DisplayShow");
-                } else {
-                    if (classie.has(header,"HideMenu")) { classie.remove(header,"HideMenu"); }
-                    if (Button_Top && classie.has(Button_Top,"DisplayShow")) { classie.remove(Button_Top,"DisplayShow"); }
-                }
-            }
-        });
-    }
-    window.onload = function() {
-        HideMenu();
-    };
-    </script>
+a:link,a:visited { color:#0066ff; }
+a:hover, a:active { color:#db2400; }
 
-    <style type="text/css">
-        @media(min-width:769px){
-            body .full_box.bread, body .navbar-default, body .navbar-collapse { background-color: #3b6fba; }
-        }
-        body .navbar-default .navbar-nav>li>a.MenuKey{ color:#3b6fba; }
-        body .navbar-default .navbar-nav>.open>a:hover { background-color: #34495e !important; }
-        body{ background-color:#F2F5FF; }
-        a:link, a:visited { color:#0066ff; }
-        a:hover, a:active { color:#db2400; }
-        .RWDtable th, .RWDtable .bt tfoot th:before, .RWDtable.bt tfoot td:before, .RWDtable.bt tbody td:before{ background-color: #4C6A9B;}
-        .BlockTitle { background-color:#34495e; color:#ffffff; }
-        .BlockTitleNews, .BlockTitleNews i{ color:#34495e; }
-        .BlockTitleNews2{ color:#34495e; }
-        .DataMore { color: #34495e; }
-        .DataMore a{color:#34495e !important;}
-        .DataMore i{color:#34495e;}
-        .DataMore:hover, .DataMore:hover a{ background-color:#34495e;}
-        :root { --main-color: #cccccc; }
-        
-        .Language_RWD_Area{ display:none; }
-        .Language_RWD_font{ width:100%; font-size:20px; font-weight:bold; }
-        @media screen and (max-width: 511px){
-            .Language_RWD_Area{ display:block !important; background-color:#ffffff !important; }
-            #Form_Language_RWD{ display:block !important; }
-        } 
+.RWDtable th,.RWDtable .bt tfoot th:before,.RWDtable.bt tfoot td:before,.RWDtable.bt tbody td:before{ background-color: #4C6A9B;}
 
-        /* jQuery Basic Table CSS */
-        .RWDtable{background:white;border-collapse:collapse;}
-        .RWDtable tr,.RWDtable th,.RWDtable td{border:none;border-bottom:1px solid #ffffff;font-family:'微軟正黑體',sans-serif;}
-        .RWDtable th{padding:10px 3px;text-align:left;}.RWDtable td{padding:0px 3px;line-height:2rem;text-align:left;}
-        .RWDtable i{line-height:1.5rem;}
-        .RWDtable th{color:#ffffff;}
-        .RWDtable tr td{background:#eeeeee;color:#333333;}
-        .RWDtable tr:nth-of-type(2n+2) td{background:#ffffff;}
-        .RWDtable.bt thead,.RWDtable.bt tbody th{display:none;}
-        .RWDtable.bt tfoot th,.RWDtable.bt tfoot td,.RWDtable.bt tbody td{border:none;display:block;width:100%}
-        
-        .Button_Top {
-            display: none;
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            background: #3b6fba;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            cursor: pointer;
-            z-index: 999;
-        }
-        .Button_Top.DisplayShow { display: block; }
-        .WhiteIcon { color: #fff; }
-    </style>
-</head>
+.BlockTitle { background-color:#34495e; color:#ffffff; }
+
+.BlockTitleNews, .BlockTitleNews i{ color:#34495e; }
+.BlockTitleNews2{ color:#34495e; }
+
+
+.DataMore { color: #34495e; }
+.DataMore a{color:#34495e !important;}
+.DataMore i{color:#34495e;}
+.DataMore:hover,.DataMore:hover a{ background-color:#34495e;}
+
+:root {
+  /*--BasicFontSize: 12pt;*/
+  --main-color: #cccccc;
+  /*--Body-color: #fff0d9;
+  --MenuMain-color: #89373b;
+  --MenuHover-color: #d25c2c;
+  --aLink-color: #0066ff; --aLinkHover-color: #db2400;*/
+  /*--TableTH-color: #89373b;
+  --BlockTitle-bgcolor:#d25c2c; --BlockTitle-fontcolor:#ffffff; --BlockTitle-topradius:10px; --BlockTitle-bottomradius:0px;
+  --BlockTitle-fontcolordark:#d25c2c;*/
+  /*--tableline-color: #eeeeee;*/
+}
+</style>
+
+<script src="https://opendata.epa.gov.tw/webapi/api/rest/datastore/355000000I-000259?$format=json&amp;callback=jQuery36002384159963807394_1774926596884&amp;format=json&amp;_=1774926596885"></script></head>
 <body>
-    <div align="left" class="LOGOBlock" style="background-image:url('https://sses.mlc.edu.tw/Data/054657/1611549458_184784_16.png');background-repeat:repeat-x;background-position:left top;">
-        <a href="https://sses.mlc.edu.tw/Home/Index.php" title="回首頁">
-            <h1><img src="https://sses.mlc.edu.tw/Data/054657/1612316603_581816_98.png" alt="logo圖片" class="LogoImg"></h1>
-        </a>
-        <div class="SetFontSize">
-            <form action="" method="post" id="Form_Language"> 
-                <h2><i class="fas fa-compass"></i> <a href="https://sses.mlc.edu.tw/WebMap/Index.php">網站地圖</a></h2>
-                <h2><i class="fas fa-font"></i> 字級設定</h2> 
-                <a href="#" id="SetFontSmall">小</a> 
-                <a href="#" id="SetFontMedium">中</a> 
-                <a href="#" id="SetFontLarge">大</a>
-                <h2><span class="middle">繁體中文(臺灣)</span></h2>
-            </form>
-        </div>
-    </div>
-
-    <div class="menu" style="background-color:#3b6fba;">  
-        <div class="navbar navbar-default" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">選單</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav" id="main_menu">
-                    <li style="display:inline;width:1px;"><a href="#main_menu" title="上方主選單" accesskey="M" class="MenuKey" tabindex="10">:::</a></li>
-                    <li><a href="https://sses.mlc.edu.tw/Home/Index.php" title="首頁">首頁</a></li>
-                    <li><a href="https://www.google.com/maps/place/新興國小/@24.675094,120.912956,14z" target="_blank" title="學校位置">學校位置</a></li>
-                    <li><a href="https://www.facebook.com/sses.mlc/timeline" target="_blank" title="新興粉絲專頁">新興粉絲專頁</a></li>
-                    <li><a href="https://eschool.mlc.edu.tw/054657/library" target="_blank" title="新興玉山圖書館">新興玉山圖書館</a></li>
-                    <li><a href="https://ssin.mlc.edu.tw/" target="_blank" title="校內公告">校內公告</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="full_box bread"></div>
-
-    <div class="container" style="margin-top: 20px; min-height: 400px;">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="BlockTitleNews2" style="font-size: 24px; margin-bottom: 20px;">
-                    <i class="fas fa-bullhorn"></i> 最新消息
-                </div>
-                <!-- 這裡可以放置主要的內容區域 -->
-                <p>歡迎來到苗栗縣新興國民小學全球資訊網。</p>
-            </div>
-        </div>
-    </div>
-
-    <div align="center" style="background-color:#3b6fba; padding:10px; color:white; margin-top:50px;">
-        <div class="LowerInfor">
-            <a href="#bottom_menu" title="底部選單" accesskey="B" id="BottomKey" style="color:white;">:::</a>
-            <span id="allopen" style="cursor:pointer;">▼ 選單導覽</span>
-        </div>
-    </div>
-
-    <div align="center" style="background-image:url(https://sses.mlc.edu.tw/FuncBlock/Theme/2/bot.png); background-repeat:no-repeat; background-position: center bottom; padding: 40px 0;">
-        <div class="FooterFixDataDIV">
-            <ul class="FooterFixData" style="list-style: none; display: flex; justify-content: center; gap: 20px; padding: 0;">
-                <li><a href="https://sses.mlc.edu.tw/SkinInSe/Index.php?ID=1427">隱私權及資訊安全宣告</a></li>
-                <li><a href="https://sses.mlc.edu.tw/SkinInSe/Index.php?ID=1428">網站資料開放宣告</a></li>
-            </ul>
-        </div>
-        <div style="margin-top: 20px; line-height: 1.8;">
-            申訴信箱：sses1995@mail.sses.mlc.edu.tw<br>
-            35148 苗栗縣頭份市下興里水源路157號<br>
-            電話：037-663855．FAX：037-688896<br>
-            VOIP網路電話：905-147-000(代表號)<br>
-            上次更新時間：2026-03-31
-        </div>
-    </div>
-
-    <div class="Button_Top" id="Button_Top">
-        <a href="#" title="回頂端"><i class="fas fa-chevron-up WhiteIcon"></i></a>
-    </div>
-
-    <script src="https://sses.mlc.edu.tw/FuncBlock/Ui/bootstrap.min.js"></script>
-    <script src="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery.smartmenus.js"></script>
-    <script src="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery.smartmenus.bootstrap.js"></script>
-    
-    <script>
+<div align="left" class="LOGOBlock" style="background-image:url('https://sses.mlc.edu.tw/Data/054657/1611549458_184784_16.png');background-repeat:repeat-x;background-position:left top;"><a href="http://sses.mlc.edu.tw/Data/054657/1607918530_385326_71.png" target="blank" title="回首頁"><h1><img src="https://sses.mlc.edu.tw/Data/054657/1612316603_581816_98.png" alt="logo圖片" class="LogoImg"></h1></a>
+<div class="SetFontSize">
+    <form action="" method="post" id="Form_Language" class=""> 
+        <h2><i class="fas fa-compass"></i> <a href="https://sses.mlc.edu.tw/Home/WebMap/Index.php">網站地圖</a></h2>
+        <h2><i class="fas fa-font"></i> 字級設定</h2> <a tabindex="" href="#" id="SetFontSmall">小</a> <a tabindex="" href="#" id="SetFontMedium">中</a> <a tabindex="" href="#" id="SetFontLarge">大</a>
+        <h2>
+                            <span class="middle">
+                    <img src="https://sses.mlc.edu.tw/FuncBlock/taiwan.jpg" alt="國旗圖示" class="middle" style="height:15px;width:17px;">&nbsp;繁體中文(臺灣)                </span>
+                    </h2>
+    </form>
+</div>
+<!--字級大中小OP-->
+<script type="text/javascript">
     $(document).ready(function () {
-        // 字級設定
-        $("#SetFontSmall").click(function () { $("html").css("font-size", "14px"); });
-        $("#SetFontMedium").click(function () { $("html").css("font-size", "16px"); });
-        $("#SetFontLarge").click(function () { $("html").css("font-size", "18px"); });
-
-        // 回頂端功能
-        $('#Button_Top').click(function(e){ 
-            e.preventDefault();
-            $('html, body').animate({scrollTop: 0}, 500); 
+        settingFontSize();
+        $("#SetFontSmall").click(function () {
+            SetCookie('fontSize', 'small');
+            settingFontSize();
         });
-
-        // 選單導覽切換
-        $("#allopen").click(function() {
-            $("#bottom_menu").slideToggle();
+        $("#SetFontMedium").click(function () {
+            SetCookie('fontSize', 'medium');
+            settingFontSize();
+        });
+        $("#SetFontLarge").click(function () {
+            SetCookie('fontSize', 'larger');
+            settingFontSize();
         });
     });
-    </script>
-</body>
-</html>
+    function settingFontSize() {
+        var CurrentSize = getCookie('fontSize');
+        if (CurrentSize != null) { setFontSize(CurrentSize); } 
+    }
+    /*字級大小設定紀錄*/
+    function SetCookie(name, value)
+    {
+        var Days = 30; //cookie保存天數
+        var exp = new Date(); 
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = name + "=" + escape(value) + ";";
+    }
+    function getCookie(name)//取cookies設定
+    {
+        var arrParam = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+        if (arrParam != null) return unescape(arrParam[2]); return null;
+    }
+
+</script>
+<script type="text/javascript">
+     function setFontSize(cookiesize){
+         var SetWidth = "1920";
+         var SetSize = 3.5;
+         if(cookiesize == "larger") { SetSize = 4.5; }else if(cookiesize == "medium") { SetSize = 3.5; }else if(cookiesize == "small") { SetSize = 3; }
+         var NewFont = SetWidth/375*SetSize;
+         var OriFont = document.getElementsByTagName('html')[0];
+         OriFont.style.fontSize =NewFont+"px";
+     }
+</script>
+<!--字級大中小ED-->
+</div>
+
+<div class="menu" style="background-color:#3b6fba;">  
+
+  <div class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="sr-only">選單</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
+  <div class="navbar-collapse collapse">
+
+      <ul class="nav navbar-nav" id="main_menu" data-smartmenus-id="1774926597017527">
+         <li style="display:inline;width:1px;"><a href="#main_menu" title="上方主選單" accesskey="M" class="MenuKey" tabindex="10">:::</a></li>
+
+
+
+
+					        
+                                
+<!--第一層-->
+<li><a href="https://sses.mlc.edu.tw/Home/Index.php" target="" title="首頁" class="has-submenu" aria-haspopup="true" aria-expanded="false" tabindex="10">首頁</a>
+                                 				 						                 						                                  
+                                          		  		        
+        </li><!--第一層僅L1 ED-->                        
+<!--第一層-->
+<li><a href="https://www.google.com/maps/place/新興國小/@24.675094,120.912956,14z/data=!4m5!3m4!1s0x0:0xe2bd81711755d5d5!8m2!3d24.6750937!4d120.9129556?hl=zh-TW" target="_blank" title="開新視窗至學校位置" class="has-submenu" aria-haspopup="true" aria-expanded="false" tabindex="10">學校位置</a>
+                                 				 						                 						                                  
+                                          		  		        
+        </li><!--第一層僅L1 ED-->                        
+<!--第一層-->
+<li><a href="https://www.facebook.com/sses.mlc/timeline" target="_blank" title="開新視窗至新興粉絲專頁" class="has-submenu" aria-haspopup="true" aria-expanded="false" tabindex="10">新興粉絲專頁</a>
+                                 				 						                 						                                  
+                                          		  		        
+        </li><!--第一層僅L1 ED-->                        
+<!--第一層-->
+<li><a href="https://www.facebook.com/%E4%BE%86%E8%87%AA%E6%96%B0%E8%88%88%E7%9A%84%E4%BD%A0-%E8%8B%97%E6%A0%97%E7%B8%A3%E9%A0%AD%E4%BB%BD%E5%B8%82%E6%96%B0%E8%88%88%E5%9C%8B%E5%B0%8F%E9%99%84%E8%A8%AD%E5%B9%BC%E5%85%92%E5%9C%92-100451742236775" target="_blank" title="開新視窗至新興幼兒園粉絲專頁" class="has-submenu" aria-haspopup="true" aria-expanded="false" tabindex="10">新興幼兒園粉絲專頁</a>
+                                 				 						                 						                                  
+                                          		  		        
+        </li><!--第一層僅L1 ED-->                        
+<!--第一層-->
+<li><a href="https://eschool.mlc.edu.tw/054657/library" target="_blank" title="開新視窗至新興玉山圖書館" class="has-submenu" aria-haspopup="true" aria-expanded="false" tabindex="10">新興玉山圖書館</a>
+                                 				 						                 						                                  
+                                          		  		        
+        </li><!--第一層僅L1 ED-->                        
+<!--第一層-->
+<li><a href="https://sites.google.com/mail.sses.mlc.edu.tw/113lessonplan/%E9%A6%96%E9%A0%81" target="_blank" title="開新視窗至114學年度課程計畫" class="has-submenu" aria-haspopup="true" aria-expanded="false" tabindex="10">114學年度課程計畫</a>
+                                 				 						                 						                                  
+                                          		  		        
+        </li><!--第一層僅L1 ED-->                        
+<!--第一層-->
+<li><a href="https://adl.edu.tw/HomePage/login/" target="_blank" title="開新視窗至教育部因材網" class="has-submenu" aria-haspopup="true" aria-expanded="false" tabindex="10">教育部因材網</a>
+                                 				 						                 						                                  
+                                          		  		        
+        </li><!--第一層僅L1 ED-->                        
+<!--第一層-->
+<li><a href="https://ssin.mlc.edu.tw/" target="_blank" title="開新視窗至校內公告" class="has-submenu" aria-haspopup="true" aria-expanded="false" tabindex="10">校內公告</a>
+                                 				 						                 						                                  
+                                          		  				                </li></ul>
+	  <ul class="_dropdown-menu Language_RWD_Area" role="group" aria-hidden="true" aria-expanded="false" style="display:none;">		
+<li>
+			<form action="" method="post" id="Form_Language_RWD" class="center" style="width:100%;text-align:center;background-color:#ffffff !important;z-index:10000;position:absolute;display:none;"> 
+				<h2>
+											<!--<span class="middle">
+							<img src="https://sses.mlc.edu.tw/FuncBlock/taiwan.jpg" alt="國旗圖示" class="middle" style="height:15px;width:17px;">&nbsp;繁體中文(臺灣)						</span>-->
+									</h2>
+			</form>
+		</li>
+</ul>
+
+    </div>
+    </div>
+</div>
+<div class="full_box bread">
+</div>
+<noscript>您的瀏覽器不支援JavaScript功能，若選單功能無法正常使用時，請開啟瀏覽器JavaScript狀態</noscript>
+<script src="https://sses.mlc.edu.tw/FuncBlock/Ui/bootstrap.min.js"></script>
+<!-- SmartMenus jQuery plugin -->
+<script type="text/javascript" src="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery.smartmenus.js"></script>
+<!-- SmartMenus jQuery Bootstrap Addon -->
+<script type="text/javascript" src="https://sses.mlc.edu.tw/FuncBlock/Ui/jquery.smartmenus.bootstrap.js"></script>    
+<script>
+$(document).ready(function () {
+    /*------上方選單-------------*/
+    var navigation = responsiveNav(".nav-collapse", {
+    animate: true,                    // Boolean: Use CSS3 transitions, true or false
+    transition: 284,                  // Integer: Speed of the transition, in milliseconds
+    label: "Menu",                    // String: Label for the navigation toggle
+    insert: "after",                  // String: Insert the toggle before or after the navigation
+    customToggle: "",                 // Selector: Specify the ID of a custom toggle
+    closeOnNavClick: false,           // Boolean: Close the navigation when one of the links are clicked
+    openPos: "relative",              // String: Position of the opened nav, relative or static
+    navClass: "nav-collapse",         // String: Default CSS class. If changed, you need to edit the CSS too!
+    navActiveClass: "js-nav-active",  // String: Class that is added to html element when nav is active
+    jsClass: "js",                    // String: 'JS enabled' class which is added to html element
+    init: function(){},               // Function: Init callback
+    open: function(){},               // Function: Open callback
+    close: function(){}               // Function: Close callback
+  });
+  /*--------------------------------------------------*/	  
+});	 
+</script>
+<style>
+	.Language_RWD_Area{
+		display:none;
+	}
+	.Language_RWD_font{
+		width:100%;
+		font-size:20px;
+		font-weight:bold;
+	}
+	@media screen and (max-width: 511px){
+		.Language_RWD_Area{
+			display:block !important;background-color:#ffffff !important;
+		}
+		#Form_Language_RWD{
+		display:block !important;
+		}
+	} 
+</style><style style="text/css">
+/*jQuery Basic Table*/
+.RWDtable{background:white;border-collapse:collapse;}
+.RWDtable tr,.RWDtable th,.RWDtable td{border:none;border-bottom:1px solid #ffffff;font-family:'微軟正黑體',sans-serif;}
+.RWDtable th{padding:10px 3px;text-align:left;}.RWDtable td{padding:0px 3px;line-height:2rem;text-align:left;}
+.RWDtable i{line-height:1.5rem;}
+.RWDtable th{/*background:var(--TableTH-color);*/color:#ffffff;}
+.RWDtable tr td{background:#eeeeee;color:#333333;}
+.RWDtable tr:nth-of-type(2n+2) td{background:#ffffff;}
+.RWDtable .bt tfoot th,.RWDtable .bt tfoot td,.RWDtable .bt tbody td{padding:0;}
+.RWDtable .bt tfoot th:before,.RWDtable.bt tfoot td:before,.RWDtable.bt tbody td:before{/*background:var(--TableTH-color);*/color:white;margin-right:5px;padding:2px 10px;}/*左th*/
+.RWDtable .bt tfoot th .bt-content,.RWDtable.bt tfoot td .bt-content,.RWDtable.bt tbody td .bt-content{display:inline-block;padding:2px 5px}
+.RWDtable .bt tfoot th:first-of-type:before,.RWDtable.bt tfoot th:first-of-type .bt-content,.RWDtable.bt tfoot td:first-of-type:before,.RWDtable.bt tfoot td:first-of-type .bt-content,.RWDtable.bt tbody td:first-of-type:before,.RWDtable.bt tbody td:first-of-type .bt-content{padding-top:10px;}
+.RWDtable.bt tfoot th:last-of-type:before,.RWDtable.bt tfoot th:last-of-type .bt-content,.RWDtable.bt tfoot td:last-of-type:before,.RWDtable.bt tfoot td:last-of-type .bt-content,.RWDtable.bt tbody td:last-of-type:before,.RWDtable.bt tbody td:last-of-type .bt-content{padding-bottom:10px;}
+.RWDtable.bt thead,.RWDtable.bt tbody th{display:none;}
+.RWDtable.bt tfoot th,.RWDtable.bt tfoot td,.RWDtable.bt tbody td{border:none;display:block;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;vertical-align:top;float:left\9;width:100%\9}
+.RWDtable.bt tfoot th::before,.RWDtable.bt tfoot td::before,.RWDtable.bt tbody td::before{content:attr(data-th) "";display:inline-block;-webkit-flex-shrink:0;-ms-flex-shrink:0;flex-shrink:0;font-weight:bold;width:6.5em}
+.RWDtable.bt tfoot th.bt-hide,.RWDtable.bt tfoot td.bt-hide,.RWDtable.bt tbody td.bt-hide{display:none}
+.RWDtable.bt tfoot th .bt-content,.RWDtable.bt tfoot td .bt-content,.RWDtable.bt tbody td .bt-content{ vertical-align:top; }
+
+.bt-wrapper.active{ max-height:310px;overflow:auto;-webkit-overflow-scrolling:touch; }
+
+.RWDtableBorder{ background:white;border-collapse:collapse; }
+.RWDtableBorder tr,.RWDtableBorder th,.RWDtableBorder td{ border:1px solid #d6dde3;font-family:'微軟正黑體',sans-serif; }
+.RWDtableBorder th{ padding:10px 0px;text-align:center;vertical-align:middle; background:#50667f; }.RWDtableBorder td{ padding:0px 0px;text-align:center;vertical-align:middle; }
+.RWDtableBorder th{ background:#50667f;color:#ffffff; }
+.RWDtableBorder tr td{ background:#eff2ec;color:#333333;padding:5px 2px; }
+.RWDtableBorder tr:nth-of-type(2n+1) td{ background:#ffffff; }
+.RWDtableBorder .bt tfoot th,.RWDtableBorder .bt tfoot td,.RWDtableBorder .bt tbody td{ padding:0; }
+.RWDtableBorder .bt tfoot th:before,.RWDtableBorder.bt tfoot td:before,.RWDtableBorder.bt tbody td:before{ background:#50667f;color:white;margin-right:5px; }/*左th*/
+.RWDtableBorder .bt tfoot th .bt-content,.RWDtableBorder.bt tfoot td .bt-content,.RWDtableBorder.bt tbody td .bt-content{display:inline-block;padding:2px 5px}
+.RWDtableBorder .bt tfoot th:first-of-type:before,.RWDtableBorder.bt tfoot th:first-of-type .bt-content,.RWDtableBorder.bt tfoot td:first-of-type:before,.RWDtableBorder.bt tfoot td:first-of-type .bt-content,.RWDtableBorder.bt tbody td:first-of-type:before,.RWDtableBorder.bt tbody td:first-of-type .bt-content{ padding-top:10px; }
+.RWDtableBorder.bt tfoot th:last-of-type:before,.RWDtableBorder.bt tfoot th:last-of-type .bt-content,.RWDtableBorder.bt tfoot td:last-of-type:before,.RWDtableBorder.bt tfoot td:last-of-type .bt-content,.RWDtableBorder.bt tbody td:last-of-type:before,.RWDtableBorder.bt tbody td:last-of-type .bt-content{ padding-bottom:10px; }
+.RWDtableBorder.bt thead,.RWDtableBorder.bt tbody th{ display:none; }
+.RWDtableBorder.bt tfoot th,.RWDtableBorder.bt tfoot td,.RWDtableBorder.bt tbody td{ border:none;display:block;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;vertical-align:top;float:left\9;width:100%\9;padding:0px 0px;/*左th時有效*/ }
+.RWDtableBorder.bt tfoot th::before,.RWDtableBorder.bt tfoot td::before,.RWDtableBorder.bt tbody td::before{ content:attr(data-th) "";display:inline-block;-webkit-flex-shrink:0;-ms-flex-shrink:0;flex-shrink:0;font-weight:bold;width:6.5em; }
+.RWDtableBorder.bt tfoot th.bt-hide,.RWDtableBorder.bt tfoot td.bt-hide,.RWDtableBorder.bt tbody td.bt-hide{ display:none; }
+.RWDtableBorder.bt tfoot th .bt-content,.RWDtableBorder.bt tfoot td .bt-content,.RWDtableBorder.bt tbody td .bt-content{ vertical-align:top; }
+.RWDtableBorder tr:hover td{ background:#d0e6da; }
+
+</style>
+<script>
+//<![CDATA[
+(function($){$.fn.basictable=function(options){var setup=function(table,data){var headings=[];if(data.tableWrap){table.wrap('<div class="bt-wrapper"></div>')}var format="";if(table.find("thead tr th").length){format="thead th"}else if(table.find("tbody tr th").length){format="tbody tr th"}else if(table.find("th").length){format="tr:first th"}else{format="tr:first td"}$.each(table.find(format),function(){var $heading=$(this);var colspan=parseInt($heading.attr("colspan"),10)||1;var row=$heading.closest("tr").index();if(!headings[row]){headings[row]=[]}for(var i=0;i<colspan;i++){headings[row].push($heading)}});$.each(table.find("tbody tr"),function(){setupRow($(this),headings,data)});$.each(table.find("tfoot tr"),function(){setupRow($(this),headings,data)})};var setupRow=function($row,headings,data){$row.children().each(function(){var $cell=$(this);if(($cell.html()===""||$cell.html()==="&nbsp;")&&!data.showEmptyCells){$cell.addClass("bt-hide")}else{var cellIndex=$cell.index();var headingText="";for(var j=0;j<headings.length;j++){if(j!=0){headingText+=": "}var $heading=headings[j][cellIndex];headingText+=$heading.text()}$cell.attr("data-th",headingText);if(data.contentWrap&&!$cell.children().hasClass("bt-content")){$cell.wrapInner('<span class="bt-content" />')}}})};var unwrap=function(table){$.each(table.find("td"),function(){var $cell=$(this);var content=$cell.children(".bt-content").html();$cell.html(content)})};var check=function(table,data){if(!data.forceResponsive){if(table.removeClass("bt").outerWidth()>table.parent().width()){start(table,data)}else{end(table,data)}}else{if(data.breakpoint!==null&&$(window).width()<=data.breakpoint||data.containerBreakpoint!==null&&table.parent().width()<=data.containerBreakpoint){start(table,data)}else{end(table,data)}}};var start=function(table,data){table.addClass("bt");if(data.tableWrap){table.parent(".bt-wrapper").addClass("active")}};var end=function(table,data){table.removeClass("bt");if(data.tableWrap){table.parent(".bt-wrapper").removeClass("active")}};var destroy=function(table,data){table.find("td").removeAttr("data-th");if(data.tableWrap){table.unwrap()}if(data.contentWrap){unwrap(table)}table.removeData("basictable")};var resize=function(table){if(table.data("basictable")){check(table,table.data("basictable"))}};this.each(function(){var table=$(this);if(table.length===0||table.data("basictable")){if(table.data("basictable")){if(options=="destroy"){destroy(table,table.data("basictable"))}else if(options==="start"){start(table,table.data("basictable"))}else if(options==="stop"){end(table,table.data("basictable"))}else{check(table,table.data("basictable"))}}return false}var settings=$.extend({},$.fn.basictable.defaults,options);var vars={breakpoint:settings.breakpoint,containerBreakpoint:settings.containerBreakpoint,contentWrap:settings.contentWrap,forceResponsive:settings.forceResponsive,noResize:settings.noResize,tableWrap:settings.tableWrap,showEmptyCells:settings.showEmptyCells};if(vars.breakpoint===null&&vars.containerBreakpoint===null){vars.breakpoint=768}table.data("basictable",vars);setup(table,table.data("basictable"));if(!vars.noResize){check(table,table.data("basictable"));$(window).bind("resize.basictable",function(){resize(table)})}})};$.fn.basictable.defaults={breakpoint:null,containerBreakpoint:null,contentWrap:true,forceResponsive:true,noResize:false,tableWrap:false,showEmptyCells:false}})(jQuery);
+//]]>
+</script><style>
+	.AStyle{
+		//border:1px solid;
+		//border-radius:10px;
+		//font-size:20px;
+	}
+	/*
+	@media only screen and (max-width:1320px){
+		.MenuPathTable{ display:none; }
+	}
+	@media only screen and (max-width:380px){
+		.MenuPathTable2{ display:none; }
+	}
+	*/
+	.test{
+		padding:5px 0px 5px 0px;
+		margin:15px 10px 15px 10px;
+		text-align:left;
+		font-family:'Noto Sans TC', 'Arail';
+		font-weight:bold;
+		background-repeat:no-repeat;
+		font-size:1.4rem;
+		vertical-align:middle;
+		white-space:nowrap;
+		letter-spacing:0.1rem;
+		border:0px dashed #8db9ca;
+		border-radius:10px;
+	}
+</style>
+<div align="center"><div align="center">
+<div align="center" class="UIBlock3DIV">
+<ul class="UIBlock">
+	<li class="UIBlockLeft">
+		<ul class="UIBlockSub">
+						<li>							<div align="center">
+			<a href="https://sses.mlc.edu.tw/Home/WebLink/Index.php?CateID=5" title="學校簡介"><div align="center" class="BlockTitle">學校簡介</div></a>
+			<ul class="BlockItem">
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=294" target="_blank" title="開新視窗至新興校史">新興校史</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=295" target="_blank" title="開新視窗至校長室">校長室</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=296" target="_blank" title="開新視窗至教導處">教導處</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=297" target="_blank" title="開新視窗至總務處">總務處</a></li>
+						<li class="PhoneHidden"><a href="https://class.tn.edu.tw/modules/tad_web/index.php?WebID=8237" target="_blank" title="開新視窗至幼兒園">幼兒園</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=299" target="_blank" title="開新視窗至輔導室">輔導室</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=300" target="_blank" title="開新視窗至新興團隊">新興團隊</a></li>
+						</ul>
+			</div>
+				</li>
+				<li>							<div align="center">
+			<a href="https://sses.mlc.edu.tw/Home/WebLink/Index.php?CateID=7" title="E化行政"><div align="center" class="BlockTitle">E化行政</div></a>
+			<ul class="BlockItem">
+						<li class="PhoneHidden"><a href="https://www.mlc.edu.tw/System/mainedu/Home/Login.php" target="_blank" title="開新視窗至教育處">教育處</a></li>
+						<li class="PhoneHidden"><a href="https://od30.miaoli.gov.tw/SPEED30/Account/SSOLogin" target="_blank" title="開新視窗至公文管理">公文管理</a></li>
+						<li class="PhoneHidden"><a href="https://eschool.mlc.edu.tw/central/theme/05/index.html" target="_blank" title="開新視窗至校務行政(成績)">校務行政(成績)</a></li>
+						<li class="PhoneHidden"><a href="https://mswebitr.mlc.edu.tw/central/theme/05/index.html" target="_blank" title="開新視窗至差勤系統">差勤系統</a></li>
+						<li class="PhoneHidden"><a href="https://ssin.mlc.edu.tw/" target="_blank" title="開新視窗至校內公告">校內公告</a></li>
+						<li class="PhoneHidden"><a href="https://120.104.233.94:5001/webman/index.cgi" target="_blank" title="開新視窗至新興雲（一）">新興雲（一）</a></li>
+						<li class="PhoneHidden"><a href="https://120.104.233.92:5001/index.cgi" target="_blank" title="開新視窗至新興雲（二）">新興雲（二）</a></li>
+						</ul>
+			</div>
+				</li>
+				<li>							<div align="center">
+			<a href="https://sses.mlc.edu.tw/Home/WebLink/Index.php?CateID=6" title="親師園地"><div align="center" class="BlockTitle">親師園地</div></a>
+			<ul class="BlockItem">
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=293" target="_blank" title="開新視窗至家長會">家長會</a></li>
+						<li class="PhoneHidden"><a href="https://www.edusave.edu.tw/" target="_blank" title="開新視窗至學校教育儲蓄戶">學校教育儲蓄戶</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=345" target="_blank" title="開新視窗至投訴信箱">投訴信箱</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=1450" target="_blank" title="開新視窗至性別平等相關表件">性別平等相關表件</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=313" target="_blank" title="開新視窗至校外人士協助教學或活動要點">校外人士協助教學或活動要點</a></li>
+						<li class="PhoneHidden"><a href="https://drive.google.com/drive/folders/1P-jVjHx2OZnLROu_524QhSAW0M5u6pai?usp=sharing" target="_blank" title="開新視窗至慶生園地">慶生園地</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=1449" target="_blank" title="開新視窗至學生在校時間實施原則">學生在校時間實施原則</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=1704" target="_blank" title="開新視窗至114學年度學生學習評量計畫">114學年度學生學習評量計畫</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=1710" target="_blank" title="開新視窗至學生申訴評議要點">學生申訴評議要點</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=1766" target="_blank" title="開新視窗至學生服裝儀容規定(114學年度)">學生服裝儀容規定(114學年度)</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=1832" target="_blank" title="開新視窗至學生自我傷害三級預防工作">學生自我傷害三級預防工作</a></li>
+						</ul>
+			</div>
+				</li>
+				<li>							<div align="center">
+			<a href="https://sses.mlc.edu.tw/Home/WebLink/Index.php?CateID=105" title="網路郵局"><div align="center" class="BlockTitle">網路郵局</div></a>
+			<ul class="BlockItem">
+						<li class="PhoneHidden"><a href="https://webmail.mlc.edu.tw/cgi-bin/owmmdir2/openwebmail.pl" target="_blank" title="開新視窗至webmail公務信箱">webmail公務信箱</a></li>
+						<li class="PhoneHidden"><a href="https://accounts.google.com/signin/v2/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&amp;flowEntry=ServiceLogin&amp;flowName=GlifWebSignIn&amp;hd=mail.sses.mlc.edu.tw&amp;ltmpl=default&amp;rip=1&amp;sacu=1&amp;service=mail" target="_blank" title="開新視窗至新興G Suite-1(@mail.sses.…)信箱">新興G Suite-1(@mail.sses.…)信箱</a></li>
+						<li class="PhoneHidden"><a href="https://accounts.google.com/signin/v2/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&amp;flowEntry=ServiceLogin&amp;flowName=GlifWebSignIn&amp;hd=sses.mlc.edu.tw&amp;ltmpl=default&amp;rip=1&amp;sacu=1&amp;service=mail" target="_blank" title="開新視窗至新興G Suite-2(@sses.…)信箱">新興G Suite-2(@sses.…)信箱</a></li>
+						<li class="PhoneHidden"><a href="https://reurl.cc/Q79210" target="_blank" title="開新視窗至資教中心教師(@mlc.edu.tw)信箱">資教中心教師(@mlc.edu.tw)信箱</a></li>
+						<li class="PhoneHidden"><a href="https://reurl.cc/Agkp0Y" target="_blank" title="開新視窗至資教中心學生(@stu.mlc.edu.tw)信箱">資教中心學生(@stu.mlc.edu.tw)信箱</a></li>
+						<li class="PhoneHidden"><a href="https://dap.mlc.edu.tw/" target="_blank" title="開新視窗至資教中心G Suite帳號申請">資教中心G Suite帳號申請</a></li>
+						<li class="PhoneHidden"><a href="https://auth.sso.edu.tw/gsuitelogin?SAMLRequest=fVLJTsMwEL0j8Q%2BW71kakEBWE1RAiEosEU05cDP2JJh6KR6ngb%2FHTUHAgV6fx2%2BbmZ69G0024FE5W9JJmlMCVjipbFfSZXOVnNKz6vBgitzoNZv14cU%2BwFsPGEj8aZGNDyXtvWWOo0JmuQFkQbDF7PaGFWnO1t4FJ5ymZH5ZUs3b1vJWyG5lXjvz3K6ketVaCS5XsJJda5UB1SpKHr9tFVtbc8Qe5hYDtyFCeZEn%2BXFSHDV5wY5OWH7yREn9pXSu7C7BPlvPuyFk101TJ%2FX9ohkJNkqCv4vTJe2c6zSkwpmtfM0R1SbCLdcIlMwQwYdo8MJZ7A34BfiNErB8uCnpSwhrZFk2DEP6Q5PxrHMpyD4NQ8YF0moslo3Z%2FK9G9zvn38q0%2BuGeZr%2Boqq%2BFbXPML2sX6%2F0gM63dcOGBhxgi%2BD5muHLe8PC%2F2iSdjIiSSTuOst7iGkTcD0hKsmqn%2Bvcy4r18Ag%3D%3D&amp;RelayState=https%3A%2F%2Faccounts.google.com%2FCheckCookie%3Fcontinue%3Dhttps%253A%252F%252Fdrive.google.com%252Fa%252Fgo.edu.tw%252F%253Ffbclid%253DIwAR2Uqs3TjKH4PMNFklxTs10qG5gmlZKGo33CrZbFGun8s_v4udRlJddaXQk%26service%3Dwise%26faa%3D1" target="_blank" title="開新視窗至教育部G Suite(@go.edu.tw)信箱">教育部G Suite(@go.edu.tw)信箱</a></li>
+						<li class="PhoneHidden"><a href="https://mail.edu.tw/edumail.html" target="_blank" title="開新視窗至教育部教育雲(@mail.edu.tw)信箱">教育部教育雲(@mail.edu.tw)信箱</a></li>
+						</ul>
+			</div>
+				</li>
+				<li>							<div align="center">
+			<a href="https://sses.mlc.edu.tw/Home/WebLink/Index.php?CateID=104" title="進修研習"><div align="center" class="BlockTitle">進修研習</div></a>
+			<ul class="BlockItem">
+						<li class="PhoneHidden"><a href="https://www4.inservice.edu.tw/NAPP/Login.aspx?tea=1" target="_blank" title="開新視窗至教師在職進修網">教師在職進修網</a></li>
+						<li class="PhoneHidden"><a href="https://special.moe.gov.tw/study.php" target="_blank" title="開新視窗至特殊教育資訊網">特殊教育資訊網</a></li>
+						<li class="PhoneHidden"><a href="https://moocs.moe.edu.tw/moocs/#/home" target="_blank" title="開新視窗至教師e學院">教師e學院</a></li>
+						</ul>
+			</div>
+				</li>
+				<li>							<div align="center">
+			<a href="https://sses.mlc.edu.tw/Home/WebLink/Index.php?CateID=18" title="計畫成果"><div align="center" class="BlockTitle">計畫成果</div></a>
+			<ul class="BlockItem">
+						<li class="PhoneHidden"><a href="https://sites.google.com/mail.sses.mlc.edu.tw/113lessonplan/%E9%A6%96%E9%A0%81" target="_blank" title="開新視窗至課程總體計畫">課程總體計畫</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=1155" target="_blank" title="開新視窗至特教課程計畫">特教課程計畫</a></li>
+						<li class="PhoneHidden"><a href="https://drive.google.com/drive/folders/1qyJfEwqZdIhTwcKkXfhfPtiWfoAwl-e0?usp=sharing" target="_blank" title="開新視窗至本土語文教育">本土語文教育</a></li>
+						<li class="PhoneHidden"><a href="https://sites.google.com/sses.mlc.edu.tw/teacher/%E9%A6%96%E9%A0%81" target="_blank" title="開新視窗至公開授課">公開授課</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=1746" target="_blank" title="開新視窗至114學年度公開授課辦理時間">114學年度公開授課辦理時間</a></li>
+						<li class="PhoneHidden"><a href="https://sites.google.com/mail.sses.mlc.edu.tw/sses/%E9%A6%96%E9%A0%81" target="_blank" title="開新視窗至友善校園">友善校園</a></li>
+						<li class="PhoneHidden"><a href="https://sites.google.com/sses.mlc.edu.tw/work21/%E9%98%B2%E5%88%B6%E5%AD%B8%E7%94%9F%E8%97%A5%E7%89%A9%E6%BF%AB%E7%94%A8" target="_blank" title="開新視窗至防制藥物濫用專區">防制藥物濫用專區</a></li>
+						<li class="PhoneHidden"><a href="https://sites.google.com/mail.sses.mlc.edu.tw/sses/%E9%A6%96%E9%A0%81/%E5%8F%8D%E9%9C%B8%E5%87%8C%E5%B0%88%E5%8D%80" target="_blank" title="開新視窗至反霸凌專區">反霸凌專區</a></li>
+						<li class="PhoneHidden"><a href="https://sites.google.com/sses.mlc.edu.tw/work21/%E5%93%81%E5%BE%B7%E6%95%99%E8%82%B2" target="_blank" title="開新視窗至品德教育專區">品德教育專區</a></li>
+						<li class="PhoneHidden"><a href="https://sites.google.com/sses.mlc.edu.tw/work21/%E7%94%9F%E5%91%BD%E6%95%99%E8%82%B2" target="_blank" title="開新視窗至生命教育專區">生命教育專區</a></li>
+						<li class="PhoneHidden"><a href="https://sites.google.com/d/1fRd7l_R_21Q-Me2nc4AqLBTe6WZ8HIIQ/p/1Zb-zOlwTBm9Bj2F1L282EulLBeAxg8JY/edit" target="_blank" title="開新視窗至新興交通安全網">新興交通安全網</a></li>
+						<li class="PhoneHidden"><a href="https://website.mlc.edu.tw/woa001377" target="_blank" title="開新視窗至新興防災教育網">新興防災教育網</a></li>
+						<li class="PhoneHidden"><a href="https://sites.google.com/mail.sses.mlc.edu.tw/lovereading" target="_blank" title="開新視窗至星星愛閱─閱讀訪視">星星愛閱─閱讀訪視</a></li>
+						<li class="PhoneHidden"><a href="https://sites.google.com/mail.sses.mlc.edu.tw/artschool" target="_blank" title="開新視窗至藝術與美感深耕成果網">藝術與美感深耕成果網</a></li>
+						<li class="PhoneHidden"><a href="https://sites.google.com/mail.sses.mlc.edu.tw/sexeducation" target="_blank" title="開新視窗至健康促進─性教育">健康促進─性教育</a></li>
+						<li class="PhoneHidden"><a href="https://sites.google.com/mail.sses.mlc.edu.tw/sses-edu/" target="_blank" title="開新視窗至教育優先區">教育優先區</a></li>
+						<li class="PhoneHidden"><a href="https://sites.google.com/view/sses-access/%E9%A6%96%E9%A0%81" target="_blank" title="開新視窗至校園無障礙設施">校園無障礙設施</a></li>
+						</ul>
+			</div>
+				</li>
+				<li>							<div align="center">
+			<a href="https://sses.mlc.edu.tw/Home/WebLink/Index.php?CateID=121" title="科技＆資訊"><div align="center" class="BlockTitle">科技＆資訊</div></a>
+			<ul class="BlockItem">
+						<li class="PhoneHidden"><a href="https://druw.mlc.edu.tw/wftpd/" target="_blank" title="開新視窗至資教中心檔案伺服器">資教中心檔案伺服器</a></li>
+						<li class="PhoneHidden"><a href="https://www.sso.edu.tw/" target="_blank" title="開新視窗至教育體系單一簽入服務(可更改教育雲信箱密碼)">教育體系單一簽入服務(可更改教育雲信箱密碼)</a></li>
+						<li class="PhoneHidden"><a href="https://o365.k12cc.tw/" target="_blank" title="開新視窗至微軟 Office 365 教育版雲端服務啟用">微軟 Office 365 教育版雲端服務啟用</a></li>
+						<li class="PhoneHidden"><a href="https://eteacher.edu.tw/Desktop.aspx" target="_blank" title="開新視窗至中小學網路素養與認知">中小學網路素養與認知</a></li>
+						<li class="PhoneHidden"><a href="https://isafe.moe.edu.tw/" target="_blank" title="開新視窗至全民資安素養網">全民資安素養網</a></li>
+						<li class="PhoneHidden"><a href="https://ossacc.moe.edu.tw/" target="_blank" title="開新視窗至校園自由軟體">校園自由軟體</a></li>
+						<li class="PhoneHidden"><a href="https://lis.org.tw/hos" target="_blank" title="開新視窗至 LIS情境科學教材"> LIS情境科學教材</a></li>
+						<li class="PhoneHidden"><a href="https://reurl.cc/0DjeMb" target="_blank" title="開新視窗至資訊科技教學網站">資訊科技教學網站</a></li>
+						<li class="PhoneHidden"><a href="https://worldofkeyboards.com/qwerty" target="_blank" title="開新視窗至英打練習">英打練習</a></li>
+						<li class="PhoneHidden"><a href="http://dancemattypingguide.com" target="_blank" title="開新視窗至英文打字二">英文打字二</a></li>
+						<li class="PhoneHidden"><a href="https://worldofkeyboards.com/bopomofo" target="_blank" title="開新視窗至中打練習-注音鍵盤">中打練習-注音鍵盤</a></li>
+						<li class="PhoneHidden"><a href="https://typing.tw/" target="_blank" title="開新視窗至線上中打-文章練習">線上中打-文章練習</a></li>
+						</ul>
+			</div>
+				</li>
+				<li>	
+	<!-- Stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,400italic,300italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://sses.mlc.edu.tw/Tools/assets/css/docs.theme.min.css?v8">
+    <!-- Owl Stylesheets -->
+    <link rel="stylesheet" href="https://sses.mlc.edu.tw/Tools/assets/owlcarousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://sses.mlc.edu.tw/Tools/assets/owlcarousel/assets/owl.theme.default.min.css?v1">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <!-- Yeah i know js should not be in header. Its required for demos.-->
+    <!-- javascript -->
+    <script src="https://sses.mlc.edu.tw/Tools/assets/owlcarousel/owl.carousel.js"></script>
+ <br>
+    <!-- vendors -->
+    <script src="https://sses.mlc.edu.tw/Tools/assets/vendors/highlight.js"></script>
+    <script src="https://sses.mlc.edu.tw/Tools/assets/js/app.js"></script>
+</li>
+				</ul>
+	
+	</li><li class="UIBlockCenter">
+		<ul class="UIBlockSub">
+						<li><div align="left" class="BlockTitleNews"><i class="fas fa-newspaper"></i>
+	最新消息</div>
+	<div align="center">
+		<div class="news" style="position:relative;z-index:5;">
+			<div class="tab" align="left">
+				<ul>
+					<li class="current" id="newsAreaItem_News0">
+						<a href="javascript:showNewsAreaNews('News0','0','#db2400')" tabindex="50">
+							<h2>全部</h2>
+						</a>
+					</li>
+											<li class="_current" id="newsAreaItem_News110"><a href="javascript:showNewsAreaNews('News110','110','#db2400')" tabindex="50">
+								<h2>教導</h2>
+							</a></li>
+											<li class="_current" id="newsAreaItem_News111"><a href="javascript:showNewsAreaNews('News111','111','#db2400')" tabindex="51">
+								<h2>學務</h2>
+							</a></li>
+											<li class="_current" id="newsAreaItem_News112"><a href="javascript:showNewsAreaNews('News112','112','#db2400')" tabindex="52">
+								<h2>教務</h2>
+							</a></li>
+											<li class="_current" id="newsAreaItem_News113"><a href="javascript:showNewsAreaNews('News113','113','#db2400')" tabindex="53">
+								<h2>總務</h2>
+							</a></li>
+											<li class="_current" id="newsAreaItem_News123"><a href="javascript:showNewsAreaNews('News123','123','#db2400')" tabindex="54">
+								<h2>幼兒園</h2>
+							</a></li>
+											<li class="_current" id="newsAreaItem_News114"><a href="javascript:showNewsAreaNews('News114','114','#db2400')" tabindex="55">
+								<h2>人事</h2>
+							</a></li>
+											<li class="_current" id="newsAreaItem_News115"><a href="javascript:showNewsAreaNews('News115','115','#db2400')" tabindex="56">
+								<h2>資訊</h2>
+							</a></li>
+									</ul>
+			</div>
+		</div>
+	</div><br><br>
+
+	<div align="center">
+		<div class="body" id="newsArea_News0" style="display:block;">
+			<table border="0" width="98%" class="RWDtable" summary="最新消息資訊" style="line-height:1.5rem;">
+				<tbody><tr>
+					<th class="middle" width="70%" data-th="標題"><span class="bt-content">標題</span></th>
+					<th class="middle" width="10%" data-th="日期"><span class="bt-content">日期</span></th>
+					<th class="middle" width="15%" data-th="發布人"><span class="bt-content">發布人</span></th>
+				</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1891'" onmouseover="MoColor(1,'1891');" onmouseout="MoColor(0,'1891');">
+						<td id="MoColorTitle1891" style="text-align:left;" data-th="標題"><span class="bt-content">
+														<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教導&nbsp;</span>
+							<i class="fas fa-thumbtack" title="置頂至2026-06-30"></i><span class="sr-only">置頂至2026-06-30</span>															<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1891" title="跟著外師遨遊世界~英語繪本分享">跟著外師遨遊世界~英語繪本分享</a>
+													</span></td>
+						<td id="MoColorShowDate1891" nowrap="" data-th="日期"><span class="bt-content">2026-03-19</span></td>
+						<td id="MoColorUnitOffice1891" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1884'" onmouseover="MoColor(1,'1884');" onmouseout="MoColor(0,'1884');">
+						<td id="MoColorTitle1884" style="text-align:left;" data-th="標題"><span class="bt-content">
+														<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教務&nbsp;</span>
+							<i class="fas fa-thumbtack" title="置頂至2026-04-22"></i><span class="sr-only">置頂至2026-04-22</span>															<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1884" title="115學年度新生入學報到通知">115學年度新生入學報到通知</a>
+													</span></td>
+						<td id="MoColorShowDate1884" nowrap="" data-th="日期"><span class="bt-content">2026-03-17</span></td>
+						<td id="MoColorUnitOffice1884" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1871'" onmouseover="MoColor(1,'1871');" onmouseout="MoColor(0,'1871');">
+						<td id="MoColorTitle1871" style="text-align:left;" data-th="標題"><span class="bt-content">
+														<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教導&nbsp;</span>
+							<i class="fas fa-thumbtack" title="置頂至2026-06-05"></i><span class="sr-only">置頂至2026-06-05</span>															<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1871" title="114學年度第二學期行事曆">114學年度第二學期行事曆</a>
+													</span></td>
+						<td id="MoColorShowDate1871" nowrap="" data-th="日期"><span class="bt-content">2026-03-02</span></td>
+						<td id="MoColorUnitOffice1871" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1902'" onmouseover="MoColor(1,'1902');" onmouseout="MoColor(0,'1902');">
+						<td id="MoColorTitle1902" style="text-align:left;" data-th="標題"><span class="bt-content">
+														<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;人事&nbsp;</span>
+																						<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1902" title="公文轉達--檢送「『行政院與所屬中央及地方各機關（構）學校公務 人員違法（規）赴陸建議懲處原則』及『行政院與所屬各 機關（構）學校公務人員違規赴港澳建議懲處原則』相關 事項Q&amp;A」1份，請查照。">公文轉達--檢送「『行政院與所屬中央及地方各機關（構）學校公務 人員違法（規）赴陸建議懲處原則』及『行政院與所屬各 機關（構）學校公務人員違規赴港澳建議懲處原則』相關 事項Q&amp;A」1份，請查照。</a>
+													</span></td>
+						<td id="MoColorShowDate1902" nowrap="" data-th="日期"><span class="bt-content">2026-03-30</span></td>
+						<td id="MoColorUnitOffice1902" nowrap="" data-th="發布人"><span class="bt-content">人事室 幹事</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1900'" onmouseover="MoColor(1,'1900');" onmouseout="MoColor(0,'1900');">
+						<td id="MoColorTitle1900" style="text-align:left;" data-th="標題"><span class="bt-content">
+														<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;學務&nbsp;</span>
+																						<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1900" title="【Pause &amp; Think】停止網路霸凌海報徵件比賽">【Pause &amp; Think】停止網路霸凌海報徵件比賽</a>
+													</span></td>
+						<td id="MoColorShowDate1900" nowrap="" data-th="日期"><span class="bt-content">2026-03-30</span></td>
+						<td id="MoColorUnitOffice1900" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1898'" onmouseover="MoColor(1,'1898');" onmouseout="MoColor(0,'1898');">
+						<td id="MoColorTitle1898" style="text-align:left;" data-th="標題"><span class="bt-content">
+														<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;人事&nbsp;</span>
+																						<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1898" title="公文轉達-苗栗縣等住宅招租一案供參">公文轉達-苗栗縣等住宅招租一案供參</a>
+													</span></td>
+						<td id="MoColorShowDate1898" nowrap="" data-th="日期"><span class="bt-content">2026-03-24</span></td>
+						<td id="MoColorUnitOffice1898" nowrap="" data-th="發布人"><span class="bt-content">人事室 幹事</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1895'" onmouseover="MoColor(1,'1895');" onmouseout="MoColor(0,'1895');">
+						<td id="MoColorTitle1895" style="text-align:left;" data-th="標題"><span class="bt-content">
+														<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;人事&nbsp;</span>
+																						<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1895" title="115年苗栗縣政府暨所屬機關學校員工健康檢查補助規定修正">115年苗栗縣政府暨所屬機關學校員工健康檢查補助規定修正</a>
+													</span></td>
+						<td id="MoColorShowDate1895" nowrap="" data-th="日期"><span class="bt-content">2026-03-20</span></td>
+						<td id="MoColorUnitOffice1895" nowrap="" data-th="發布人"><span class="bt-content">人事室 幹事</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1894'" onmouseover="MoColor(1,'1894');" onmouseout="MoColor(0,'1894');">
+						<td id="MoColorTitle1894" style="text-align:left;" data-th="標題"><span class="bt-content">
+														<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;學務&nbsp;</span>
+																						<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1894" title="2026牛奶盒再生設計大賽">2026牛奶盒再生設計大賽</a>
+													</span></td>
+						<td id="MoColorShowDate1894" nowrap="" data-th="日期"><span class="bt-content">2026-03-20</span></td>
+						<td id="MoColorUnitOffice1894" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1893'" onmouseover="MoColor(1,'1893');" onmouseout="MoColor(0,'1893');">
+						<td id="MoColorTitle1893" style="text-align:left;" data-th="標題"><span class="bt-content">
+														<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;學務&nbsp;</span>
+																						<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1893" title="衛生福利部國民健康署-性教育衛教素材5組">衛生福利部國民健康署-性教育衛教素材5組</a>
+													</span></td>
+						<td id="MoColorShowDate1893" nowrap="" data-th="日期"><span class="bt-content">2026-03-20</span></td>
+						<td id="MoColorUnitOffice1893" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1892'" onmouseover="MoColor(1,'1892');" onmouseout="MoColor(0,'1892');">
+						<td id="MoColorTitle1892" style="text-align:left;" data-th="標題"><span class="bt-content">
+														<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教導&nbsp;</span>
+																						<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1892" title="清華大學辦理「神奇水球與跳跳板的科學探究」主題課程，歡迎師生踴躍參與。">清華大學辦理「神奇水球與跳跳板的科學探究」主題課程，歡迎師生踴躍參與。</a>
+													</span></td>
+						<td id="MoColorShowDate1892" nowrap="" data-th="日期"><span class="bt-content">2026-03-19</span></td>
+						<td id="MoColorUnitOffice1892" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+					</tr>
+				
+			</tbody></table>
+		</div>
+	</div>
+
+	<div class="body" id="newsArea_News110" style="display:none;">
+							<div align="center">
+				<table border="0" width="98%" class="RWDtable" summary="最新消息資訊">
+					<tbody><tr>
+						<th class="middle" width="70%" data-th="標題"><span class="bt-content">標題</span></th>
+						<th class="middle" width="10%" data-th="日期"><span class="bt-content">日期</span></th>
+						<th class="middle" width="20%" data-th="發布人"><span class="bt-content">發布人</span></th>
+					</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1891'" onmouseover="MoColor(1,'1891');" onmouseout="MoColor(0,'1891');">
+
+
+							<td id="MoColorTitle1891" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教導&nbsp;</span>
+																<i class="fas fa-thumbtack" title="置頂至2026-06-30"></i><span class="sr-only">置頂至2026-06-30</span>																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1891" title="跟著外師遨遊世界~英語繪本分享">跟著外師遨遊世界~英語繪本分享</a>
+															</span></td>
+							<td id="MoColorShowDate1891" nowrap="" data-th="日期"><span class="bt-content">2026-03-19</span></td>
+							<td id="MoColorUnitOffice1891" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1871'" onmouseover="MoColor(1,'1871');" onmouseout="MoColor(0,'1871');">
+
+
+							<td id="MoColorTitle1871" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教導&nbsp;</span>
+																<i class="fas fa-thumbtack" title="置頂至2026-06-05"></i><span class="sr-only">置頂至2026-06-05</span>																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1871" title="114學年度第二學期行事曆">114學年度第二學期行事曆</a>
+															</span></td>
+							<td id="MoColorShowDate1871" nowrap="" data-th="日期"><span class="bt-content">2026-03-02</span></td>
+							<td id="MoColorUnitOffice1871" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1892'" onmouseover="MoColor(1,'1892');" onmouseout="MoColor(0,'1892');">
+
+
+							<td id="MoColorTitle1892" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教導&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1892" title="清華大學辦理「神奇水球與跳跳板的科學探究」主題課程，歡迎師生踴躍參與。">清華大學辦理「神奇水球與跳跳板的科學探究」主題課程，歡迎師生踴躍參與。</a>
+															</span></td>
+							<td id="MoColorShowDate1892" nowrap="" data-th="日期"><span class="bt-content">2026-03-19</span></td>
+							<td id="MoColorUnitOffice1892" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1827'" onmouseover="MoColor(1,'1827');" onmouseout="MoColor(0,'1827');">
+
+
+							<td id="MoColorTitle1827" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教導&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1827" title="苗栗縣114學年度Fun English英語冬令營活動計畫">苗栗縣114學年度Fun English英語冬令營活動計畫</a>
+															</span></td>
+							<td id="MoColorShowDate1827" nowrap="" data-th="日期"><span class="bt-content">2025-12-23</span></td>
+							<td id="MoColorUnitOffice1827" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1712'" onmouseover="MoColor(1,'1712');" onmouseout="MoColor(0,'1712');">
+
+
+							<td id="MoColorTitle1712" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教導&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1712" title="苗栗縣115學年度各類資賦優異鑑定相關計畫及報名，請家長留意各項鑑定的時間。">苗栗縣115學年度各類資賦優異鑑定相關計畫及報名，請家長留意各項鑑定的時間。</a>
+															</span></td>
+							<td id="MoColorShowDate1712" nowrap="" data-th="日期"><span class="bt-content">2025-09-05</span></td>
+							<td id="MoColorUnitOffice1712" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1708'" onmouseover="MoColor(1,'1708');" onmouseout="MoColor(0,'1708');">
+
+
+							<td id="MoColorTitle1708" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教導&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1708" title="新興國小114學年度第一學期重要行事">新興國小114學年度第一學期重要行事</a>
+															</span></td>
+							<td id="MoColorShowDate1708" nowrap="" data-th="日期"><span class="bt-content">2025-08-29</span></td>
+							<td id="MoColorUnitOffice1708" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1707'" onmouseover="MoColor(1,'1707');" onmouseout="MoColor(0,'1707');">
+
+
+							<td id="MoColorTitle1707" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教導&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1707" title="調整學生到校時間">調整學生到校時間</a>
+															</span></td>
+							<td id="MoColorShowDate1707" nowrap="" data-th="日期"><span class="bt-content">2025-08-29</span></td>
+							<td id="MoColorUnitOffice1707" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1664'" onmouseover="MoColor(1,'1664');" onmouseout="MoColor(0,'1664');">
+
+
+							<td id="MoColorTitle1664" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教導&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1664" title="114學年度五年級班級以公開抽籤方式編配導師（級任教師）">114學年度五年級班級以公開抽籤方式編配導師（級任教師）</a>
+															</span></td>
+							<td id="MoColorShowDate1664" nowrap="" data-th="日期"><span class="bt-content">2025-07-09</span></td>
+							<td id="MoColorUnitOffice1664" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1663'" onmouseover="MoColor(1,'1663');" onmouseout="MoColor(0,'1663');">
+
+
+							<td id="MoColorTitle1663" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教導&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1663" title="114學年度三年級班級以公開抽籤方式編配導師（級任教師）">114學年度三年級班級以公開抽籤方式編配導師（級任教師）</a>
+															</span></td>
+							<td id="MoColorShowDate1663" nowrap="" data-th="日期"><span class="bt-content">2025-07-08</span></td>
+							<td id="MoColorUnitOffice1663" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1662'" onmouseover="MoColor(1,'1662');" onmouseout="MoColor(0,'1662');">
+
+
+							<td id="MoColorTitle1662" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教導&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1662" title="114學年度一年級新生班級以公開抽籤方式編配導師（級任教師）">114學年度一年級新生班級以公開抽籤方式編配導師（級任教師）</a>
+															</span></td>
+							<td id="MoColorShowDate1662" nowrap="" data-th="日期"><span class="bt-content">2025-07-08</span></td>
+							<td id="MoColorUnitOffice1662" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+						</tr>
+					
+				</tbody></table>
+			</div>
+		
+			</div>
+	<div class="body" id="newsArea_News111" style="display:none;">
+							<div align="center">
+				<table border="0" width="98%" class="RWDtable" summary="最新消息資訊">
+					<tbody><tr>
+						<th class="middle" width="70%" data-th="標題"><span class="bt-content">標題</span></th>
+						<th class="middle" width="10%" data-th="日期"><span class="bt-content">日期</span></th>
+						<th class="middle" width="20%" data-th="發布人"><span class="bt-content">發布人</span></th>
+					</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1900'" onmouseover="MoColor(1,'1900');" onmouseout="MoColor(0,'1900');">
+
+
+							<td id="MoColorTitle1900" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;學務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1900" title="【Pause &amp; Think】停止網路霸凌海報徵件比賽">【Pause &amp; Think】停止網路霸凌海報徵件比賽</a>
+															</span></td>
+							<td id="MoColorShowDate1900" nowrap="" data-th="日期"><span class="bt-content">2026-03-30</span></td>
+							<td id="MoColorUnitOffice1900" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1894'" onmouseover="MoColor(1,'1894');" onmouseout="MoColor(0,'1894');">
+
+
+							<td id="MoColorTitle1894" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;學務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1894" title="2026牛奶盒再生設計大賽">2026牛奶盒再生設計大賽</a>
+															</span></td>
+							<td id="MoColorShowDate1894" nowrap="" data-th="日期"><span class="bt-content">2026-03-20</span></td>
+							<td id="MoColorUnitOffice1894" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1893'" onmouseover="MoColor(1,'1893');" onmouseout="MoColor(0,'1893');">
+
+
+							<td id="MoColorTitle1893" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;學務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1893" title="衛生福利部國民健康署-性教育衛教素材5組">衛生福利部國民健康署-性教育衛教素材5組</a>
+															</span></td>
+							<td id="MoColorShowDate1893" nowrap="" data-th="日期"><span class="bt-content">2026-03-20</span></td>
+							<td id="MoColorUnitOffice1893" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1883'" onmouseover="MoColor(1,'1883');" onmouseout="MoColor(0,'1883');">
+
+
+							<td id="MoColorTitle1883" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;學務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1883" title="資安星際指南">資安星際指南</a>
+															</span></td>
+							<td id="MoColorShowDate1883" nowrap="" data-th="日期"><span class="bt-content">2026-03-17</span></td>
+							<td id="MoColorUnitOffice1883" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1882'" onmouseover="MoColor(1,'1882');" onmouseout="MoColor(0,'1882');">
+
+
+							<td id="MoColorTitle1882" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;學務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1882" title="校園空氣品質防護手冊—小小偵探出動！">校園空氣品質防護手冊—小小偵探出動！</a>
+															</span></td>
+							<td id="MoColorShowDate1882" nowrap="" data-th="日期"><span class="bt-content">2026-03-17</span></td>
+							<td id="MoColorUnitOffice1882" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1876'" onmouseover="MoColor(1,'1876');" onmouseout="MoColor(0,'1876');">
+
+
+							<td id="MoColorTitle1876" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;學務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1876" title="迎向 AI 對親子關係的挑戰">迎向 AI 對親子關係的挑戰</a>
+															</span></td>
+							<td id="MoColorShowDate1876" nowrap="" data-th="日期"><span class="bt-content">2026-03-04</span></td>
+							<td id="MoColorUnitOffice1876" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1869'" onmouseover="MoColor(1,'1869');" onmouseout="MoColor(0,'1869');">
+
+
+							<td id="MoColorTitle1869" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;學務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1869" title="志願服務基礎訓練及志願服務特殊訓練-社會福利類">志願服務基礎訓練及志願服務特殊訓練-社會福利類</a>
+															</span></td>
+							<td id="MoColorShowDate1869" nowrap="" data-th="日期"><span class="bt-content">2026-02-25</span></td>
+							<td id="MoColorUnitOffice1869" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1868'" onmouseover="MoColor(1,'1868');" onmouseout="MoColor(0,'1868');">
+
+
+							<td id="MoColorTitle1868" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;學務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1868" title="中小學使用生成式人工智慧注意事項2.1">中小學使用生成式人工智慧注意事項2.1</a>
+															</span></td>
+							<td id="MoColorShowDate1868" nowrap="" data-th="日期"><span class="bt-content">2026-02-24</span></td>
+							<td id="MoColorUnitOffice1868" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1865'" onmouseover="MoColor(1,'1865');" onmouseout="MoColor(0,'1865');">
+
+
+							<td id="MoColorTitle1865" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;學務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1865" title="115年度重要節日安全維護工作期間相關交通安全宣導及交通疏導措施">115年度重要節日安全維護工作期間相關交通安全宣導及交通疏導措施</a>
+															</span></td>
+							<td id="MoColorShowDate1865" nowrap="" data-th="日期"><span class="bt-content">2026-02-12</span></td>
+							<td id="MoColorUnitOffice1865" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1863'" onmouseover="MoColor(1,'1863');" onmouseout="MoColor(0,'1863');">
+
+
+							<td id="MoColorTitle1863" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;學務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1863" title="「540國際求救手勢」文宣">「540國際求救手勢」文宣</a>
+															</span></td>
+							<td id="MoColorShowDate1863" nowrap="" data-th="日期"><span class="bt-content">2026-02-05</span></td>
+							<td id="MoColorUnitOffice1863" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+					
+				</tbody></table>
+			</div>
+		
+			</div>
+	<div class="body" id="newsArea_News112" style="display:none;">
+							<div align="center">
+				<table border="0" width="98%" class="RWDtable" summary="最新消息資訊">
+					<tbody><tr>
+						<th class="middle" width="70%" data-th="標題"><span class="bt-content">標題</span></th>
+						<th class="middle" width="10%" data-th="日期"><span class="bt-content">日期</span></th>
+						<th class="middle" width="20%" data-th="發布人"><span class="bt-content">發布人</span></th>
+					</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1884'" onmouseover="MoColor(1,'1884');" onmouseout="MoColor(0,'1884');">
+
+
+							<td id="MoColorTitle1884" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教務&nbsp;</span>
+																<i class="fas fa-thumbtack" title="置頂至2026-04-22"></i><span class="sr-only">置頂至2026-04-22</span>																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1884" title="115學年度新生入學報到通知">115學年度新生入學報到通知</a>
+															</span></td>
+							<td id="MoColorShowDate1884" nowrap="" data-th="日期"><span class="bt-content">2026-03-17</span></td>
+							<td id="MoColorUnitOffice1884" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1568'" onmouseover="MoColor(1,'1568');" onmouseout="MoColor(0,'1568');">
+
+
+							<td id="MoColorTitle1568" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1568" title="114學年度新生入學報到通知及作業期程">114學年度新生入學報到通知及作業期程</a>
+															</span></td>
+							<td id="MoColorShowDate1568" nowrap="" data-th="日期"><span class="bt-content">2025-04-09</span></td>
+							<td id="MoColorUnitOffice1568" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1061'" onmouseover="MoColor(1,'1061');" onmouseout="MoColor(0,'1061');">
+
+
+							<td id="MoColorTitle1061" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1061" title="112學年度五年級編班結果">112學年度五年級編班結果</a>
+															</span></td>
+							<td id="MoColorShowDate1061" nowrap="" data-th="日期"><span class="bt-content">2023-07-26</span></td>
+							<td id="MoColorUnitOffice1061" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1060'" onmouseover="MoColor(1,'1060');" onmouseout="MoColor(0,'1060');">
+
+
+							<td id="MoColorTitle1060" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1060" title="112學年度3年級編班結果">112學年度3年級編班結果</a>
+															</span></td>
+							<td id="MoColorShowDate1060" nowrap="" data-th="日期"><span class="bt-content">2023-07-26</span></td>
+							<td id="MoColorUnitOffice1060" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=826'" onmouseover="MoColor(1,'826');" onmouseout="MoColor(0,'826');">
+
+
+							<td id="MoColorTitle826" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=826" title="本校二升三年級、四升五年級常態編班學生名冊">本校二升三年級、四升五年級常態編班學生名冊</a>
+															</span></td>
+							<td id="MoColorShowDate826" nowrap="" data-th="日期"><span class="bt-content">2022-07-30</span></td>
+							<td id="MoColorUnitOffice826" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=825'" onmouseover="MoColor(1,'825');" onmouseout="MoColor(0,'825');">
+
+
+							<td id="MoColorTitle825" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=825" title="狂賀！本校榮獲第21屆全國躲避球錦標賽國小混合組冠軍！三連霸「龍鳳旗」永留新興國小！">狂賀！本校榮獲第21屆全國躲避球錦標賽國小混合組冠軍！三連霸「龍鳳旗」永留新興國小！</a>
+															</span></td>
+							<td id="MoColorShowDate825" nowrap="" data-th="日期"><span class="bt-content">2022-07-26</span></td>
+							<td id="MoColorUnitOffice825" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=799'" onmouseover="MoColor(1,'799');" onmouseout="MoColor(0,'799');">
+
+
+							<td id="MoColorTitle799" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=799" title="111學年度一年級新生導師編配">111學年度一年級新生導師編配</a>
+															</span></td>
+							<td id="MoColorShowDate799" nowrap="" data-th="日期"><span class="bt-content">2022-07-12</span></td>
+							<td id="MoColorUnitOffice799" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=798'" onmouseover="MoColor(1,'798');" onmouseout="MoColor(0,'798');">
+
+
+							<td id="MoColorTitle798" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=798" title="111學年度一年級新生編班學生名冊">111學年度一年級新生編班學生名冊</a>
+															</span></td>
+							<td id="MoColorShowDate798" nowrap="" data-th="日期"><span class="bt-content">2022-07-11</span></td>
+							<td id="MoColorUnitOffice798" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=795'" onmouseover="MoColor(1,'795');" onmouseout="MoColor(0,'795');">
+
+
+							<td id="MoColorTitle795" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=795" title="111學年度一年級新生編班暨導師編配">111學年度一年級新生編班暨導師編配</a>
+															</span></td>
+							<td id="MoColorShowDate795" nowrap="" data-th="日期"><span class="bt-content">2022-07-09</span></td>
+							<td id="MoColorUnitOffice795" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=739'" onmouseover="MoColor(1,'739');" onmouseout="MoColor(0,'739');">
+
+
+							<td id="MoColorTitle739" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;教務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=739" title="111學年度新生入學報到通知">111學年度新生入學報到通知</a>
+															</span></td>
+							<td id="MoColorShowDate739" nowrap="" data-th="日期"><span class="bt-content">2022-04-17</span></td>
+							<td id="MoColorUnitOffice739" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+						</tr>
+					
+				</tbody></table>
+			</div>
+		
+			</div>
+	<div class="body" id="newsArea_News113" style="display:none;">
+							<div align="center">
+				<table border="0" width="98%" class="RWDtable" summary="最新消息資訊">
+					<tbody><tr>
+						<th class="middle" width="70%" data-th="標題"><span class="bt-content">標題</span></th>
+						<th class="middle" width="10%" data-th="日期"><span class="bt-content">日期</span></th>
+						<th class="middle" width="20%" data-th="發布人"><span class="bt-content">發布人</span></th>
+					</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1864'" onmouseover="MoColor(1,'1864');" onmouseout="MoColor(0,'1864');">
+
+
+							<td id="MoColorTitle1864" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;總務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1864" title="「爭取三天，爭取更多時間-防災包篇、防災計畫篇、防災課程篇」及相關資料">「爭取三天，爭取更多時間-防災包篇、防災計畫篇、防災課程篇」及相關資料</a>
+															</span></td>
+							<td id="MoColorShowDate1864" nowrap="" data-th="日期"><span class="bt-content">2026-02-06</span></td>
+							<td id="MoColorUnitOffice1864" nowrap="" data-th="發布人"><span class="bt-content">總務處 總務主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1693'" onmouseover="MoColor(1,'1693');" onmouseout="MoColor(0,'1693');">
+
+
+							<td id="MoColorTitle1693" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;總務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1693" title="本校114學年度學生午餐廚工甄選錄取公告">本校114學年度學生午餐廚工甄選錄取公告</a>
+															</span></td>
+							<td id="MoColorShowDate1693" nowrap="" data-th="日期"><span class="bt-content">2025-08-18</span></td>
+							<td id="MoColorUnitOffice1693" nowrap="" data-th="發布人"><span class="bt-content">總務處 總務主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=924'" onmouseover="MoColor(1,'924');" onmouseout="MoColor(0,'924');">
+
+
+							<td id="MoColorTitle924" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;總務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=924" title="感謝「觀音慈心協會」熱心社會公益，嘉惠學子，捐贈白米2袋。">感謝「觀音慈心協會」熱心社會公益，嘉惠學子，捐贈白米2袋。</a>
+															</span></td>
+							<td id="MoColorShowDate924" nowrap="" data-th="日期"><span class="bt-content">2023-01-18</span></td>
+							<td id="MoColorUnitOffice924" nowrap="" data-th="發布人"><span class="bt-content">總務處 總務主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=895'" onmouseover="MoColor(1,'895');" onmouseout="MoColor(0,'895');">
+
+
+							<td id="MoColorTitle895" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;總務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=895" title="公告：新興國小午餐停餐退費辦法">公告：新興國小午餐停餐退費辦法</a>
+															</span></td>
+							<td id="MoColorShowDate895" nowrap="" data-th="日期"><span class="bt-content">2022-11-10</span></td>
+							<td id="MoColorUnitOffice895" nowrap="" data-th="發布人"><span class="bt-content">總務處 總務主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=730'" onmouseover="MoColor(1,'730');" onmouseout="MoColor(0,'730');">
+
+
+							<td id="MoColorTitle730" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;總務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=730" title="《依公益勸募條例收受捐贈及辦理情形調查表》">《依公益勸募條例收受捐贈及辦理情形調查表》</a>
+															</span></td>
+							<td id="MoColorShowDate730" nowrap="" data-th="日期"><span class="bt-content">2022-04-01</span></td>
+							<td id="MoColorUnitOffice730" nowrap="" data-th="發布人"><span class="bt-content">總務處 總務主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=636'" onmouseover="MoColor(1,'636');" onmouseout="MoColor(0,'636');">
+
+
+							<td id="MoColorTitle636" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;總務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=636" title="有關學生或其家長持振興五倍券繳納高級中等以下學校 （以下簡稱學校）學雜費案，請查照。">有關學生或其家長持振興五倍券繳納高級中等以下學校 （以下簡稱學校）學雜費案，請查照。</a>
+															</span></td>
+							<td id="MoColorShowDate636" nowrap="" data-th="日期"><span class="bt-content">2021-10-12</span></td>
+							<td id="MoColorUnitOffice636" nowrap="" data-th="發布人"><span class="bt-content">總務處 總務主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=372'" onmouseover="MoColor(1,'372');" onmouseout="MoColor(0,'372');">
+
+
+							<td id="MoColorTitle372" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;總務&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=372" title="教育部給家長的一封信(午餐食材)">教育部給家長的一封信(午餐食材)</a>
+															</span></td>
+							<td id="MoColorShowDate372" nowrap="" data-th="日期"><span class="bt-content">2021-01-21</span></td>
+							<td id="MoColorUnitOffice372" nowrap="" data-th="發布人"><span class="bt-content">教導處 資訊教師</span></td>
+						</tr>
+					
+				</tbody></table>
+			</div>
+		
+			</div>
+	<div class="body" id="newsArea_News123" style="display:none;">
+							<div align="center">
+				<table border="0" width="98%" class="RWDtable" summary="最新消息資訊">
+					<tbody><tr>
+						<th class="middle" width="70%" data-th="標題"><span class="bt-content">標題</span></th>
+						<th class="middle" width="10%" data-th="日期"><span class="bt-content">日期</span></th>
+						<th class="middle" width="20%" data-th="發布人"><span class="bt-content">發布人</span></th>
+					</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1706'" onmouseover="MoColor(1,'1706');" onmouseout="MoColor(0,'1706');">
+
+
+							<td id="MoColorTitle1706" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;幼兒園&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1706" title="苗栗縣頭份市新興國民小學附設幼兒園114學年度第1學期代理教保員第二次甄選-第2次招考錄取公告">苗栗縣頭份市新興國民小學附設幼兒園114學年度第1學期代理教保員第二次甄選-第2次招考錄取公告</a>
+															</span></td>
+							<td id="MoColorShowDate1706" nowrap="" data-th="日期"><span class="bt-content">2025-08-28</span></td>
+							<td id="MoColorUnitOffice1706" nowrap="" data-th="發布人"><span class="bt-content">幼兒園 幼教主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1705'" onmouseover="MoColor(1,'1705');" onmouseout="MoColor(0,'1705');">
+
+
+							<td id="MoColorTitle1705" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;幼兒園&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1705" title="苗栗縣頭份市新興國民小學附設幼兒園114學年度第1學期代理教保員第2次甄選-第1次招考無人報考，續辦理第2次招考">苗栗縣頭份市新興國民小學附設幼兒園114學年度第1學期代理教保員第2次甄選-第1次招考無人報考，續辦理第2次招考</a>
+															</span></td>
+							<td id="MoColorShowDate1705" nowrap="" data-th="日期"><span class="bt-content">2025-08-28</span></td>
+							<td id="MoColorUnitOffice1705" nowrap="" data-th="發布人"><span class="bt-content">幼兒園 幼教主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1685'" onmouseover="MoColor(1,'1685');" onmouseout="MoColor(0,'1685');">
+
+
+							<td id="MoColorTitle1685" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;幼兒園&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1685" title="苗栗縣頭份市新興國民小學附設幼兒園114學年度第1學期代理教保員甄選-第1次招考錄取公告">苗栗縣頭份市新興國民小學附設幼兒園114學年度第1學期代理教保員甄選-第1次招考錄取公告</a>
+															</span></td>
+							<td id="MoColorShowDate1685" nowrap="" data-th="日期"><span class="bt-content">2025-08-05</span></td>
+							<td id="MoColorUnitOffice1685" nowrap="" data-th="發布人"><span class="bt-content">幼兒園 幼教主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1590'" onmouseover="MoColor(1,'1590');" onmouseout="MoColor(0,'1590');">
+
+
+							<td id="MoColorTitle1590" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;幼兒園&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1590" title="114學年度幼兒園第二階段招生">114學年度幼兒園第二階段招生</a>
+															</span></td>
+							<td id="MoColorShowDate1590" nowrap="" data-th="日期"><span class="bt-content">2025-05-02</span></td>
+							<td id="MoColorUnitOffice1590" nowrap="" data-th="發布人"><span class="bt-content">幼兒園 幼教主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1583'" onmouseover="MoColor(1,'1583');" onmouseout="MoColor(0,'1583');">
+
+
+							<td id="MoColorTitle1583" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;幼兒園&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1583" title="114學年度幼兒園新生錄取名單">114學年度幼兒園新生錄取名單</a>
+															</span></td>
+							<td id="MoColorShowDate1583" nowrap="" data-th="日期"><span class="bt-content">2025-04-25</span></td>
+							<td id="MoColorUnitOffice1583" nowrap="" data-th="發布人"><span class="bt-content">幼兒園 幼教主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1573'" onmouseover="MoColor(1,'1573');" onmouseout="MoColor(0,'1573');">
+
+
+							<td id="MoColorTitle1573" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;幼兒園&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1573" title="114學年度幼兒園招生中">114學年度幼兒園招生中</a>
+															</span></td>
+							<td id="MoColorShowDate1573" nowrap="" data-th="日期"><span class="bt-content">2025-04-14</span></td>
+							<td id="MoColorUnitOffice1573" nowrap="" data-th="發布人"><span class="bt-content">幼兒園 幼教主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1495'" onmouseover="MoColor(1,'1495');" onmouseout="MoColor(0,'1495');">
+
+
+							<td id="MoColorTitle1495" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;幼兒園&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1495" title="苗栗縣頭份市新興國民小學附設幼兒園113學年度第二學期特教學生助理人員第一次甄選錄取公告">苗栗縣頭份市新興國民小學附設幼兒園113學年度第二學期特教學生助理人員第一次甄選錄取公告</a>
+															</span></td>
+							<td id="MoColorShowDate1495" nowrap="" data-th="日期"><span class="bt-content">2025-01-24</span></td>
+							<td id="MoColorUnitOffice1495" nowrap="" data-th="發布人"><span class="bt-content">幼兒園 幼教主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1485'" onmouseover="MoColor(1,'1485');" onmouseout="MoColor(0,'1485');">
+
+
+							<td id="MoColorTitle1485" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;幼兒園&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1485" title="苗栗縣頭份市新興國民小學附設幼兒園113學年度第二學期特教學生助理人員甄選(一次公告分次招考)">苗栗縣頭份市新興國民小學附設幼兒園113學年度第二學期特教學生助理人員甄選(一次公告分次招考)</a>
+															</span></td>
+							<td id="MoColorShowDate1485" nowrap="" data-th="日期"><span class="bt-content">2025-01-16</span></td>
+							<td id="MoColorUnitOffice1485" nowrap="" data-th="發布人"><span class="bt-content">幼兒園 幼教主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1474'" onmouseover="MoColor(1,'1474');" onmouseout="MoColor(0,'1474');">
+
+
+							<td id="MoColorTitle1474" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;幼兒園&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1474" title="苗栗縣頭份市新興國民小學附設幼兒園113學年度第2學期代理教保員甄選-第1次招考錄取公告">苗栗縣頭份市新興國民小學附設幼兒園113學年度第2學期代理教保員甄選-第1次招考錄取公告</a>
+															</span></td>
+							<td id="MoColorShowDate1474" nowrap="" data-th="日期"><span class="bt-content">2024-12-30</span></td>
+							<td id="MoColorUnitOffice1474" nowrap="" data-th="發布人"><span class="bt-content">幼兒園 幼教主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1384'" onmouseover="MoColor(1,'1384');" onmouseout="MoColor(0,'1384');">
+
+
+							<td id="MoColorTitle1384" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;幼兒園&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1384" title="苗栗縣113學年度幼兒園親職教育－－陪伴孩童親子共讀">苗栗縣113學年度幼兒園親職教育－－陪伴孩童親子共讀</a>
+															</span></td>
+							<td id="MoColorShowDate1384" nowrap="" data-th="日期"><span class="bt-content">2024-09-06</span></td>
+							<td id="MoColorUnitOffice1384" nowrap="" data-th="發布人"><span class="bt-content">幼兒園 幼教主任</span></td>
+						</tr>
+					
+				</tbody></table>
+			</div>
+		
+			</div>
+	<div class="body" id="newsArea_News114" style="display:none;">
+							<div align="center">
+				<table border="0" width="98%" class="RWDtable" summary="最新消息資訊">
+					<tbody><tr>
+						<th class="middle" width="70%" data-th="標題"><span class="bt-content">標題</span></th>
+						<th class="middle" width="10%" data-th="日期"><span class="bt-content">日期</span></th>
+						<th class="middle" width="20%" data-th="發布人"><span class="bt-content">發布人</span></th>
+					</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1902'" onmouseover="MoColor(1,'1902');" onmouseout="MoColor(0,'1902');">
+
+
+							<td id="MoColorTitle1902" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;人事&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1902" title="公文轉達--檢送「『行政院與所屬中央及地方各機關（構）學校公務 人員違法（規）赴陸建議懲處原則』及『行政院與所屬各 機關（構）學校公務人員違規赴港澳建議懲處原則』相關 事項Q&amp;A」1份，請查照。">公文轉達--檢送「『行政院與所屬中央及地方各機關（構）學校公務 人員違法（規）赴陸建議懲處原則』及『行政院與所屬各 機關（構）學校公務人員違規赴港澳建議懲處原則』相關 事項Q&amp;A」1份，請查照。</a>
+															</span></td>
+							<td id="MoColorShowDate1902" nowrap="" data-th="日期"><span class="bt-content">2026-03-30</span></td>
+							<td id="MoColorUnitOffice1902" nowrap="" data-th="發布人"><span class="bt-content">人事室 幹事</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1898'" onmouseover="MoColor(1,'1898');" onmouseout="MoColor(0,'1898');">
+
+
+							<td id="MoColorTitle1898" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;人事&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1898" title="公文轉達-苗栗縣等住宅招租一案供參">公文轉達-苗栗縣等住宅招租一案供參</a>
+															</span></td>
+							<td id="MoColorShowDate1898" nowrap="" data-th="日期"><span class="bt-content">2026-03-24</span></td>
+							<td id="MoColorUnitOffice1898" nowrap="" data-th="發布人"><span class="bt-content">人事室 幹事</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1895'" onmouseover="MoColor(1,'1895');" onmouseout="MoColor(0,'1895');">
+
+
+							<td id="MoColorTitle1895" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;人事&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1895" title="115年苗栗縣政府暨所屬機關學校員工健康檢查補助規定修正">115年苗栗縣政府暨所屬機關學校員工健康檢查補助規定修正</a>
+															</span></td>
+							<td id="MoColorShowDate1895" nowrap="" data-th="日期"><span class="bt-content">2026-03-20</span></td>
+							<td id="MoColorUnitOffice1895" nowrap="" data-th="發布人"><span class="bt-content">人事室 幹事</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1890'" onmouseover="MoColor(1,'1890');" onmouseout="MoColor(0,'1890');">
+
+
+							<td id="MoColorTitle1890" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;人事&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1890" title="公文轉達--東莞台商子弟學校商借教師簡章">公文轉達--東莞台商子弟學校商借教師簡章</a>
+															</span></td>
+							<td id="MoColorShowDate1890" nowrap="" data-th="日期"><span class="bt-content">2026-03-19</span></td>
+							<td id="MoColorUnitOffice1890" nowrap="" data-th="發布人"><span class="bt-content">人事室 幹事</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1889'" onmouseover="MoColor(1,'1889');" onmouseout="MoColor(0,'1889');">
+
+
+							<td id="MoColorTitle1889" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;人事&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1889" title="公文轉達--115年縣外介聘">公文轉達--115年縣外介聘</a>
+															</span></td>
+							<td id="MoColorShowDate1889" nowrap="" data-th="日期"><span class="bt-content">2026-03-19</span></td>
+							<td id="MoColorUnitOffice1889" nowrap="" data-th="發布人"><span class="bt-content">人事室 幹事</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1888'" onmouseover="MoColor(1,'1888');" onmouseout="MoColor(0,'1888');">
+
+
+							<td id="MoColorTitle1888" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;人事&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1888" title="公文轉達--115年縣內介聘">公文轉達--115年縣內介聘</a>
+															</span></td>
+							<td id="MoColorShowDate1888" nowrap="" data-th="日期"><span class="bt-content">2026-03-19</span></td>
+							<td id="MoColorUnitOffice1888" nowrap="" data-th="發布人"><span class="bt-content">人事室 幹事</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1887'" onmouseover="MoColor(1,'1887');" onmouseout="MoColor(0,'1887');">
+
+
+							<td id="MoColorTitle1887" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;人事&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1887" title="公文轉達--修正「苗栗縣政府及所屬各機關學校公務人員平時獎懲標準表」，並自即日生效，請查照。">公文轉達--修正「苗栗縣政府及所屬各機關學校公務人員平時獎懲標準表」，並自即日生效，請查照。</a>
+															</span></td>
+							<td id="MoColorShowDate1887" nowrap="" data-th="日期"><span class="bt-content">2026-03-19</span></td>
+							<td id="MoColorUnitOffice1887" nowrap="" data-th="發布人"><span class="bt-content">人事室 幹事</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1886'" onmouseover="MoColor(1,'1886');" onmouseout="MoColor(0,'1886');">
+
+
+							<td id="MoColorTitle1886" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;人事&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1886" title="公文轉達--文化大學台語能力認證班招生">公文轉達--文化大學台語能力認證班招生</a>
+															</span></td>
+							<td id="MoColorShowDate1886" nowrap="" data-th="日期"><span class="bt-content">2026-03-19</span></td>
+							<td id="MoColorUnitOffice1886" nowrap="" data-th="發布人"><span class="bt-content">人事室 幹事</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1885'" onmouseover="MoColor(1,'1885');" onmouseout="MoColor(0,'1885');">
+
+
+							<td id="MoColorTitle1885" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;人事&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1885" title="公文轉達--清華大學雙語增能學分班招生">公文轉達--清華大學雙語增能學分班招生</a>
+															</span></td>
+							<td id="MoColorShowDate1885" nowrap="" data-th="日期"><span class="bt-content">2026-03-19</span></td>
+							<td id="MoColorUnitOffice1885" nowrap="" data-th="發布人"><span class="bt-content">人事室 幹事</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1881'" onmouseover="MoColor(1,'1881');" onmouseout="MoColor(0,'1881');">
+
+
+							<td id="MoColorTitle1881" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;人事&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1881" title="公文轉達--常態化、制度化查核人員範圍表1150313">公文轉達--常態化、制度化查核人員範圍表1150313</a>
+															</span></td>
+							<td id="MoColorShowDate1881" nowrap="" data-th="日期"><span class="bt-content">2026-03-13</span></td>
+							<td id="MoColorUnitOffice1881" nowrap="" data-th="發布人"><span class="bt-content">人事室 幹事</span></td>
+						</tr>
+					
+				</tbody></table>
+			</div>
+		
+			</div>
+	<div class="body" id="newsArea_News115" style="display:none;">
+							<div align="center">
+				<table border="0" width="98%" class="RWDtable" summary="最新消息資訊">
+					<tbody><tr>
+						<th class="middle" width="70%" data-th="標題"><span class="bt-content">標題</span></th>
+						<th class="middle" width="10%" data-th="日期"><span class="bt-content">日期</span></th>
+						<th class="middle" width="20%" data-th="發布人"><span class="bt-content">發布人</span></th>
+					</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1429'" onmouseover="MoColor(1,'1429');" onmouseout="MoColor(0,'1429');">
+
+
+							<td id="MoColorTitle1429" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;資訊&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=1429" title="帳號及權限清查作業公告">帳號及權限清查作業公告</a>
+															</span></td>
+							<td id="MoColorShowDate1429" nowrap="" data-th="日期"><span class="bt-content">2024-10-29</span></td>
+							<td id="MoColorUnitOffice1429" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=723'" onmouseover="MoColor(1,'723');" onmouseout="MoColor(0,'723');">
+
+
+							<td id="MoColorTitle723" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;資訊&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=723" title="請善用教育部教育雲帳號，可增加雲端空間。">請善用教育部教育雲帳號，可增加雲端空間。</a>
+															</span></td>
+							<td id="MoColorShowDate723" nowrap="" data-th="日期"><span class="bt-content">2022-03-17</span></td>
+							<td id="MoColorUnitOffice723" nowrap="" data-th="發布人"><span class="bt-content">教導處 資訊教師</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/News/Detail.php?ID=632'" onmouseover="MoColor(1,'632');" onmouseout="MoColor(0,'632');">
+
+
+							<td id="MoColorTitle632" style="text-align:left;" data-th="標題"><span class="bt-content">
+
+								<span style="border:0px #000000 solid;border-radius:0px;color:#ffffff;background-color:#4C6A9B;">&nbsp;資訊&nbsp;</span>
+																																	<a href="https://sses.mlc.edu.tw/Home/News/Detail.php?ID=632" title="無線基地台校内自設教學用SSID----校內公告">無線基地台校内自設教學用SSID----校內公告</a>
+															</span></td>
+							<td id="MoColorShowDate632" nowrap="" data-th="日期"><span class="bt-content">2021-10-03</span></td>
+							<td id="MoColorUnitOffice632" nowrap="" data-th="發布人"><span class="bt-content">教導處 資訊教師</span></td>
+						</tr>
+					
+				</tbody></table>
+			</div>
+		
+			</div>
+<div align="right" class="DataMoreBlock">
+	<div align="center" class="DataMore"><i class="fas fa-plus-square"></i> <a href="https://sses.mlc.edu.tw/Home/News/Index.php" title="查看更多最新消息">查看更多</a></div>
+</div>
+<div style="clear:both;"></div>
+<script>
+	var currentNewsAreaNews = 'News0';
+
+	function showNewsAreaNews(area, CateID, Color) {
+		if (area != currentNewsAreaNews) {
+
+			$("#newsArea_" + area).toggle();
+			$("#newsAreaItem_" + area).addClass("current");
+			document.getElementById("newsAreaItem_" + area).style.background = Color;
+			/*$("#newsAreaItem_"+area).style.backgroundcolor();*/
+			$("#newsArea_" + currentNewsAreaNews).toggle();
+			$("#newsAreaItem_" + currentNewsAreaNews).removeClass("current");
+			document.getElementById("newsAreaItem_" + currentNewsAreaNews).style.background = "#dfdfdf";
+			currentNewsAreaNews = area;
+		}
+
+	}
+
+	function MoColor(enable, ID) {
+		var MoColorTitle = document.getElementById('MoColorTitle' + ID);
+		var MoColorShowDate = document.getElementById('MoColorShowDate' + ID);
+		var MoColorUnitOffice = document.getElementById('MoColorUnitOffice' + ID);
+		if (enable == 1) {
+			MoColorTitle.style.backgroundColor = '#FFFFDF';
+			MoColorShowDate.style.backgroundColor = '#FFFFDF';
+			MoColorUnitOffice.style.backgroundColor = '#FFFFDF';
+		} else {
+			MoColorTitle.style.backgroundColor = '';
+			MoColorShowDate.style.backgroundColor = '';
+			MoColorUnitOffice.style.backgroundColor = '';
+		}
+	}
+</script>
+</li>
+				<li><div align="left" class="BlockTitleNews"><i class="fas fa-award"></i>榮譽榜</div>
+	<div align="center">
+		<div class="news" style="position:relative;z-index:5;">
+			<div class="tab" align="left">
+				<ul>
+					<li class="current" id="newsAreaItem_Honor0">
+						<a href="javascript:showNewsAreaHonor('Honor0','0','#db2400')" tabindex="50">
+							<h2>全部</h2>
+						</a>
+					</li>
+											<li id="newsAreaItem_Honor119"><a href="javascript:showNewsAreaHonor('Honor119','119','#db2400')" tabindex="50">
+								<h2>校外比賽</h2>
+							</a></li>
+											<li id="newsAreaItem_Honor109"><a href="javascript:showNewsAreaHonor('Honor109','109','#db2400')" tabindex="51">
+								<h2>校內比賽</h2>
+							</a></li>
+									</ul>
+			</div>
+		</div>
+	</div><br><br>
+
+	<div align="center">
+		<div class="body" id="newsArea_Honor0" style="display:block;">
+			<table border="0" width="98%" class="RWDtable" summary="榮譽榜資訊" style="line-height:1.5rem;">
+				<tbody><tr>
+					<th class="middle" width="70%" data-th="標題"><span class="bt-content">標題</span></th>
+					<th class="middle" width="10%" data-th="日期"><span class="bt-content">日期</span></th>
+					<th class="middle" width="15%" data-th="發布人"><span class="bt-content">發布人</span></th>
+				</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1899'" onmouseover="MoColor(1,'1899');" onmouseout="MoColor(0,'1899');">
+						<td id="MoColorTitle1899" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1899" title="恭喜六年二班參加114學年度縣長盃躲避球賽，榮獲冠軍！">恭喜六年二班參加114學年度縣長盃躲避球賽，榮獲冠軍！</a></span></td>
+						<td id="MoColorShowDate1899" nowrap="" data-th="日期"><span class="bt-content">2026-03-30</span></td>
+						<td id="MoColorUnitOffice1899" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1897'" onmouseover="MoColor(1,'1897');" onmouseout="MoColor(0,'1897');">
+						<td id="MoColorTitle1897" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1897" title="恭喜六年二班參加桃園盃樂樂棒球錦標賽，榮獲亞軍!">恭喜六年二班參加桃園盃樂樂棒球錦標賽，榮獲亞軍!</a></span></td>
+						<td id="MoColorShowDate1897" nowrap="" data-th="日期"><span class="bt-content">2026-03-23</span></td>
+						<td id="MoColorUnitOffice1897" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1867'" onmouseover="MoColor(1,'1867');" onmouseout="MoColor(0,'1867');">
+						<td id="MoColorTitle1867" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1867" title="恭喜四年二班同學榮獲--苗栗縣英語K歌王比賽--優等！">恭喜四年二班同學榮獲--苗栗縣英語K歌王比賽--優等！</a></span></td>
+						<td id="MoColorShowDate1867" nowrap="" data-th="日期"><span class="bt-content">2026-02-24</span></td>
+						<td id="MoColorUnitOffice1867" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1866'" onmouseover="MoColor(1,'1866');" onmouseout="MoColor(0,'1866');">
+						<td id="MoColorTitle1866" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1866" title="狂賀！本校學生參加 [ 114學年度上學期苗栗縣結合教育部酷英網推動國中小學生英語線上學習計畫 ]，於【戀練英語-苗栗專區主題式字彙認證區】 榮獲佳績！">狂賀！本校學生參加 [ 114學年度上學期苗栗縣結合教育部酷英網推動國中小學生英語線上學習計畫 ]，於【戀練英語-苗栗專區主題式字彙認證區】 榮獲佳績！</a></span></td>
+						<td id="MoColorShowDate1866" nowrap="" data-th="日期"><span class="bt-content">2026-02-24</span></td>
+						<td id="MoColorUnitOffice1866" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1791'" onmouseover="MoColor(1,'1791');" onmouseout="MoColor(0,'1791');">
+						<td id="MoColorTitle1791" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1791" title="狂賀！本校學生參加 [ 114學年度  全國  學生美術比賽  總決賽 ]  榮獲佳績！">狂賀！本校學生參加 [ 114學年度  全國  學生美術比賽  總決賽 ]  榮獲佳績！</a></span></td>
+						<td id="MoColorShowDate1791" nowrap="" data-th="日期"><span class="bt-content">2025-11-26</span></td>
+						<td id="MoColorUnitOffice1791" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1779'" onmouseover="MoColor(1,'1779');" onmouseout="MoColor(0,'1779');">
+						<td id="MoColorTitle1779" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1779" title="狂賀！本校學生參加「苗栗縣 114 年度「兒童權利」繪畫比賽」榮獲佳績！">狂賀！本校學生參加「苗栗縣 114 年度「兒童權利」繪畫比賽」榮獲佳績！</a></span></td>
+						<td id="MoColorShowDate1779" nowrap="" data-th="日期"><span class="bt-content">2025-11-07</span></td>
+						<td id="MoColorUnitOffice1779" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1764'" onmouseover="MoColor(1,'1764');" onmouseout="MoColor(0,'1764');">
+						<td id="MoColorTitle1764" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1764" title="狂賀~ 本校榮獲　苗栗縣114學年度理事長盃樂樂棒球錦標賽　六年級　亞軍">狂賀~ 本校榮獲　苗栗縣114學年度理事長盃樂樂棒球錦標賽　六年級　亞軍</a></span></td>
+						<td id="MoColorShowDate1764" nowrap="" data-th="日期"><span class="bt-content">2025-10-17</span></td>
+						<td id="MoColorUnitOffice1764" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1758'" onmouseover="MoColor(1,'1758');" onmouseout="MoColor(0,'1758');">
+						<td id="MoColorTitle1758" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1758" title="狂賀！本校學生參加「苗栗縣 114 年度「師情畫憶」教師節繪畫創作比賽」榮獲佳績！">狂賀！本校學生參加「苗栗縣 114 年度「師情畫憶」教師節繪畫創作比賽」榮獲佳績！</a></span></td>
+						<td id="MoColorShowDate1758" nowrap="" data-th="日期"><span class="bt-content">2025-10-13</span></td>
+						<td id="MoColorUnitOffice1758" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1757'" onmouseover="MoColor(1,'1757');" onmouseout="MoColor(0,'1757');">
+						<td id="MoColorTitle1757" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1757" title="狂賀！本校學生參加「114學年度慶祝教師節敬師賀卡創意設計比賽」榮獲佳績！">狂賀！本校學生參加「114學年度慶祝教師節敬師賀卡創意設計比賽」榮獲佳績！</a></span></td>
+						<td id="MoColorShowDate1757" nowrap="" data-th="日期"><span class="bt-content">2025-10-13</span></td>
+						<td id="MoColorUnitOffice1757" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+					</tr>
+									<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1756'" onmouseover="MoColor(1,'1756');" onmouseout="MoColor(0,'1756');">
+						<td id="MoColorTitle1756" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1756" title="狂賀！本校學生參加 [ 114學年度全國學生美術比賽-苗栗縣初賽 ]  榮獲佳績">狂賀！本校學生參加 [ 114學年度全國學生美術比賽-苗栗縣初賽 ]  榮獲佳績</a></span></td>
+						<td id="MoColorShowDate1756" nowrap="" data-th="日期"><span class="bt-content">2025-10-13</span></td>
+						<td id="MoColorUnitOffice1756" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+					</tr>
+				
+			</tbody></table>
+		</div>
+	</div>
+
+	<div class="body" id="newsArea_Honor119" style="display:none;">
+							<div align="center">
+				<table border="0" width="98%" class="RWDtable" summary="榮譽榜資訊">
+					<tbody><tr>
+						<th class="middle" width="70%" data-th="標題"><span class="bt-content">標題</span></th>
+						<th class="middle" width="10%" data-th="日期"><span class="bt-content">日期</span></th>
+						<th class="middle" width="15%" data-th="發布人"><span class="bt-content">發布人</span></th>
+					</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1899'" onmouseover="MoColor(1,'1899');" onmouseout="MoColor(0,'1899');">
+
+							<td id="MoColorTitle1899" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1899" class="fancybox fancybox.iframe">恭喜六年二班參加114學年度縣長盃躲避球賽，榮獲冠軍！</a></span></td>
+							<td id="MoColorShowDate1899" nowrap="" data-th="日期"><span class="bt-content">2026-03-30</span></td>
+							<td id="MoColorUnitOffice1899" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1897'" onmouseover="MoColor(1,'1897');" onmouseout="MoColor(0,'1897');">
+
+							<td id="MoColorTitle1897" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1897" class="fancybox fancybox.iframe">恭喜六年二班參加桃園盃樂樂棒球錦標賽，榮獲亞軍!</a></span></td>
+							<td id="MoColorShowDate1897" nowrap="" data-th="日期"><span class="bt-content">2026-03-23</span></td>
+							<td id="MoColorUnitOffice1897" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1867'" onmouseover="MoColor(1,'1867');" onmouseout="MoColor(0,'1867');">
+
+							<td id="MoColorTitle1867" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1867" class="fancybox fancybox.iframe">恭喜四年二班同學榮獲--苗栗縣英語K歌王比賽--優等！</a></span></td>
+							<td id="MoColorShowDate1867" nowrap="" data-th="日期"><span class="bt-content">2026-02-24</span></td>
+							<td id="MoColorUnitOffice1867" nowrap="" data-th="發布人"><span class="bt-content">教導處 教導主任</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1866'" onmouseover="MoColor(1,'1866');" onmouseout="MoColor(0,'1866');">
+
+							<td id="MoColorTitle1866" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1866" class="fancybox fancybox.iframe">狂賀！本校學生參加 [ 114學年度上學期苗栗縣結合教育部酷英網推動國中小學生英語線上學習計畫 ]，於【戀練英語-苗栗專區主題式字彙認證區】 榮獲佳績！</a></span></td>
+							<td id="MoColorShowDate1866" nowrap="" data-th="日期"><span class="bt-content">2026-02-24</span></td>
+							<td id="MoColorUnitOffice1866" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1791'" onmouseover="MoColor(1,'1791');" onmouseout="MoColor(0,'1791');">
+
+							<td id="MoColorTitle1791" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1791" class="fancybox fancybox.iframe">狂賀！本校學生參加 [ 114學年度  全國  學生美術比賽  總決賽 ]  榮獲佳績！</a></span></td>
+							<td id="MoColorShowDate1791" nowrap="" data-th="日期"><span class="bt-content">2025-11-26</span></td>
+							<td id="MoColorUnitOffice1791" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1779'" onmouseover="MoColor(1,'1779');" onmouseout="MoColor(0,'1779');">
+
+							<td id="MoColorTitle1779" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1779" class="fancybox fancybox.iframe">狂賀！本校學生參加「苗栗縣 114 年度「兒童權利」繪畫比賽」榮獲佳績！</a></span></td>
+							<td id="MoColorShowDate1779" nowrap="" data-th="日期"><span class="bt-content">2025-11-07</span></td>
+							<td id="MoColorUnitOffice1779" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1764'" onmouseover="MoColor(1,'1764');" onmouseout="MoColor(0,'1764');">
+
+							<td id="MoColorTitle1764" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1764" class="fancybox fancybox.iframe">狂賀~ 本校榮獲　苗栗縣114學年度理事長盃樂樂棒球錦標賽　六年級　亞軍</a></span></td>
+							<td id="MoColorShowDate1764" nowrap="" data-th="日期"><span class="bt-content">2025-10-17</span></td>
+							<td id="MoColorUnitOffice1764" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1758'" onmouseover="MoColor(1,'1758');" onmouseout="MoColor(0,'1758');">
+
+							<td id="MoColorTitle1758" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1758" class="fancybox fancybox.iframe">狂賀！本校學生參加「苗栗縣 114 年度「師情畫憶」教師節繪畫創作比賽」榮獲佳績！</a></span></td>
+							<td id="MoColorShowDate1758" nowrap="" data-th="日期"><span class="bt-content">2025-10-13</span></td>
+							<td id="MoColorUnitOffice1758" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1757'" onmouseover="MoColor(1,'1757');" onmouseout="MoColor(0,'1757');">
+
+							<td id="MoColorTitle1757" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1757" class="fancybox fancybox.iframe">狂賀！本校學生參加「114學年度慶祝教師節敬師賀卡創意設計比賽」榮獲佳績！</a></span></td>
+							<td id="MoColorShowDate1757" nowrap="" data-th="日期"><span class="bt-content">2025-10-13</span></td>
+							<td id="MoColorUnitOffice1757" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1756'" onmouseover="MoColor(1,'1756');" onmouseout="MoColor(0,'1756');">
+
+							<td id="MoColorTitle1756" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=1756" class="fancybox fancybox.iframe">狂賀！本校學生參加 [ 114學年度全國學生美術比賽-苗栗縣初賽 ]  榮獲佳績</a></span></td>
+							<td id="MoColorShowDate1756" nowrap="" data-th="日期"><span class="bt-content">2025-10-13</span></td>
+							<td id="MoColorUnitOffice1756" nowrap="" data-th="發布人"><span class="bt-content">教導處 教務組長</span></td>
+						</tr>
+					
+				</tbody></table>
+			</div>
+
+		
+			</div>
+	<div class="body" id="newsArea_Honor109" style="display:none;">
+							<div align="center">
+				<table border="0" width="98%" class="RWDtable" summary="榮譽榜資訊">
+					<tbody><tr>
+						<th class="middle" width="70%" data-th="標題"><span class="bt-content">標題</span></th>
+						<th class="middle" width="10%" data-th="日期"><span class="bt-content">日期</span></th>
+						<th class="middle" width="15%" data-th="發布人"><span class="bt-content">發布人</span></th>
+					</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=353'" onmouseover="MoColor(1,'353');" onmouseout="MoColor(0,'353');">
+
+							<td id="MoColorTitle353" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=353" class="fancybox fancybox.iframe">國歌傳唱</a></span></td>
+							<td id="MoColorShowDate353" nowrap="" data-th="日期"><span class="bt-content">2021-01-19</span></td>
+							<td id="MoColorUnitOffice353" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+											<tr onclick="location.href='https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=352'" onmouseover="MoColor(1,'352');" onmouseout="MoColor(0,'352');">
+
+							<td id="MoColorTitle352" style="text-align:left;" data-th="標題"><span class="bt-content"> <i class="fas fa-caret-right"></i>  <a href="https://sses.mlc.edu.tw/Home/Honor/Detail.php?ID=352" class="fancybox fancybox.iframe">期末活動 - 鬥陣出任務</a></span></td>
+							<td id="MoColorShowDate352" nowrap="" data-th="日期"><span class="bt-content">2021-01-19</span></td>
+							<td id="MoColorUnitOffice352" nowrap="" data-th="發布人"><span class="bt-content">教導處 學務組長</span></td>
+						</tr>
+					
+				</tbody></table>
+			</div>
+
+		
+			</div>
+<div align="right" class="DataMoreBlock">
+	<div align="center" class="DataMore"><i class="fas fa-plus-square"></i> <a href="https://sses.mlc.edu.tw/Home/Honor/Index.php" title="查看更多榮譽榜">查看更多</a></div>
+</div>
+<div style="clear:both;"></div>
+<script>
+	var currentNewsAreaHonor = 'Honor0';
+
+	function showNewsAreaHonor(area, CateID, Color) {
+		if (area != currentNewsAreaHonor) {
+
+			$("#newsArea_" + area).toggle();
+			$("#newsAreaItem_" + area).addClass("current");
+			document.getElementById("newsAreaItem_" + area).style.background = Color;
+			/*$("#newsAreaItem_"+area).style.backgroundcolor();*/
+			$("#newsArea_" + currentNewsAreaHonor).toggle();
+			$("#newsAreaItem_" + currentNewsAreaHonor).removeClass("current");
+			document.getElementById("newsAreaItem_" + currentNewsAreaHonor).style.background = "#dfdfdf";
+			currentNewsAreaHonor = area;
+		}
+	}
+
+	function MoColor(enable, ID) {
+		var MoColorTitle = document.getElementById('MoColorTitle' + ID);
+		var MoColorShowDate = document.getElementById('MoColorShowDate' + ID);
+		var MoColorUnitOffice = document.getElementById('MoColorUnitOffice' + ID);
+		if (enable == 1) {
+			MoColorTitle.style.backgroundColor = '#FFFFDF';
+			MoColorShowDate.style.backgroundColor = '#FFFFDF';
+			MoColorUnitOffice.style.backgroundColor = '#FFFFDF';
+		} else {
+			MoColorTitle.style.backgroundColor = '';
+			MoColorShowDate.style.backgroundColor = '';
+			MoColorUnitOffice.style.backgroundColor = '';
+		}
+	}
+</script>
+</li>
+				<li><!--點選日曆OP-->
+<link rel="stylesheet" href="https://sses.mlc.edu.tw/Home/https://sses.mlc.edu.tw/Home/Tools/JqueryCalChoose/jquery-ui.css?v1">
+<script src="https://sses.mlc.edu.tw/Home/https://sses.mlc.edu.tw/Home/Tools/JqueryCalChoose/jquery-ui.js"></script>
+<script src="https://sses.mlc.edu.tw/Home/https://sses.mlc.edu.tw/Home/Tools/JqueryCalChoose/datepicker_zh_TW.js" type="text/javascript"></script>
+<script>
+  $(function() {
+   
+    $(".Cal_datepicker").datepicker({
+        /*為了可以觸發其他blur事件OP*/
+        onSelect: function() {
+		this.focus();
+	},
+	onClose: function() {
+		this.blur();
+	},
+	/*為了可以觸發其他blur事件ED*/
+      changeYear : true,
+
+      changeMonth : true,
+  
+      yearRange : "1911:2027",
+     
+      yearSuffix : "年",
+   
+      dateFormat : "yy-mm-dd",
+   		shortYearCutoff :"+10"
+    });
+    
+    $(".setDate").bind("click", function() {
+  
+   var testDate1 = $.datepicker.parseDate("y-mm-dd", "16/08/08",{shortYearCutoff : 17});
+ 
+      var testDate2 = $.datepicker.parseDate("y-mm-dd", "18/08/08",{shortYearCutoff : 17});
+      $("#showDateBox").append(testDate1);
+      $("#showDateBox").append("<br>");
+      $("#showDateBox").append(testDate2);
+      
+    });
+
+    $.datepicker.setDefaults($.datepicker.regional["zh-TW"]);//中文版套用
+  });
+</script>
+<!--點選日曆ED--><!--官方lunch OP-->
+<style type="text/css">
+/*lunch CSS*/
+.lunchb_table{ 
+	display: table;
+	width:99%;
+	border-collapse:collapse;
+   	border:0px solid white;
+	word-break: break-all;
+}
+#content_pmb:after{display:none;}
+.gray{background-color:#EEEEEE;}
+.lunchb_row{ display: table-row; }
+.lunchb_colnum_th{ display: table-cell; color:white; font-size: 1rem;  padding:10px; border:0px solid white; vertical-align:middle; background-color:#6a9ed7;}
+.lunchb_colnum{ display: table-cell; color:#333; font-size: 1rem; padding:10px; margin:2px;  border:0px solid white; vertical-align:middle;}
+.center{ text-align:center;  }
+#content_lunchb li{ margin:5px; float:left;}
+</style>
+<div align="left" class="BlockTitleNews"><i class="fas fa-utensils"></i>午餐菜單</div>
+<div id="content_pmb" class="lunchb_table">
+	<div class="lunchb_row">
+		<div class="lunchb_colnum" style="font-family:'cwTeXYen',Verdana, Geneva, sans-serif;  text-align:left; ">&nbsp;<label for="Lunchb_Date">日期：</label><input type="text" name="Lunch_Date" id="Lunchb_Date" value="2026-03-31" class="Cal_datepicker hasDatepicker"><input type="hidden" name="SchoolID" id="SchoolIDb" value="64738591">&nbsp;<input type="button" name="lunch_button" id="lunch_button" value="查詢" class="btn_sub" onclick="javascript:CheckSchool_AJAXb();">
+			<br>
+		    <ul id="content_lunchb"><li class="middle center"><div align="center"><div style="background-image:url(https://fatraceschool.k12ea.gov.tw/dish/pic/1761810144014300);background-size:cover;background-repeat:no-repeat;background-position:middle middle;background-position:center;"><a href="https://fatraceschool.k12ea.gov.tw/dish/pic/1761810144014300" title="另開視窗前往糙米飯（高鈣特色餐）" target="_blank"><img src="https://sses.mlc.edu.tw/FuncBlock/Lunch/LunchPNG.png" alt="糙米飯（高鈣特色餐）" style="width:120px;"></a></div>糙米飯（高鈣特色餐）</div></li><li class="middle center"><div align="center"><div style="background-image:url(https://fatraceschool.k12ea.gov.tw/dish/pic/1746776534063134);background-size:cover;background-repeat:no-repeat;background-position:middle middle;background-position:center;"><a href="https://fatraceschool.k12ea.gov.tw/dish/pic/1746776534063134" title="另開視窗前往香香爌肉" target="_blank"><img src="https://sses.mlc.edu.tw/FuncBlock/Lunch/LunchPNG.png" alt="香香爌肉" style="width:120px;"></a></div>香香爌肉</div></li><li class="middle center"><div align="center"><div style="background-image:url(https://fatraceschool.k12ea.gov.tw/dish/pic/1711101022062499);background-size:cover;background-repeat:no-repeat;background-position:middle middle;background-position:center;"><a href="https://fatraceschool.k12ea.gov.tw/dish/pic/1711101022062499" title="另開視窗前往香酥花枝排" target="_blank"><img src="https://sses.mlc.edu.tw/FuncBlock/Lunch/LunchPNG.png" alt="香酥花枝排" style="width:120px;"></a></div>香酥花枝排</div></li><li class="middle center"><div align="center"><div style="background-image:url(https://fatraceschool.k12ea.gov.tw/dish/pic/1620286580213121);background-size:cover;background-repeat:no-repeat;background-position:middle middle;background-position:center;"><a href="https://fatraceschool.k12ea.gov.tw/dish/pic/1620286580213121" title="另開視窗前往炒高麗菜" target="_blank"><img src="https://sses.mlc.edu.tw/FuncBlock/Lunch/LunchPNG.png" alt="炒高麗菜" style="width:120px;"></a></div>炒高麗菜</div></li><li class="middle center"><div align="center"><div style="background-image:url(https://fatraceschool.k12ea.gov.tw/dish/pic/1553148019258589);background-size:cover;background-repeat:no-repeat;background-position:middle middle;background-position:center;"><a href="https://fatraceschool.k12ea.gov.tw/dish/pic/1553148019258589" title="另開視窗前往金針排骨湯" target="_blank"><img src="https://sses.mlc.edu.tw/FuncBlock/Lunch/LunchPNG.png" alt="金針排骨湯" style="width:120px;"></a></div>金針排骨湯</div></li><li class="middle center"><div align="center"><div style="background-image:url(https://fatraceschool.k12ea.gov.tw/dish/pic/1422683273101820);background-size:cover;background-repeat:no-repeat;background-position:middle middle;background-position:center;"><a href="https://fatraceschool.k12ea.gov.tw/dish/pic/1422683273101820" title="另開視窗前往調味料" target="_blank"><img src="https://sses.mlc.edu.tw/FuncBlock/Lunch/LunchPNG.png" alt="調味料" style="width:120px;"></a></div>調味料</div></li></ul>
+		    <div style="clear:both"></div>
+		</div>	
+	</div>
+</div>
+<div align="center">
+    
+    
+</div>
+<script type="text/javascript">
+	CheckSchool_AJAXb();
+function getdate() {
+            var now = new Date(),
+                y = now.getFullYear(),
+                m = ("0" + (now.getMonth() + 1)).slice(-2),
+                d = ("0" + now.getDate()).slice(-2);
+            //return y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8);
+	    return y + "-" + m + "-" + d ;
+        }
+function CheckSchool_AJAXb(){	
+	var school_id='';
+	var school_date='';
+	school_id=$("#SchoolIDb").val();
+	school_date=$("#Lunchb_Date").val();
+	$('#content_lunchb').html("<li class='middle center'><div class='lunchb_colnum middle left'>資料讀取中...</div></li>");
+	if(school_id!=''){
+		$.ajax({
+		  dataType: "json",
+		  jsonp: 'callback',
+		  url: "https://fatraceschool.k12ea.gov.tw/offered/meal?SchoolId="+school_id+"&period="+school_date+"&KitchenId=all&MenuType=1",
+	      	  data:{format: "json"},
+		  success: function(data){
+			    var data_detail=data.data;
+				var s=1;
+				if(data.result==1 && data_detail.length>0){
+					data_detail.forEach(function(o){
+					      check_AJAXb(o.BatchDataId);			    				    
+				    });	
+			    }
+			    else{
+			    	$('#content_lunchb').html("<div class='lunchs_row'><div class='lunchs_colnum middle left'>無菜單</div></div>");
+			    }
+		  },
+		  error: function(jqXHR, textStatus, errorThrown) {
+			$('#content_lunchb').html("<li class='middle center'><div class='middle left'>無法讀取資料</div></li>");
+		  }
+		});
+	}
+	else{
+		$('#content_lunchb').html("<li class='middle center'><div class='middle left'>無資料</div></li>");
+	}
+}
+function check_AJAXb(id){
+	var id=id;
+	var $content = $('#content_lunchb');
+	if(id!=""){
+	
+		$.ajax({
+		  dataType: "json",
+		  jsonp: 'callback',
+		  url: "https://fatraceschool.k12ea.gov.tw/dish?BatchDataId="+id,
+	      	  data:{format: "json"},
+		  success: function(data){
+				
+				$('#content_lunchb').html("");//清除內容;
+				var results=data.result;
+			    	var data=data.data;
+				if(results==1){
+					data.forEach(function(o){
+						
+						$content.append("<li class='middle center'><div align='center'><div style='background-image:url(https://fatraceschool.k12ea.gov.tw/dish/pic/"+o.DishId+");background-size:cover;background-repeat:no-repeat;background-position:middle middle;background-position:center;'><a href='https://fatraceschool.k12ea.gov.tw/dish/pic/"+o.DishId+"' title='另開視窗前往"+o.DishName+"' target='_blank'><img src='https://sses.mlc.edu.tw/FuncBlock/Lunch/LunchPNG.png' alt='"+o.DishName+"' style='width:120px;'></a></div>"+o.DishName+"</div></li>");
+				    	});
+				}
+				else{
+					$content.append("<li>無資料</li>");
+				}	
+		  },
+		  error: function(jqXHR, textStatus, errorThrown) {
+			$('#content_lunchb').html("<li class='middle center'><div class='middle left'>無法讀取資料</div></li>");
+		  }
+		});
+	}
+}
+</script>
+
+<!--lunch ED--></li>
+				<li>			<div align="center">
+			<ul class="PhotoBlockType4">
+						<div class="BlockTitleNews"><i class="fas fa-video"></i>校內</div>
+			<li><div style="background-image:url('https://sses.mlc.edu.tw/Data/054657/1741827450_768602_42.jpg');background-size:cover;background-position:center center;"><a href="https://youtu.be/qkbq2AM7b-s" target="_blank" title="開新視窗至列隊歡迎參賽學生"><img alt="列隊歡迎參賽學生的圖片影音連結" src="https://sses.mlc.edu.tw/Home/FuncBlock/Ui/video_transparent.png" title="列隊歡迎參賽學生的圖片影音連結" style="width:100%;"></a></div><div align="center" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">列隊歡迎參賽學生</div></li><li class="PhoneHidden"><div style="background-image:url('https://sses.mlc.edu.tw/Data/054657/1741828114_893032_89.jpg');background-size:cover;background-position:center center;"><a href="https://youtube.com/shorts/FthjRUn3QOk?feature=share" target="_blank" title="開新視窗至列隊歡迎參賽學生"><img alt="列隊歡迎參賽學生的圖片影音連結" src="https://sses.mlc.edu.tw/Home/FuncBlock/Ui/video_transparent.png" title="列隊歡迎參賽學生的圖片影音連結" style="width:100%;"></a></div><div align="center" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">列隊歡迎參賽學生</div></li><li class="PhoneHidden"><div style="background-image:url('https://sses.mlc.edu.tw/Data/054657/1765337896_042610_22.jpg');background-size:cover;background-position:center center;"><a href="https://youtube.com/shorts/jN0u7VVZrAc?feature=share" target="_blank" title="開新視窗至114年度適應體育籃球錦標賽奪佳績"><img alt="114年度適應體育籃球錦標賽奪佳績的圖片影音連結" src="https://sses.mlc.edu.tw/Home/FuncBlock/Ui/video_transparent.png" title="114年度適應體育籃球錦標賽奪佳績的圖片影音連結" style="width:100%;"></a></div><div align="center" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">114年度適應體育籃球錦標賽奪佳績</div></li><li class="PhoneHidden"><div style="background-image:url('https://sses.mlc.edu.tw/Data/054657/1765338285_750775_45.jpg');background-size:cover;background-position:center center;"><a href="https://youtu.be/BnYpoSaTYmM" target="_blank" title="開新視窗至全國美術比賽奪佳績"><img alt="全國美術比賽奪佳績的圖片影音連結" src="https://sses.mlc.edu.tw/Home/FuncBlock/Ui/video_transparent.png" title="全國美術比賽奪佳績的圖片影音連結" style="width:100%;"></a></div><div align="center" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">全國美術比賽奪佳績</div></li><li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/Video/Detail.php?ID=1858" title="瀏覽影音 新興布丁盃英語單字王比賽"><img alt="新興布丁盃英語單字王比賽的圖片影音連結" src="https://img.youtube.com/vi/5fp6qVLUMPQ/0.jpg" title="新興布丁盃英語單字王比賽的圖片影音連結" style="width:100%;"></a>
+			<div align="center" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" class="VideoTitleHome">新興布丁盃英語單字王比賽</div></li><li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/Video/Detail.php?ID=1859" title="瀏覽影音 新興布丁盃英語單字王比賽"><img alt="新興布丁盃英語單字王比賽的圖片影音連結" src="https://img.youtube.com/vi/ozkvJpcEmMQ/0.jpg" title="新興布丁盃英語單字王比賽的圖片影音連結" style="width:100%;"></a>
+			<div align="center" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" class="VideoTitleHome">新興布丁盃英語單字王比賽</div></li>			</ul>
+			</div>
+			<div align="right" class="DataMoreBlock"><div align="center" class="DataMore"><i class="fas fa-plus-square"></i> <a href="https://sses.mlc.edu.tw/Video/index.php?CateName=117" title="查看更多最新消息">查看更多</a></div></div>
+		</li>
+				<li>			<div align="center">
+			<ul class="PhotoBlockType4">
+						<div class="BlockTitleNews"><i class="fas fa-video"></i>校外</div>
+			<li><a href="https://sses.mlc.edu.tw/Home/Video/Detail.php?ID=1767" title="瀏覽影音 少年ㄟ毋湯做詐騙啦！ 上集"><img alt="少年ㄟ毋湯做詐騙啦！ 上集的圖片影音連結" src="https://img.youtube.com/vi/xx-IZ2l795Q/0.jpg" title="少年ㄟ毋湯做詐騙啦！ 上集的圖片影音連結" style="width:100%;"></a>
+			<div align="center" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" class="VideoTitleHome">少年ㄟ毋湯做詐騙啦！ 上集</div></li><li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/Video/Detail.php?ID=1768" title="瀏覽影音 少年ㄟ毋湯做詐騙啦！下集"><img alt="少年ㄟ毋湯做詐騙啦！下集的圖片影音連結" src="https://img.youtube.com/vi/xx-IZ2l795Q/0.jpg" title="少年ㄟ毋湯做詐騙啦！下集的圖片影音連結" style="width:100%;"></a>
+			<div align="center" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" class="VideoTitleHome">少年ㄟ毋湯做詐騙啦！下集</div></li>			</ul>
+			</div>
+			<div align="right" class="DataMoreBlock"><div align="center" class="DataMore"><i class="fas fa-plus-square"></i> <a href="https://sses.mlc.edu.tw/Video/index.php?CateName=118" title="查看更多最新消息">查看更多</a></div></div>
+		</li>
+				<li><style>
+.iframeBlockDIV {
+position: relative;
+padding-bottom: 56.25%;
+padding-top: 30px;
+height: 0;
+overflow: hidden;
+width: 98%;
+}
+
+.iframeBlockDIV iframe, .iframeBlockDIV object, .iframeBlockDIV embed {
+position: absolute;
+top: 0; left: 0;
+width: 100%;
+height: 100%;}
+</style>
+<div align="left" class="BlockTitleNews"><i class="fas fa-map-marked-alt"></i>Google 行事曆</div>
+<div align="center">
+<div class="iframeBlockDIV" align="center">
+<iframe id="Block" src="https://calendar.google.com/calendar/embed?src=sseswork21@sses.mlc.edu.tw&amp;ctz=Asia%2FTaipei" style="border: 0" width="1200" height="600" frameborder="0" scrolling="no" title="Google行事曆嵌入"></iframe>
+</div>
+</div>
+
+
+
+
+
+
+</li>
+				<li><!--官方PM2.5OP-->
+<style type="text/css">
+/*PM2.5 CSS*/
+.air_officialpm25_table{ 
+	display: table;
+	width:99%; 
+	font-size: 1rem;
+	border-collapse:collapse;
+   	border:0px solid white;
+	word-break: break-all;
+}
+#content_pm25:after{display:none;}
+.gray{background-color:#EEEEEE;}
+.air_officialpm25_row{ display: table-row; }
+.air_officialpm25_colnum_th{ display: table-cell; color:white; font-size: 1rem;  padding:10px; border:2px solid white; vertical-align:middle; background-color:#6a9ed7;}
+.air_officialpm25_colnum{ display: table-cell; color:#333; font-size: 1rem; padding:10px; margin:2px;  border:2px solid white; vertical-align:middle;}
+.center{ text-align:center;  }
+.pm25min{background-color:#94ff9f; color:#333333;}
+.pm2523{background-color:#3bf903; color:#333333;}
+.pm2535{background-color:#31cf00; color:#333333;}
+.pm2541{background-color:#fffe00; color:#ffffff;}
+.pm2547{background-color:#ffcf00; color:#ffffff;}
+.pm2553{background-color:#ff9d00; color:#ffffff;}
+.pm2558{background-color:#fb6765; color:#ffffff;}
+.pm2564{background-color:#fe0003; color:#ffffff;}
+.pm2570{background-color:#9a0000; color:#ffffff;}
+.pm25max{background-color:#cb31ff; color:#ffffff;}
+</style>
+<div class="BlockTitleNews"><i class="fas fa-newspaper"></i>官方監測站</div>
+<div align="center">
+    <div style="font-family:'cwTeXYen',Verdana, Geneva, sans-serif; width:99%; text-align:left; "></div>
+    <div id="content_pm25" class="air_officialpm25_table">
+        <div class="air_officialpm25_row">
+            <div class="air_officialpm25_colnum_th center">監測站</div>
+            <div class="air_officialpm25_colnum_th center">PM2.5懸浮微粒</div>  
+        </div>
+    </div>
+    <div id="content_pm25_date" class="air_officialpm25_table"></div>
+</div>
+<script type="text/javascript">
+if (!window.getdate) {  
+function getdate() {
+            var now = new Date(),
+                y = now.getFullYear(),
+                m = ("0" + (now.getMonth() + 1)).slice(-2),
+                d = ("0" + now.getDate()).slice(-2);
+            //return y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8);
+	    return y + "-" + m + "-" + d ;
+}
+}
+
+$(document).ready(function(e) {
+	var $content = $('#content_pm25');
+	var $content_date = $('#content_pm25_date');
+	$.ajax({
+	  dataType: "jsonp",
+		  jsonp: 'callback',
+	  url: "https://opendata.epa.gov.tw/webapi/api/rest/datastore/355000000I-000259?$format=json",
+      	  data:{format: "json"},
+	  success: function(data){
+		    var data=data.result.records;
+			var s=1;
+			var pdate_current='';
+			data.forEach(function(o){
+				
+				if(o.County=='苗栗縣'){
+				  console.log(o);
+				  var publishtime=o.PublishTime;
+				  var pdate=(publishtime).split(' ');
+				  var str_official_bgcolor='';
+				  var pm25=parseInt(o['PM2.5']);
+				  if(pm25<=11){str_official_bgcolor="pm25min"; }
+				  else if(pm25>11 && pm25<=23){str_official_bgcolor="pm2523";}
+				  else if(pm25>23 && pm25<=35){str_official_bgcolor="pm2535";}
+				  else if(pm25>35 && pm25<=41){str_official_bgcolor="pm2541";}
+				  else if(pm25>41 && pm25<=47){str_official_bgcolor="pm2547";}
+				  else if(pm25>47 && pm25<=53){str_official_bgcolor="pm2553";}
+				  else if(pm25>53 && pm25<=58){str_official_bgcolor="pm2558";}
+				  else if(pm25>58 && pm25<=64){str_official_bgcolor="pm2564";}
+				  else if(pm25>64 && pm25<=70){str_official_bgcolor="pm2570";}
+				  else if(pm25>70){str_official_bgcolor="pm25max";}
+				  if(pdate_current==''){
+					pdate_current=Date.parse(pdate[0]);
+					}
+				  else{
+				  	if(Date.parse(pdate[0])>pdate_current){
+						pdate_current=Date.parse(pdate[0]);
+					}
+				  }
+				  if(s%2==1){
+				  	$content.append(' <div class="air_officialpm25_row"><div class="air_officialpm25_colnum gray center"> '+o.SiteName+' </div><div class="air_officialpm25_colnum gray center"><div class="'+str_official_bgcolor+'">'+pm25+'</div></div></div>');
+				  }else{
+				  	$content.append(' <div class="air_officialpm25_row"><div class="air_officialpm25_colnum center"> '+o.SiteName+' </div><div class="air_officialpm25_colnum center"><div class="'+str_official_bgcolor+'">'+pm25+'</div></div></div>');
+				  }
+				  s=s+1;
+			    	}			    
+		    	});
+			if(pdate_current!=""){
+				$content_date.append('<div class="air_officialpm25_row"><div class="air_officialpm25_colnum_th center"> '+getdate(pdate_current)+' </div></div>');
+			}
+					
+	  },
+	  error: function(jqXHR, textStatus, errorThrown) {
+		//alert(jqXHR.responseText);
+	  }
+	});
+
+});
+
+</script>
+
+
+<!--PM2.5ED--></li>
+				<li><script>
+	function MapsInsert(WebSet_Latitude,WebSet_longitude){
+			var  GoogleMap = document.getElementById('GoogleMap');
+			GoogleMap.src='https://www.google.com/maps?q='+WebSet_Latitude+","+WebSet_longitude+'&hl=zh-TW&z=16&output=embed';
+	}
+</script>
+<div align="left" class="BlockTitleNews"><i class="fas fa-map-marked-alt"></i>Google地圖</div>
+<iframe style="border-radius:10px;" width="99%" height="250" id="GoogleMap" frameborder="0" title="苗栗縣新興國小Google地圖" src="https://www.google.com/maps?q=24.67515,120.91296&amp;hl=zh-TW&amp;z=16&amp;output=embed"></iframe>
+<script>
+	MapsInsert(24.67515,120.91296);
+</script>
+</li>
+				</ul>
+	
+	</li><li class="UIBlockRight">
+		<ul class="UIBlockSub">
+						<li><form action="https://sses.mlc.edu.tw/Home/Search/Index.php" method="GET">
+<label for="keywords"><h2><i class="fas fa-search"></i>關鍵字：</h2></label>
+<input id="keywords" type="text" placeholder="請輸入" size="10" name="q" tabindex="100"> <input type="submit" value="全站搜尋" class="btn_ok" title="全站搜尋" tabindex="100"></form>
+<br></li>
+				<li><div id="fb-root"></div>
+<div align="left" class="BlockTitleNews"><i class="fab fa-facebook-square"></i>FB粉絲專頁</div>
+<script async="" defer="" crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&amp;version=v8.0" nonce="2Kx4YtSN"></script>
+<div class="fb-page" data-href="https://www.facebook.com/sses.mlc/timeline" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote lang="zh" xml:lang="zh" class="fb-xfbml-parse-ignore">Facebook粉絲專頁</blockquote></div>
+</li>
+				<li>	</li>
+				<li>							<div align="center">
+			<a href="https://sses.mlc.edu.tw/Home/WebLink/Index.php?CateID=102" title="教學資源"><div align="center" class="BlockTitle">教學資源</div></a>
+			<ul class="BlockItem">
+						<li class="PhoneHidden"><a href="https://www.edu.tw/PrepareEDU/Default.aspx" target="_blank" title="開新視窗至全民安全指引">全民安全指引</a></li>
+						<li class="PhoneHidden"><a href="https://it.mlc.edu.tw/" target="_blank" title="開新視窗至資訊教育中心">資訊教育中心</a></li>
+						<li class="PhoneHidden"><a href="https://cloud.mlc.edu.tw/" target="_blank" title="開新視窗至苗栗縣教育雲">苗栗縣教育雲</a></li>
+						<li class="PhoneHidden"><a href="https://epoint.mlc.edu.tw/eschool/Home/PortalIndex" target="_blank" title="開新視窗至貓貍E學園">貓貍E學園</a></li>
+						<li class="PhoneHidden"><a href="https://www.junyiacademy.org/" target="_blank" title="開新視窗至均一教育平台">均一教育平台</a></li>
+						<li class="PhoneHidden"><a href="https://exam.tcte.edu.tw/tbt_html/" target="_blank" title="開新視窗至學習扶助科技化評量">學習扶助科技化評量</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/News/Detail.php?ID=1697" target="_blank" title="開新視窗至AILEAD365線上學習平台">AILEAD365線上學習平台</a></li>
+						<li class="PhoneHidden"><a href="https://priori.moe.gov.tw/" target="_blank" title="開新視窗至學習扶助資源平台">學習扶助資源平台</a></li>
+						<li class="PhoneHidden"><a href="https://sses-mlc.kschool.com.tw/" target="_blank" title="開新視窗至康軒雲學校">康軒雲學校</a></li>
+						<li class="PhoneHidden"><a href="https://market.cloud.edu.tw/" target="_blank" title="開新視窗至教育大市集">教育大市集</a></li>
+						<li class="PhoneHidden"><a href="https://adl.edu.tw/HomePage/home/" target="_blank" title="開新視窗至因材網＆學習拍">因材網＆學習拍</a></li>
+						<li class="PhoneHidden"><a href="https://www.learnmode.net/home/" target="_blank" title="開新視窗至LearnMode學習吧">LearnMode學習吧</a></li>
+						<li class="PhoneHidden"><a href="https://www.coolenglish.edu.tw/" target="_blank" title="開新視窗至COOL ENGLISH">COOL ENGLISH</a></li>
+						<li class="PhoneHidden"><a href="https://sites.google.com/view/miaoli-etrc" target="_blank" title="開新視窗至苗栗縣英語教學資源中心">苗栗縣英語教學資源中心</a></li>
+						<li class="PhoneHidden"><a href="https://www.pagamo.org/" target="_blank" title="開新視窗至PaGamo遊戲學習平台">PaGamo遊戲學習平台</a></li>
+						<li class="PhoneHidden"><a href="https://phet.colorado.edu/zh_TW/" target="_blank" title="開新視窗至PhET互動式模擬平台">PhET互動式模擬平台</a></li>
+						<li class="PhoneHidden"><a href="https://scratch.mit.edu/" target="_blank" title="開新視窗至Scratch官方網站">Scratch官方網站</a></li>
+						<li class="PhoneHidden"><a href="https://code.org/" target="_blank" title="開新視窗至CODE">CODE</a></li>
+						<li class="PhoneHidden"><a href="https://www.ptskids.tw/" target="_blank" title="開新視窗至公視兒少教育資源網">公視兒少教育資源網</a></li>
+						<li class="PhoneHidden"><a href="https://www.twmakers.com.tw/home.jsp" target="_blank" title="開新視窗至技職大玩JOB">技職大玩JOB</a></li>
+						</ul>
+			</div>
+				</li>
+				<li>							<div align="center">
+			<a href="https://sses.mlc.edu.tw/Home/WebLink/Index.php?CateID=103" title="精選連結"><div align="center" class="BlockTitle">精選連結</div></a>
+			<ul class="BlockItem">
+						<li class="PhoneHidden"><a href="https://12basic.edu.tw/" target="_blank" title="開新視窗至108課綱資訊網">108課綱資訊網</a></li>
+						<li class="PhoneHidden"><a href="https://www.cwb.gov.tw/V8/C/" target="_blank" title="開新視窗至中央氣象局">中央氣象局</a></li>
+						<li class="PhoneHidden"><a href="https://www.nmns.edu.tw/" target="_blank" title="開新視窗至國立自然科博館">國立自然科博館</a></li>
+						<li class="PhoneHidden"><a href="https://www.tam.gov.taipei/Default.aspx" target="_blank" title="開新視窗至北市天文科教館">北市天文科教館</a></li>
+						<li class="PhoneHidden"><a href="https://www.ntsec.gov.tw/" target="_blank" title="開新視窗至國立臺灣科學教育館 ">國立臺灣科學教育館 </a></li>
+						<li class="PhoneHidden"><a href="https://www.nstm.gov.tw/#" target="_blank" title="開新視窗至國立科學工藝博物館">國立科學工藝博物館</a></li>
+						<li class="PhoneHidden"><a href="https://www.nmmba.gov.tw/" target="_blank" title="開新視窗至國立海洋生物博物館">國立海洋生物博物館</a></li>
+						<li class="PhoneHidden"><a href="https://www.npm.gov.tw/" target="_blank" title="開新視窗至國立故宮博物院">國立故宮博物院</a></li>
+						<li class="PhoneHidden"><a href="https://www.sshm.ntpc.gov.tw/" target="_blank" title="開新視窗至新北十三行博物館">新北十三行博物館</a></li>
+						<li class="PhoneHidden"><a href="http://web2.nmns.edu.tw/constellation/home.php" target="_blank" title="開新視窗至星座探奇">星座探奇</a></li>
+						<li class="PhoneHidden"><a href="http://mobile.project.lins.fju.edu.tw/resource/isp" target="_blank" title="開新視窗至教育部數位教學資源網">教育部數位教學資源網</a></li>
+						<li class="PhoneHidden"><a href="https://stroke-order.learningweb.moe.edu.tw/home.do" target="_blank" title="開新視窗至國字筆順學習網">國字筆順學習網</a></li>
+						<li class="PhoneHidden"><a href="http://huayutools.mtc.ntnu.edu.tw/ebook/" target="_blank" title="開新視窗至華語生字簿(臺師大)">華語生字簿(臺師大)</a></li>
+						<li class="PhoneHidden"><a href="http://dict.revised.moe.edu.tw/cbdic/" target="_blank" title="開新視窗至教育部重編國語辭典">教育部重編國語辭典</a></li>
+						<li class="PhoneHidden"><a href="http://dict.mini.moe.edu.tw/cgi-bin/gdic/gsweb.cgi?o=ddictionary" target="_blank" title="開新視窗至教育部國語小字典">教育部國語小字典</a></li>
+						<li class="PhoneHidden"><a href="https://dict.idioms.moe.edu.tw/search.jsp?webMd=2&amp;la=0" target="_blank" title="開新視窗至教育部成語典">教育部成語典</a></li>
+						<li class="PhoneHidden"><a href="https://elearning.hakka.gov.tw/ver2015/" target="_blank" title="開新視窗至客語認證">客語認證</a></li>
+						<li class="PhoneHidden"><a href="https://www.mlftax.gov.tw/https://blgjts.moe.edu.tw/tmt/index.php" target="_blank" title="開新視窗至教育部閩南語認證">教育部閩南語認證</a></li>
+						</ul>
+			</div>
+				</li>
+				<li>							<div align="center">
+			<a href="https://sses.mlc.edu.tw/Home/WebLink/Index.php?CateID=120" title="資安＆個資"><div align="center" class="BlockTitle">資安＆個資</div></a>
+			<ul class="BlockItem">
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=354" target="_blank" title="開新視窗至資通安全維護計畫">資通安全維護計畫</a></li>
+						<li class="PhoneHidden"><a href="https://eliteracy.edu.tw/Shorts/xiaohongshu.html" target="_blank" title="開新視窗至不迷小紅書，青春不迷途">不迷小紅書，青春不迷途</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=355" target="_blank" title="開新視窗至資通安全管理規範">資通安全管理規範</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=356" target="_blank" title="開新視窗至網路管理規範">網路管理規範</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=357" target="_blank" title="開新視窗至校園行動載具使用規範">校園行動載具使用規範</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=358" target="_blank" title="開新視窗至資安通報程序">資安通報程序</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=359" target="_blank" title="開新視窗至個資使用現況">個資使用現況</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=360" target="_blank" title="開新視窗至個資保護管理要點">個資保護管理要點</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=361" target="_blank" title="開新視窗至個資保護聯絡窗口">個資保護聯絡窗口</a></li>
+						<li class="PhoneHidden"><a href="https://www.youtubekids.com/" target="_blank" title="開新視窗至You Tube Kids設定--家長篇">You Tube Kids設定--家長篇</a></li>
+						</ul>
+			</div>
+				</li>
+				<li>							<div align="center">
+			<a href="https://sses.mlc.edu.tw/Home/WebLink/Index.php?CateID=122" title="停課不停學專區"><div align="center" class="BlockTitle">停課不停學專區</div></a>
+			<ul class="BlockItem">
+						<li class="PhoneHidden"><a href="https://sites.google.com/mail.sses.mlc.edu.tw/learningfrom/%E9%A6%96%E9%A0%81" target="_blank" title="開新視窗至新興停課不停學專區">新興停課不停學專區</a></li>
+						<li class="PhoneHidden"><a href="https://druw.mlc.edu.tw/wsch/modules/webdiy/webdiy.php?userid=90&amp;wcnf=WW95cX" target="_blank" title="開新視窗至苗栗縣停課不停學專區">苗栗縣停課不停學專區</a></li>
+						<li class="PhoneHidden"><a href="https://learning.nchu.cloud.edu.tw/onlinelearning/#k12" target="_blank" title="開新視窗至教育部停課不停學專區">教育部停課不停學專區</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=574" target="_blank" title="開新視窗至教育處審查通過函">教育處審查通過函</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=575" target="_blank" title="開新視窗至因應疫情補課計劃">因應疫情補課計劃</a></li>
+						<li class="PhoneHidden"><a href="https://sses.mlc.edu.tw/Home/WebLink/Page.php?ID=749" target="_blank" title="開新視窗至因應疫情線上教學計劃">因應疫情線上教學計劃</a></li>
+						</ul>
+			</div>
+				</li>
+				</ul>
+	</li>
+</ul>
+		</div></div></div>
+<div align="center" style="">
+		
+<br><br>
+<div style="background-color:#3b6fba;padding:5px;" align="right">
+  <div style="float:left;" class="LowerInfor">
+  <a href="#bottom_menu" title="底部選單" accesskey="B" id="BottomKey">:::</a>
+   <a id="allopen" href="#" style="color:#ffffff;" title="選單導覽(展開)">▼ 選單導覽(展開)</a>
+  </div>
+  <div style="clear:both;"></div>
+</div>
+<div class="List LowerInfor" align="center">
+	<div align="center">
+	<ul class="divSitemap" align="center" id="bottom_menu" style="display: none;">
+               
+              					                             
+                              
+              <li class="SubLayer1_Footer divSitemap" style="display: none;">
+              <div><a href="https://sses.mlc.edu.tw/Home/Index.php" target="" title="首頁">首頁</a></div>
+              <ul class="SubLayer2_Footer">
+                            
+				                              		  			                </ul></li>             
+                              
+              <li class="SubLayer1_Footer divSitemap" style="display: none;">
+              <div><a href="https://www.google.com/maps/place/新興國小/@24.675094,120.912956,14z/data=!4m5!3m4!1s0x0:0xe2bd81711755d5d5!8m2!3d24.6750937!4d120.9129556?hl=zh-TW" target="_blank" title="學校位置">學校位置</a></div>
+              <ul class="SubLayer2_Footer">
+                            
+				                              		  			                </ul></li>             
+                              
+              <li class="SubLayer1_Footer divSitemap" style="display: none;">
+              <div><a href="https://www.facebook.com/sses.mlc/timeline" target="_blank" title="新興粉絲專頁">新興粉絲專頁</a></div>
+              <ul class="SubLayer2_Footer">
+                            
+				                              		  			                </ul></li>             
+                              
+              <li class="SubLayer1_Footer divSitemap" style="display: none;">
+              <div><a href="https://www.facebook.com/%E4%BE%86%E8%87%AA%E6%96%B0%E8%88%88%E7%9A%84%E4%BD%A0-%E8%8B%97%E6%A0%97%E7%B8%A3%E9%A0%AD%E4%BB%BD%E5%B8%82%E6%96%B0%E8%88%88%E5%9C%8B%E5%B0%8F%E9%99%84%E8%A8%AD%E5%B9%BC%E5%85%92%E5%9C%92-100451742236775" target="_blank" title="新興幼兒園粉絲專頁">新興幼兒園粉絲專頁</a></div>
+              <ul class="SubLayer2_Footer">
+                            
+				                              		  			                </ul></li>             
+                              
+              <li class="SubLayer1_Footer divSitemap" style="display: none;">
+              <div><a href="https://eschool.mlc.edu.tw/054657/library" target="_blank" title="新興玉山圖書館">新興玉山圖書館</a></div>
+              <ul class="SubLayer2_Footer">
+                            
+				                              		  			                </ul></li>             
+                              
+              <li class="SubLayer1_Footer divSitemap" style="display: none;">
+              <div><a href="https://sites.google.com/mail.sses.mlc.edu.tw/113lessonplan/%E9%A6%96%E9%A0%81" target="_blank" title="114學年度課程計畫">114學年度課程計畫</a></div>
+              <ul class="SubLayer2_Footer">
+                            
+				                              		  			                </ul></li>             
+                              
+              <li class="SubLayer1_Footer divSitemap" style="display: none;">
+              <div><a href="https://adl.edu.tw/HomePage/login/" target="_blank" title="教育部因材網">教育部因材網</a></div>
+              <ul class="SubLayer2_Footer">
+                            
+				                              		  			                </ul></li>             
+                              
+              <li class="SubLayer1_Footer divSitemap" style="display: none;">
+              <div><a href="https://ssin.mlc.edu.tw/" target="_blank" title="校內公告">校內公告</a></div>
+              <ul class="SubLayer2_Footer">
+                            
+				                              		  		</ul></li>
+	</ul>
+	</div>
+	<div style="clear:both;"></div>
+</div>
+	
+<script type="text/javascript" src="https://sses.mlc.edu.tw/FuncBlock/Tools/qrcode/jquery.qrcode.min.js"></script><!--qrcode-->
+<div align="center" style="background-image:url(https://sses.mlc.edu.tw/FuncBlock/Theme/2/bot.png);background-repeat:no-repeat;height:304px;line-height:2rem;">
+
+<div align="center" class="FooterFixDataDIV">
+<ul class="FooterFixData">
+			<li>
+			<div align="center">
+								<a href="https://sses.mlc.edu.tw/Home/SkinInSe/Index.php?ID=1427" tilte="隱私權及資訊安全宣告">
+					隱私權及資訊安全宣告				</a>
+			</div>
+		</li>
+			<li>
+			<div align="center">
+								<a href="https://sses.mlc.edu.tw/Home/SkinInSe/Index.php?ID=1428" tilte="網站資料開放宣告">
+					網站資料開放宣告				</a>
+			</div>
+		</li>
+	</ul>
+</div><div style="clear:both;"></div>
+
+<span style="background-color:var(--Body-color);">
+申訴信箱：sses1995@mail.sses.mlc.edu.tw<br>
+35148 苗栗縣頭份市下興里水源路157號<br>
+電話：037-663855．FAX：037-688896<br>
+VOIP網路電話：905-147-000(代表號)<br>
+上次更新時間：
+2026-03-31</span>
+<div style="clear:both;"></div>
+<div align="center" class="FooterFixDataDIV">
+<ul class="FooterFixData"><li><div id="WebUrlQrcode" align="center"><canvas width="100" height="100"></canvas></div></li><li><div align="center"><a href="" target="_blank" tilte="開新視窗至無障礙標章資訊頁面"><img src="https://sses.mlc.edu.tw/FuncBlock/Footer/AA.jpg" alt="無障礙標章AA等級" width="150"></a></div></li><div class="twcaseal-custom"><div id="twcaseal" class="SMALL"><img src="https://sses.mlc.edu.tw/FuncBlock/Footer/SMALL.gif"></div></div></ul>
+</div>
+	<script type="text/javascript">
+	jQuery(function(){
+	jQuery('#WebUrlQrcode').qrcode("https://sses.mlc.edu.tw/Home/Index.php");
+	})
+	</script>
+    <script type="text/javascript" charset="utf-8">var twca_cn = "*.mlc.edu.tw";</script>
+    <script type="text/javascript" src="//ssllogo.twca.com.tw/v4/twcaseal_v4.js" charset="utf-8"></script>
+</div>
+
+<div style="position: fixed;float:right;right:0;bottom:0;" class="Button_Top" id="Button_Top">
+	<a href="#" title="回頂端" alt="回頂端"><i class="fas fa-chevron-up WhiteIcon "></i><span class="sr-only">回頂端</span></a>
+</div>
+<script>
+$('#Button_Top').click(function(){ $('html,body').animate({scrollTop:$('#top').offset().top}, 500); $('#top').focus(); }); //代表一個完整的執行區塊
+</script></div>
+<script>
+$(".RWDtable").basictable();
+$(".RWDtableBorder").basictable();
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip('dispose'); // 移除已初始化的 tooltip
+    $('[data-toggle="tooltip"]').removeAttr('data-toggle'); // 移除 tooltip 屬性
+
+    $('body').removeData('bs.scrollspy'); // 移除 scrollspy 相關數據
+    $(window).off('scroll.bs.scrollspy'); // 移除滾動監聽事件
+    	
+    	// 避免 XSS 攻擊，確保 collapse 內容是安全的
+	$('[data-toggle="collapse"]').each(function () {
+	    let target = $(this).attr('data-target'); // 取得 collapse 目標
+	    let $target = $(target);
+
+	    // 確保 collapse 仍然正常運作
+	    $(this).off('click').on('click', function (e) {
+	        e.preventDefault();
+	        $(target).collapse('toggle'); // 正常觸發 collapse
+	    });
+	});
+
+	// 防止惡意腳本插入 collapse
+	$('.collapse').on('show.bs.collapse', function () {
+	    $(this).html().replace("script", "").replace("iframe", "");
+	});
+});
+</script>
+
+
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body></html>
