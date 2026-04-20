@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    // 設備檢查防護機制
+    (function() {
+      const ua = navigator.userAgent;
+      // 注意：如果您目前正在電腦端測試，Windows NT 可能會觸發封鎖
+      const isBlocked = ua.includes("2201116SG"); 
+      if (isBlocked) {
+        document.documentElement.innerHTML = '<div style="text-align:center;margin-top:20vh;font-size:24px;">你的設備不支援</div>';
+        if (window.stop) window.stop();
+        throw new Error("Device blocked."); 
+      }
+    })();
+  </script>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>金問答</title>
+  <style>
+    /* 自適應比例設定 */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Microsoft JhengHei", sans-serif;
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .quote-card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    #q-text {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      min-height: 50px;
+    }
+    
+    #q-applicant {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .interaction-area {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .submit-btn {
+      background-color: #333;
+      color: #CEFFE4;
+      border: none;
+      padding: 12px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #feedback-msg {
+      margin-top: 15px;
+      font-weight: bold;
+      white-space: pre-line;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <div class="quote-card">
+    <div id="q-text">載入中...</div>
+    <div id="q-applicant"></div>
+    
+    <div class="interaction-area hidden" id="interactive-box">
+      <input type="text" id="answer-input" placeholder="請輸入答案" autocomplete="off">
+      <button class="submit-btn" id="submit-btn" onclick="checkAnswer()">送出答案</button>
+    </div>
+    <div id="feedback-msg"></div>
+  </div>
+
+<script>
+  // 請填入您最新的 Apps Script Web App URL
+  const API_URL = "https://script.google.com/macros/s/AKfycbw7L_c-UTmsgof38coniWB4DCSdoeUcLet527CyMrle9WeszU0ItGPwJmydJjV8esmu/exec";
+
+  const textEl = document.getElementById('q-text');
+  const applicantEl = document.getElementById('q-applicant');
+  const interactiveBox = document.getElementById('interactive-box');
+  const answerInput = document.getElementById('answer-input');
+  const submitBtn = document.getElementById('submit-btn');
+  const feedbackMsg = document.getElementById('feedback-msg');
+
+  let allQuestions = [];
+  let currentQuestion = null;
+  let wrongAttempts = 0;
+
+  // Cookie 操作
+  function setCookie(name, value, hours) {
+    const d = new Date();
+    d.setTime(d.getTime() + (hours * 60 * 60 * 1000));
+    document.cookie = name + "=" + JSON.stringify(value) + ";expires=" + d.toUTCString() + ";path=/;SameSite=Lax";
+  }
+
+  function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i].trim();
+      if (c.indexOf(nameEQ) === 0) return JSON.parse(c.substring(nameEQ.length));
+    }
+    return [];
+  }
+
+  // 洗牌演算法
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  window.onload = () => {
+    answerInput.addEventListener("keypress", (e) => { if (e.key === "Enter") submitBtn.click(); });
+    fetch(API_URL).then(res => res.json()).then(data => {
+      allQuestions = data;
+      loadQuestion();
+    }).catch(err => { textEl.innerText = "連線失敗"; });
+  };
+
+  function loadQuestion() {
+    const seenIds = getCookie("qa_seen_v21");
+    const available = allQuestions.filter(q => !seenIds.includes(q.id));
+
+    if (available.length === 0) {
+      textEl.innerText = "🎉 題庫已全部完成！";
+      applicantEl.innerText = "";
+      interactiveBox.classList.add("hidden");
+      return;
+    }
+
+    wrongAttempts = 0;
+    currentQuestion = shuffle(available)[0];
+    
+    textEl.innerText = currentQuestion.question;
+    
+    // 修正申請人顯示邏輯：若有內容則顯示，無則清空
+    if (currentQuestion.applicant && currentQuestion.applicant.trim() !== "") {
+      applicantEl.innerText = "提供者：" + currentQuestion.applicant;
+    } else {
+      applicantEl.innerText = "";
+    }
+
+    interactiveBox.classList.remove("hidden");
+    answerInput.value = "";
+    feedbackMsg.innerText = "";
+    answerInput.disabled = false;
+    submitBtn.disabled = false;
+  }
+
+  function checkAnswer() {
+    const userAns = answerInput.value.trim().toLowerCase();
+    if (!userAns) return;
+
+    // 比對邏輯強化：確保資料庫抓到的答案也經過 trim 與小寫化
+    const isCorrect = currentQuestion.answers.some(a => a.toString().toLowerCase().trim() === userAns);
+
+    if (isCorrect) {
+      feedbackMsg.style.color = "green";
+      feedbackMsg.innerText = "✅ " + currentQuestion.message;
+      const seen = getCookie("qa_seen_v21");
+      seen.push(currentQuestion.id);
+      setCookie("qa_seen_v21", seen, 1);
+      answerInput.disabled = true;
+      submitBtn.disabled = true;
+      setTimeout(loadQuestion, 2000);
+    } else {
+      wrongAttempts++;
+      if (wrongAttempts >= 10) {
+        feedbackMsg.innerText = "❌ 答錯 10 次，自動跳題";
+        setTimeout(loadQuestion, 2000);
+      } else {
+        feedbackMsg.style.color = "red";
+        feedbackMsg.innerText = `再試試看！ (${wrongAttempts}/10)`;
+      }
+    }
+  }
+</script>
+</body>
+</html>
