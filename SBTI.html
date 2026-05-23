@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBTI 全能人格類型測試 - 完整版</title>
+    <style>
+        /* 全域自適應樣式設定 */
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #50e3c2;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
+            color: var(--dark-color);
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 自適應主容器，確保在各裝置上完美展現比例 */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                border-radius: 8px;
+            }
+            h1 { font-size: 1.5rem; }
+            .btn { width: 100%; text-align: center; }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+        }
+
+        /* 題目區塊樣式 */
+        .question-card {
+            background: var(--light-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+
+        /* 選項自適應排列 */
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-color);
+            background: #f0f7ff;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+
+        /* 動作按鈕 */
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary-color), #357abd);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* 結果展示區塊 */
+        #result-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .result-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .result-code {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 5px;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+        }
+
+        /* 分析條樣式 */
+        .dimension-bar-container {
+            margin-bottom: 15px;
+        }
+
+        .dimension-labels {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .bar-bg {
+            background: #e2e8f0;
+            height: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            height: 100%;
+            width: 0%;
+            transition: width 1s ease-in-out;
+        }
+
+        .analysis-text {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f1f5f9;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0 8px 8px 0;
+            font-size: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 測試進行中介面 -->
+    <div id="quiz-section">
+        <header>
+            <h1>SBTI 全能人格類型測試</h1>
+            <p class="subtitle">完整專業版 • 請依據最真實的直覺回答所有問題</p>
+        </header>
+
+        <form id="sbti-form">
+            <div id="questions-container"></div>
+            <div class="actions">
+                <button type="button" class="btn" onclick="calculateResult()">查看分析結果</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- 結果展現介面 -->
+    <div id="result-section">
+        <header>
+            <h1>你的 SBTI 分析報告</h1>
+            <p class="subtitle">根據你的全方位思維與行為模式計算完成</p>
+        </header>
+        
+        <div class="result-title">核心人格類型</div>
+        <div class="result-code" id="type-output">XXXX</div>
+        
+        <div id="bars-container"></div>
+
+        <div class="analysis-text" id="analysis-output">
+            正在分析你的人格特質...
+        </div>
+        
+        <div class="actions">
+            <button type="button" class="btn" onclick="window.location.reload()">重新測試</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 20題完整題庫，完美劃分四大維度：
+    // E/I（外向/內向）、S/N（實感/直覺）、T/F（思考/情感）、J/P（判斷/感知）
+    const questions = [
+        // --- E vs I 維度 ---
+        { id: 1, dimension: 'EI', text: '1. 在連續參與多人的聚會或群體活動後，你通常會感覺？', options: [{ text: '精神飽滿，覺得充滿了電力', value: 'E' }, { text: '精疲力竭，需要一個人靜靜處來充電', value: 'I' }] },
+        { id: 2, dimension: 'EI', text: '2. 當你在生活中遇到有趣的事情時，你通常會？', options: [{ text: '立刻打電話或發訊息與朋友分享', value: 'E' }, { text: '先在心裡默默回味，等見面或合適時機再說', value: 'I' }] },
+        { id: 3, dimension: 'EI', text: '3. 在社交場合中，你傾向於扮演什麼樣的角色？', options: [{ text: '主動帶起話題，和周圍的人打成一片', value: 'E' }, { text: '待在熟人身邊，多數時間當個傾聽者', value: 'I' }] },
+        { id: 4, dimension: 'EI', text: '4. 當你要處理一項新任務或學習新技能時，你更喜歡？', options: [{ text: '與大家一邊討論、交流意見一邊進行', value: 'E' }, { text: '自己先找資料研究摸索，獨立完成', value: 'I' }] },
+        { id: 5, dimension: 'EI', text: '5. 如果待在家裡一整天都不跟任何人說話，你會覺得？', options: [{ text: '有點悶，無聊到發慌，想找人聊天', value: 'E' }, { text: '非常放鬆、自在，很享受這段時間', value: 'I' }] },
+
+        // --- S vs N 維度 ---
+        { id: 6, dimension: 'SN', text: '6. 面對一項新任務時，你更習慣於哪種切入方式？', options: [{ text: '遵循前人留下的明確步驟與標準作業程序', value: 'S' }, { text: '嘗試自己找出新的、更有創意的非傳統方法', value: 'N' }] },
+        { id: 7, dimension: 'SN', text: '7. 觀察周遭事物時，你更容易注意到什麼？', options: [{ text: '具體的事實、具體的數據以及眼前的細節', value: 'S' }, { text: '背後的意涵、未來的可能性與隱藏的脈絡', value: 'N' }] },
+        { id: 8, dimension: 'SN', text: '8. 你比較喜歡看哪種類型的文章、故事或影片？', options: [{ text: '基於真實事件、充滿寫實與日常細節的內容', value: 'S' }, { text: '探討抽象概念、科幻、富有想像力或哲理的內容', value: 'N' }] },
+        { id: 9, dimension: 'SN', text: '9. 當朋友向你描述一個新景點時，你大腦中浮現的是？', options: [{ text: '具體的畫面（如建築外觀、門票價格、餐點）', value: 'S' }, { text: '整體的氣氛感（如整體給人的氛圍、情調）', value: 'N' }] },
+        { id: 10, dimension: 'SN', text: '10. 你認為自己是一個比較實事求是還是充滿靈感的人？', options: [{ text: '腳踏實地，更看重現在能做好的事情', value: 'S' }, { text: '滿腦子點子，對未來的計畫充滿各種想像', value: 'N' }] },
+
+        // --- T vs F 維度 ---
+        { id: 11, dimension: 'TF', text: '11. 當朋友遇到挫折來找你訴苦時，你的第一反應通常是？', options: [{ text: '幫他冷靜分析原因，試圖找出具體解決方案', value: 'T' }, { text: '先安撫他的情緒，表達你的同理、支持與安慰', value: 'F' }] },
+        { id: 12, dimension: 'TF', text: '12. 在團隊合作中進行決策時，你認為最重要的是？', options: [{ text: '邏輯與客觀事實，對事不對人', value: 'T' }, { text: '團隊的和諧與每位成員內心的感受', value: 'F' }] },
+        { id: 13, dimension: 'TF', text: '13. 評價一部電影或一件作品時，你比較看重？', options: [{ text: '它的架構是否嚴謹、邏輯是否合理', value: 'T' }, { text: '它是否成功打動人心、引發強烈的情感共鳴', value: 'F' }] },
+        { id: 14, dimension: 'TF', text: '14. 如果必須指出別人身上的某個缺點，你會？', options: [{ text: '直接了當地說明事實，因為這樣才對他有幫助', value: 'T' }, { text: '委婉地表達，非常小心避開可能會傷害對方自尊的字眼', value: 'F' }] },
+        { id: 15, dimension: 'TF', text: '15. 你覺得自己被以下哪句話形容時會讓你更開心？', options: [{ text: '「你真的非常有條理且聰明優秀。」', value: 'T' }, { text: '「你真是一個溫暖且善良懂人的人。」', value: 'F' }] },
+
+        // --- J vs P 維度 ---
+        { id: 16, dimension: 'JP', text: '16. 當你準備出遠門旅行或執行大型計畫時，你通常？', options: [{ text: '提前安排好詳細行程表與時間節點，不喜歡意外', value: 'J' }, { text: '只定好大方向，剩下隨遇而安，保留彈性空間', value: 'P' }] },
+        { id: 17, dimension: 'JP', text: '17. 面對手頭上的多項工作或家庭作業，你習慣怎麼做？', options: [{ text: '設定好時程，井然有序地提早完成它們', value: 'J' }, { text: '在接近最後期限（Deadline）時，爆發力全開地一口氣做完', value: 'P' }] },
+        { id: 18, dimension: 'JP', text: '18. 當原定的計畫突然被打亂、發生變故時，你的心情是？', options: [{ text: '感到焦慮與煩躁，討厭事情脫離掌控的感覺', value: 'J' }, { text: '覺得沒關係，靈活調整就好，甚至覺得有點刺激', value: 'P' }] },
+        { id: 19, dimension: 'JP', text: '19. 你的房間、書桌或是電腦桌面文件檔案，通常呈現什麼狀態？', options: [{ text: '物品分類明確，有條不紊地擺放在該放的位置', value: 'J' }, { text: '隨性擺放，雖然看起來有點亂，但你自己找得到', value: 'P' }] },
+        { id: 20, dimension: 'JP', text: '20. 在日常生活中，你更喜歡過哪種節奏的日子？', options: [{ text: '目標清晰、生活規律且富有掌控感的生活', value: 'J' }, { text: '自由度高、隨性、可以隨心情自由調整的日子', value: 'P' }] }
+    ];
+
+    // 動態建置題目至 HTML 中
+    function initQuiz() {
+        const container = document.getElementById('questions-container');
+        questions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            const qText = document.createElement('div');
+            qText.className = 'question-text';
+            qText.innerText = q.text;
+            card.appendChild(qText);
+            
+            const optionsGroup = document.createElement('div');
+            optionsGroup.className = 'options-group';
+            
+            q.options.forEach((opt, oIndex) => {
+                const label = document.createElement('label');
+                label.className = 'option-label';
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `q_${q.id}`;
+                input.value = opt.value;
+                if (oIndex === 0) input.required = true; // 強制每題必填
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(opt.text));
+                optionsGroup.appendChild(label);
+            });
+            
+            card.appendChild(optionsGroup);
+            container.appendChild(card);
+        });
+    }
+
+    // 計算測試結果演算法
+    function calculateResult() {
+        const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+        let unanswered = false;
+
+        // 檢查並撈取所有題目答案
+        questions.forEach(q => {
+            const selected = document.querySelector(`input[name="q_${q.id}"]:checked`);
+            if (!selected) {
+                unanswered = true;
+            } else {
+                scores[selected.value]++;
+            }
+        });
+
+        // 預防未填寫完成
+        if (unanswered) {
+            alert('鍾旻邑，請將所有題目填寫完整後再提交分析喔！');
+            return;
+        }
+
+        // 決定四大維度最終屬性字元
+        const resE_I = scores.E >= scores.I ? 'E' : 'I';
+        const resS_N = scores.S >= scores.N ? 'S' : 'N';
+        const resT_F = scores.T >= scores.F ? 'T' : 'F';
+        const resJ_P = scores.J >= scores.P ? 'J' : 'P';
+        
+        const finalType = resE_I + resS_N + resT_F + resJ_P;
+
+        // 計算各維度百分比（每維度5題）
+        const pctE = Math.round((scores.E / 5) * 100);
+        const pctS = Math.round((scores.S / 5) * 100);
+        const pctT = Math.round((scores.T / 5) * 100);
+        const pctJ = Math.round((scores.J / 5) * 100);
+
+        // 切換顯示區塊
+        document.getElementById('quiz-section').style.display = 'none';
+        document.getElementById('result-section').style.display = 'block';
+        
+        // 渲染人格代碼
+        document.getElementById('type-output').innerText = finalType;
+
+        // 渲染比例分析條
+        const dimensionsData = [
+            { left: 'E 外向', right: '內向 I', val: pctE },
+            { left: 'S 實感', right: '直覺 N', val: pctS },
+            { left: 'T 思考', right: '情感 F', val: pctT },
+            { left: 'J 判斷', right: '感知 P', val: pctJ }
+        ];
+
+        const barsContainer = document.getElementById('bars-container');
+        barsContainer.innerHTML = ''; // 清空舊資料
+        
+        dimensionsData.forEach(d => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'dimension-bar-container';
+            
+            wrapper.innerHTML = `
+                <div class="dimension-labels">
+                    <span>${d.left} (${d.val}%)</span>
+                    <span>${100 - d.val}% (${d.right})</span>
+                </div>
+                <div class="bar-bg">
+                    <div class="bar-fill" style="width: ${d.val}%"></div>
+                </div>
+            `;
+            barsContainer.appendChild(wrapper);
+        });
+
+        // 動態生成客製化解析文本
+        document.getElementById('analysis-output').innerHTML = generateAnalysis(finalType);
+        
+        // 捲動至最上方
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 各大分析解說資料庫
+    function generateAnalysis(type) {
+        const typeExplanations = {
+            'INTJ': '<strong>系統架構師：</strong>你擁有極強的獨立思考能力與長遠戰略目光。你喜歡追求效率，善於將複雜的點子轉化為具體的結構化執行方案。有時你可能顯得有點冷靜與完美主義，但你的智慧總能讓人驚嘆。',
+            'INTP': '<strong>邏輯思想家：</strong>你是天生的問題解決者與分析家。你對新技術、系統設計或底層邏輯有著無窮的探索慾望。你喜歡解構事物（無論是程式碼還是硬體設備），雖然生活上比較隨性，但在熱愛的專業領域中精準無比。',
+            'ENTJ': '<strong>大膽指揮官：</strong>你是天生的領導者，充滿自信與強大的組織意志力。你善於為團隊訂定宏大的目標，並透過極度理性的邏輯去分配資源、排除萬難。你享受帶領大家贏得勝利的巨大成就感。',
+            'ENTP': '<strong>睿智開拓者：</strong>你思維敏捷、博學且充滿好奇心。你最討厭一成不變的規則，喜歡在思想上與他人激盪出新火花。你熱衷於尋找別人沒發現的新方法，並用幽默且富有洞察力的方式去改造這個世界。',
+            'INFJ': '<strong>神祕守護者：</strong>你擁有深沉的洞察力與極強的同理心。雖然你對外人可能比較安靜內斂，但內心對自己理想的追求從未停止。你善於理解人性的本質，並默默用自己的方式為身邊帶來正向的改變。',
+            'INFP': '<strong>心靈療癒者：</strong>你是一位內心世界極其豐富的理想主義者。你非常看重自身的價值觀與真實感，對美好的事物（如音樂、文字或寵物）有著細膩的情感共鳴。你雖然低調，但擁有不容忽視的精神力量。',
+            'ENFJ': '<strong>全能導師：</strong>你充滿熱情、極具魅力且非常善解人意。你能夠輕易察覺他人的潛能，並樂於去鼓舞與引領他人成長。你在群體中總能建構起強大的向心力，是一個讓人感到無比可靠的燈塔。',
+            'ENFP': '<strong>熱情追夢人：</strong>你是一個充滿活力與創意的自由靈魂。你總能在日常生活中看見無限的可能性，並用你的熱情去感染身邊的每一個人。你喜歡探索新奇的事物，拒絕被框架束縛，是大家的開心果。',
+            'ISTJ': '<strong>穩健檢查員：</strong>你是最值得信賴的基石。你行事作風腳踏實地、注重細節，且極度重視承諾與責任感。你喜歡有條不紊的環境，透過精準地執行每一步計畫，確保所有人事物都在正確的軌道上運作。',
+            'ISFJ': '<strong>守護者天使：</strong>你非常溫和、務實且富有高度的責任感。你總是默默地關懷並照顧著身邊的人與寵物，將他們的需要放在心上。你重視傳統與家庭的穩定，在任何細緻的工作中都能展現出無與倫比的專注。',
+            'ESTJ': '<strong>效率管理者：</strong>你是秩序與實務的推動者。你善於打理生活中的大小事，堅信事實與數據，做事果斷迅速。你喜歡明確的規範與清晰的架構，並有能力帶領整個環境變得更加井井有條。',
+            'ESFJ': '<strong>熱心招待者：</strong>你是一個非常有親和力且受歡迎的人。你樂於建立和諧的社交關係，細心留意每位朋友的感受。你熱愛團隊活動與合作，總是主動為大家創造充滿歡笑與溫暖的實體凝聚體驗。',
+            'ISTP': '<strong>工藝實踐家：</strong>你是一個務實且特立獨行的行動派。你喜歡用雙手去觸摸、探索、組裝或操作真實的工具與設備。你擁有冷靜的頭腦與超群的危機處理能力，在需要爆發力或動手改裝的領域中表現驚人。',
+            'ISFP': '<strong>藝術創作者：</strong>你是一位生活的美學家，喜歡生活在當下。你內心柔軟、情感豐富，比起言語，你更傾向用自己獨特的作品（音樂、手作、改裝、或與寵物互動）來展現自我。你熱愛自由，不喜歡被生活計畫死死綁住。',
+            'ESTP': '<strong>極限挑戰者：</strong>你充滿動能、勇敢且富有實踐力。你不會花太多時間紙上談兵，而是直接投入實戰中去體驗和學習。你對周圍環境的變化有著極度敏銳的直覺，非常擅長在競爭激烈的動態環境中贏得優勢。',
+            'ESFP': '<strong>天生表演家：</strong>你熱愛生活，渾身散發著無法忽視的個人魅力。你喜歡將快樂帶給身邊的每個人，讓每一個平凡的瞬間都變成歡樂的派對。你對周圍人事物有著極強的實感體驗，活得既精采又自由自在。'
+        };
+
+        const defaultDesc = '<strong>全能測試完成：</strong>你展現了十分獨特且多元的綜合人格特質。維持你的優勢，在未來的各種專案、學習、甚至是休閒競賽中持續發光發熱吧！';
+        return typeExplanations[type] || defaultDesc;
+    }
+
+    // 啟動初始化
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
