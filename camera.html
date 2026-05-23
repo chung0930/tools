@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>專業網頁相機系統</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 自定義樣式與動畫 */
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow: hidden; /* 防止滾動 */
+            touch-action: none; /* 防止移動端預設手勢干擾 */
+        }
+
+        /* 影片自適應滿版，並支援數位變焦 */
+        #camera-feed {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.2s ease-out, filter 0.2s;
+            transform-origin: center center;
+        }
+
+        /* 九宮格參考線 */
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            display: none;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+        }
+        .grid-overlay.active {
+            display: grid;
+        }
+        .grid-cell {
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* 專業滑桿樣式 */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 2px;
+        }
+        
+        /* 垂直滑桿 */
+        .vertical-slider {
+            writing-mode: bt-lr; /* IE */
+            -webkit-appearance: slider-vertical; /* WebKit */
+            width: 8px;
+            height: 150px;
+            padding: 0 5px;
+        }
+
+        /* 快門閃爍動畫 */
+        @keyframes flash {
+            0% { background-color: rgba(255, 255, 255, 0); }
+            50% { background-color: rgba(255, 255, 255, 1); }
+            100% { background-color: rgba(255, 255, 255, 0); }
+        }
+        .shutter-flash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0;
+        }
+        .flash-active {
+            animation: flash 0.3s ease-out;
+        }
+
+        /* 快門按鈕樣式 */
+        .shutter-btn {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 4px solid #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.1s;
+        }
+        .shutter-btn-inner {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: #fff;
+            transition: all 0.1s;
+        }
+        .shutter-btn:active .shutter-btn-inner {
+            width: 48px;
+            height: 48px;
+            background-color: #e5e5e5;
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen w-full relative select-none">
+
+    <!-- 頂部控制列 -->
+    <div class="absolute top-0 left-0 w-full p-4 flex justify-between items-center z-20 bg-gradient-to-b from-black/70 to-transparent">
+        <button id="btn-settings" class="text-white p-2 hover:bg-white/20 rounded-full transition" onclick="toggleSettingsModal()">
+            <i class="fas fa-cog text-xl"></i>
+        </button>
+        
+        <!-- 解析度指示器 -->
+        <div id="resolution-indicator" class="text-xs font-mono bg-black/50 px-3 py-1 rounded-full border border-gray-600">
+            偵測中...
+        </div>
+
+        <button id="btn-grid" class="text-white p-2 hover:bg-white/20 rounded-full transition" onclick="toggleGrid()">
+            <i class="fas fa-border-all text-xl"></i>
+        </button>
+    </div>
+
+    <!-- 設定面板 (預設隱藏) -->
+    <div id="settings-modal" class="hidden absolute top-16 left-4 bg-black/80 backdrop-blur-md border border-gray-700 rounded-xl p-4 z-30 w-64 shadow-2xl">
+        <h3 class="text-sm text-gray-400 mb-3 border-b border-gray-700 pb-2">相機設定</h3>
+        
+        <div class="mb-4">
+            <label class="block text-xs mb-1">預期解析度 (若硬體不支援會自動降級)</label>
+            <select id="select-resolution" class="w-full bg-gray-800 text-white text-sm p-2 rounded outline-none border border-gray-600" onchange="changeResolution()">
+                <option value="2160">4K (3840x2160)</option>
+                <option value="1080" selected>FHD (1920x1080)</option>
+                <option value="720">HD (1280x720)</option>
+                <option value="480">VGA (640x480)</option>
+            </select>
+        </div>
+        
+        <div class="flex justify-between items-center mb-2">
+            <span class="text-sm">鏡頭方向</span>
+            <span id="facing-mode-indicator" class="text-xs text-blue-400">後置</span>
+        </div>
+    </div>
+
+    <!-- 視訊與視角區域 -->
+    <div class="flex-grow relative w-full overflow-hidden bg-black flex items-center justify-center">
+        <!-- 影像來源 -->
+        <video id="camera-feed" autoplay playsinline muted></video>
+        
+        <!-- 九宮格疊加層 -->
+        <div id="grid-overlay" class="grid-overlay w-full h-full">
+            <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+            <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+            <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+        </div>
+
+        <!-- 變焦與亮度控制 (側邊) -->
+        <div class="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col items-center space-y-2 z-20 bg-black/40 p-2 rounded-full backdrop-blur-sm">
+            <i class="fas fa-search-plus text-xs text-gray-300"></i>
+            <input type="range" id="slider-zoom" class="vertical-slider" min="1" max="4" step="0.1" value="1" oninput="updateZoom()">
+            <span id="zoom-text" class="text-xs font-mono mt-1 text-white">1.0x</span>
+        </div>
+
+        <div class="absolute left-4 top-1/2 -translate-y-1/2 flex flex-col items-center space-y-2 z-20 bg-black/40 p-2 rounded-full backdrop-blur-sm">
+            <i class="fas fa-sun text-xs text-gray-300"></i>
+            <input type="range" id="slider-brightness" class="vertical-slider" min="50" max="150" step="1" value="100" oninput="updateBrightness()">
+            <span id="brightness-text" class="text-xs font-mono mt-1 text-white">0</span>
+        </div>
+
+        <!-- 快門閃爍層 -->
+        <div id="shutter-flash" class="shutter-flash"></div>
+    </div>
+
+    <!-- 底部控制列 -->
+    <div class="absolute bottom-0 left-0 w-full h-28 bg-gradient-to-t from-black to-transparent flex justify-around items-center px-6 z-20 pb-4">
+        
+        <!-- 備用方案：本機上傳 -->
+        <button class="w-12 h-12 rounded-full bg-gray-800/80 hover:bg-gray-700 flex justify-center items-center transition border border-gray-600 relative overflow-hidden" onclick="document.getElementById('file-fallback').click()" title="從本機選擇照片">
+            <i class="fas fa-images text-lg"></i>
+            <input type="file" id="file-fallback" accept="image/*" class="hidden" onchange="handleFileFallback(event)">
+        </button>
+
+        <!-- 拍照快門 -->
+        <button id="btn-shutter" class="shutter-btn" onclick="takePhoto()">
+            <div class="shutter-btn-inner"></div>
+        </button>
+
+        <!-- 切換鏡頭 -->
+        <button id="btn-switch-camera" class="w-12 h-12 rounded-full bg-gray-800/80 hover:bg-gray-700 flex justify-center items-center transition border border-gray-600 disabled:opacity-30" onclick="switchCamera()">
+            <i class="fas fa-sync-alt text-lg"></i>
+        </button>
+    </div>
+
+    <!-- 權限與錯誤備援對話框 (Fallback Modal) -->
+    <div id="error-modal" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center hidden backdrop-blur-sm p-6">
+        <div class="bg-gray-900 border border-red-900/50 rounded-2xl p-6 max-w-sm w-full text-center shadow-2xl">
+            <div class="w-16 h-16 bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-exclamation-triangle text-3xl text-red-500"></i>
+            </div>
+            <h2 id="error-title" class="text-xl font-bold mb-2">無法存取相機</h2>
+            <p id="error-desc" class="text-sm text-gray-400 mb-6 leading-relaxed">
+                系統無法獲取相機畫面。
+            </p>
+            
+            <div class="space-y-3">
+                <button onclick="initCamera()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 rounded-lg font-medium transition">
+                    <i class="fas fa-redo mr-2"></i>重試連線
+                </button>
+                <div class="relative flex py-2 items-center">
+                    <div class="flex-grow border-t border-gray-700"></div>
+                    <span class="flex-shrink-0 mx-4 text-gray-500 text-xs">或使用備援方案</span>
+                    <div class="flex-grow border-t border-gray-700"></div>
+                </div>
+                <button onclick="document.getElementById('file-fallback').click(); hideErrorModal();" class="w-full py-3 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded-lg font-medium transition text-gray-300">
+                    <i class="fas fa-folder-open mr-2"></i>上傳本機圖片
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 用於處理影像處理的隱藏 Canvas -->
+    <canvas id="capture-canvas" class="hidden"></canvas>
+
+    <script>
+        // --- 全域狀態變數 ---
+        const video = document.getElementById('camera-feed');
+        const canvas = document.getElementById('capture-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let currentStream = null;
+        let currentFacingMode = 'environment'; // 預設使用後置鏡頭
+        let videoTrack = null;
+        
+        // 參數狀態
+        let currentZoom = 1.0;
+        let currentBrightness = 100;
+        let hardwareZoomSupported = false;
+
+        // 初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            checkBrowserSupport();
+        });
+
+        // 檢查瀏覽器基本支援 (備援方案第一道防線)
+        function checkBrowserSupport() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                showErrorModal(
+                    "環境不支援", 
+                    "您的瀏覽器不支援相機 API，或者您目前並非處於安全的連線環境 (HTTPS)。請嘗試使用最新的瀏覽器或確保網址為 https 開頭。"
+                );
+                return;
+            }
+            initCamera();
+        }
+
+        // --- 核心相機初始化與備援邏輯 (Fallback Strategy) ---
+        async function initCamera() {
+            hideErrorModal();
+            stopMediaTracks();
+
+            const idealHeight = parseInt(document.getElementById('select-resolution').value);
+            const idealWidth = idealHeight === 2160 ? 3840 : (idealHeight === 1080 ? 1920 : (idealHeight === 720 ? 1280 : 640));
+
+            // 策略 1: 嘗試最高配置 (指定解析度與鏡頭)
+            const constraintsPrimary = {
+                video: {
+                    facingMode: currentFacingMode,
+                    width: { ideal: idealWidth },
+                    height: { ideal: idealHeight }
+                },
+                audio: false
+            };
+
+            // 策略 2: 降級配置 (捨棄解析度要求，只要指定鏡頭)
+            const constraintsFallback1 = {
+                video: { facingMode: currentFacingMode },
+                audio: false
+            };
+
+            // 策略 3: 最低限度配置 (只要能抓到任何相機就好)
+            const constraintsFallback2 = {
+                video: true,
+                audio: false
+            };
+
+            try {
+                // 執行策略 1
+                await startStream(constraintsPrimary);
+                console.log("策略 1 成功：使用理想配置");
+            } catch (err1) {
+                console.warn("策略 1 失敗:", err1.name);
+                if (err1.name === 'OverconstrainedError' || err1.name === 'NotFoundError') {
+                    try {
+                        // 執行策略 2
+                        await startStream(constraintsFallback1);
+                        console.log("策略 2 成功：降級解析度");
+                    } catch (err2) {
+                        console.warn("策略 2 失敗:", err2.name);
+                        try {
+                            // 執行策略 3
+                            await startStream(constraintsFallback2);
+                            console.log("策略 3 成功：取得任意可用相機");
+                        } catch (err3) {
+                            handleCameraError(err3);
+                        }
+                    }
+                } else {
+                    // 其他錯誤 (如權限拒絕 NotAllowedError) 直接處理
+                    handleCameraError(err1);
+                }
+            }
+        }
+
+        // 啟動串流
+        async function startStream(constraints) {
+            currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+            video.srcObject = currentStream;
+            videoTrack = currentStream.getVideoTracks()[0];
+            
+            // 當影片載入資料後，更新介面資訊
+            video.onloadedmetadata = () => {
+                video.play();
+                updateUIInfo();
+                checkHardwareCapabilities();
+            };
+        }
+
+        // 停止所有軌道
+        function stopMediaTracks() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => {
+                    track.stop();
+                });
+            }
+        }
+
+        // 處理相機錯誤 (備援對話框)
+        function handleCameraError(error) {
+            console.error("相機存取錯誤:", error);
+            let title = "相機發生錯誤";
+            let desc = error.message || "發生未知錯誤。";
+
+            switch (error.name) {
+                case 'NotAllowedError':
+                case 'PermissionDeniedError':
+                    title = "權限遭拒絕";
+                    desc = "您已拒絕瀏覽器存取相機。請點擊網址列左側的鎖頭圖示，將相機權限設為「允許」，然後點擊下方重試。";
+                    break;
+                case 'NotFoundError':
+                    title = "找不到相機";
+                    desc = "系統偵測不到任何相機設備。請檢查硬體連接，或使用下方按鈕上傳本機圖片進行處理。";
+                    break;
+                case 'NotReadableError':
+                case 'TrackStartError':
+                    title = "相機被佔用";
+                    desc = "您的相機可能正被其他應用程式（如視訊會議軟體）佔用。請關閉其他程式後重試。";
+                    break;
+            }
+            showErrorModal(title, desc);
+        }
+
+        // 檢查硬體能力 (如是否支援原生縮放)
+        function checkHardwareCapabilities() {
+            if (!videoTrack) return;
+            const capabilities = videoTrack.getCapabilities();
+            
+            // 檢查是否支援硬體縮放
+            if (capabilities.zoom) {
+                hardwareZoomSupported = true;
+                const slider = document.getElementById('slider-zoom');
+                slider.min = capabilities.zoom.min;
+                slider.max = capabilities.zoom.max;
+                slider.step = capabilities.zoom.step;
+                // 初始化為目前值或最小值
+                const settings = videoTrack.getSettings();
+                slider.value = settings.zoom || capabilities.zoom.min;
+                currentZoom = slider.value;
+                document.getElementById('zoom-text').innerText = parseFloat(currentZoom).toFixed(1) + 'x';
+            } else {
+                hardwareZoomSupported = false;
+                // 重置數位變焦滑桿設定
+                const slider = document.getElementById('slider-zoom');
+                slider.min = 1;
+                slider.max = 4;
+                slider.step = 0.1;
+                slider.value = 1;
+            }
+        }
+
+        // --- 控制項邏輯 ---
+
+        // 切換前後鏡頭
+        function switchCamera() {
+            currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
+            document.getElementById('facing-mode-indicator').innerText = currentFacingMode === 'environment' ? '後置' : '前置';
+            
+            // 添加一個短暫的黑屏動畫提升專業感
+            video.style.opacity = 0;
+            setTimeout(() => {
+                initCamera().then(() => {
+                    video.style.opacity = 1;
+                });
+            }, 300);
+        }
+
+        // 更改解析度
+        function changeResolution() {
+            initCamera();
+            toggleSettingsModal(); // 關閉設定面板
+        }
+
+        // 調整變焦 (支援硬體變焦與數位變焦備援)
+        function updateZoom() {
+            const slider = document.getElementById('slider-zoom');
+            currentZoom = parseFloat(slider.value);
+            document.getElementById('zoom-text').innerText = currentZoom.toFixed(1) + 'x';
+
+            if (hardwareZoomSupported && videoTrack) {
+                // 硬體變焦
+                videoTrack.applyConstraints({
+                    advanced: [{ zoom: currentZoom }]
+                }).catch(e => console.warn("硬體縮放失敗:", e));
+            } else {
+                // 數位變焦備援 (CSS Transform)
+                video.style.transform = `scale(${currentZoom})`;
+            }
+        }
+
+        // 調整亮度 (使用 CSS Filter 模擬，拍照時繪製到 Canvas)
+        function updateBrightness() {
+            const slider = document.getElementById('slider-brightness');
+            currentBrightness = parseInt(slider.value);
+            
+            // 顯示相對值 -50 到 +50
+            const displayVal = currentBrightness - 100;
+            document.getElementById('brightness-text').innerText = (displayVal > 0 ? '+' : '') + displayVal;
+            
+            applyVideoFilters();
+        }
+
+        function applyVideoFilters() {
+            // 套用亮度，可擴充其他濾鏡
+            video.style.filter = `brightness(${currentBrightness}%)`;
+        }
+
+        // --- 拍照與影像處理邏輯 ---
+
+        function takePhoto() {
+            if (!video.videoWidth) return;
+
+            // 觸發快門動畫與聲音
+            triggerShutterEffect();
+
+            const vWidth = video.videoWidth;
+            const vHeight = video.videoHeight;
+
+            // 決定畫布大小
+            canvas.width = vWidth;
+            canvas.height = vHeight;
+
+            // 1. 套用亮度濾鏡到 Context
+            ctx.filter = `brightness(${currentBrightness}%)`;
+
+            // 2. 處理數位變焦的裁切 (如果使用硬體變焦，vWidth/vHeight 就是已經縮放好的，不需要裁切)
+            if (!hardwareZoomSupported && currentZoom > 1) {
+                // 計算裁切區域 (提取中心點)
+                const cropWidth = vWidth / currentZoom;
+                const cropHeight = vHeight / currentZoom;
+                const cropX = (vWidth - cropWidth) / 2;
+                const cropY = (vHeight - cropHeight) / 2;
+
+                // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+                ctx.drawImage(video, cropX, cropY, cropWidth, cropHeight, 0, 0, vWidth, vHeight);
+            } else {
+                // 直接繪製
+                ctx.drawImage(video, 0, 0, vWidth, vHeight);
+            }
+
+            // 3. 輸出與下載
+            downloadImage(canvas.toDataURL('image/jpeg', 0.95));
+        }
+
+        // 備援方案：處理本機圖片上傳
+        function handleFileFallback(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    // 將上傳的圖片畫到 canvas 並套用目前的亮度設定
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.filter = `brightness(${currentBrightness}%)`;
+                    ctx.drawImage(img, 0, 0);
+                    
+                    triggerShutterEffect(); // 給個回饋
+                    downloadImage(canvas.toDataURL('image/jpeg', 0.95), "edited_");
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            
+            // 清空 input 確保下次選同一個檔案也能觸發
+            event.target.value = '';
+        }
+
+        // 下載圖片邏輯
+        function downloadImage(dataUrl, prefix = "Capture_") {
+            const a = document.createElement('a');
+            a.href = dataUrl;
+            
+            // 建立專業的檔案命名 (Capture_YYYYMMDD_HHMMSS.jpg)
+            const date = new Date();
+            const timeStr = date.getFullYear() +
+                          String(date.getMonth() + 1).padStart(2, '0') +
+                          String(date.getDate()).padStart(2, '0') + "_" +
+                          String(date.getHours()).padStart(2, '0') +
+                          String(date.getMinutes()).padStart(2, '0') +
+                          String(date.getSeconds()).padStart(2, '0');
+                          
+            a.download = `${prefix}${timeStr}.jpg`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // 快門特效
+        function triggerShutterEffect() {
+            const flash = document.getElementById('shutter-flash');
+            flash.classList.remove('flash-active');
+            // 觸發 reflow
+            void flash.offsetWidth;
+            flash.classList.add('flash-active');
+            
+            // 嘗試播放快門音效 (若無實體音檔，用 Web Audio API 模擬簡單的滴答聲)
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                oscillator.type = 'square';
+                oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.1);
+            } catch(e) { /* 忽略音效錯誤 */ }
+        }
+
+        // --- UI 互動邏輯 ---
+
+        function toggleSettingsModal() {
+            const modal = document.getElementById('settings-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        function toggleGrid() {
+            const grid = document.getElementById('grid-overlay');
+            grid.classList.toggle('active');
+            const btn = document.getElementById('btn-grid');
+            btn.classList.toggle('text-blue-400');
+            btn.classList.toggle('text-white');
+        }
+
+        function updateUIInfo() {
+            if (videoTrack) {
+                const settings = videoTrack.getSettings();
+                const resText = `${settings.width || '?'} x ${settings.height || '?'}`;
+                document.getElementById('resolution-indicator').innerText = resText;
+            }
+        }
+
+        function showErrorModal(title, desc) {
+            document.getElementById('error-title').innerText = title;
+            document.getElementById('error-desc').innerText = desc;
+            document.getElementById('error-modal').classList.remove('hidden');
+        }
+
+        function hideErrorModal() {
+            document.getElementById('error-modal').classList.add('hidden');
+        }
+
+        // 點擊空白處關閉設定面板
+        document.addEventListener('click', (e) => {
+            const settingsModal = document.getElementById('settings-modal');
+            const btnSettings = document.getElementById('btn-settings');
+            if (!settingsModal.classList.contains('hidden') && 
+                !settingsModal.contains(e.target) && 
+                !btnSettings.contains(e.target)) {
+                settingsModal.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
