@@ -138,7 +138,7 @@
 
         try {
             // 使用 ip-api.com 的 JSON 接口
-            const response = await fetch('http://ip-api.com/json/?lang=zh-TW');
+            const response = await fetch('https://ip-api.com/json/?lang=zh-TW');
             const data = await response.json();
 
             if (data.status === 'success') {
@@ -165,4 +165,3 @@
 
 </body>
 </html>
-
