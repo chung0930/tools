@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>光學檔案傳輸</title>
+<title>光學檔案傳輸 · 噴泉碼版</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsqr/1.4.0/jsQR.js"></script>
 <style>
@@ -26,7 +26,8 @@
   body{min-height:100vh;padding:16px;padding-bottom:40px;}
   .wrap{max-width:520px;margin:0 auto;}
   h1{font-size:19px;font-weight:700;margin:4px 0 2px;letter-spacing:.2px}
-  .tagline{color:var(--sub);font-size:13px;margin-bottom:16px}
+  .tagline{color:var(--sub);font-size:13px;margin-bottom:16px;line-height:1.5;}
+  .tagline b{color:var(--accent);font-weight:700;}
 
   .tabs{display:flex;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px;margin-bottom:16px;}
   .tab{flex:1;text-align:center;padding:10px 0;border-radius:10px;font-size:14px;font-weight:600;color:var(--sub);cursor:pointer;transition:.15s;}
@@ -37,7 +38,7 @@
 
   .row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
   .row label{font-size:13px;color:var(--sub);flex-shrink:0;}
-  .row .val{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .row .val{font-family:var(--mono);font-size:13px;color:var(--accent);white-space:nowrap;}
   input[type=range]{flex:1;accent-color:var(--accent);}
 
   .filebtn{display:block;width:100%;text-align:center;padding:14px;border-radius:12px;border:1.5px dashed var(--line);
@@ -66,7 +67,7 @@
   .stat .v.blue{color:var(--accent2);}
 
   .progress-outer{height:8px;background:var(--panel2);border-radius:6px;overflow:hidden;margin-top:10px;}
-  .progress-inner{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));width:0%;transition:width .15s;}
+  .progress-inner{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));width:0%;transition:width .1s;}
 
   .camwrap{position:relative;border-radius:14px;overflow:hidden;background:#000;aspect-ratio:3/4;}
   video{width:100%;height:100%;object-fit:cover;display:block;}
@@ -88,8 +89,8 @@
 </head>
 <body>
 <div class="wrap">
-  <h1>📡 光學檔案傳輸</h1>
-  <div class="tagline">用一支手機的螢幕閃 QR code,另一支手機的相機拍 — 不需要網路連線</div>
+  <h1>📡 光學檔案傳輸 · 噴泉碼版</h1>
+  <div class="tagline">兩支手機靠螢幕閃爍 QR + <b>Fountain Code</b> 互傳檔案,不連網不配對。接收端不用照順序、不用每張都拍到,收夠「隨機組合」就能自動解回原始檔案。</div>
 
   <div class="tabs">
     <div class="tab active" id="tabSend">傳送</div>
@@ -108,23 +109,24 @@
     <div class="card">
       <h2>傳輸設定</h2>
       <div class="row">
-        <label>每塊大小</label>
-        <input type="range" id="chunkSize" min="200" max="1200" step="50" value="500">
-        <span class="val" id="chunkSizeVal">500 B</span>
+        <label>每格資料量</label>
+        <input type="range" id="blockSize" min="200" max="2100" step="50" value="1200">
+        <span class="val" id="blockSizeVal">1200 B</span>
       </div>
-      <div class="row">
-        <label>切換間隔</label>
-        <input type="range" id="interval" min="0" max="300" step="10" value="80">
-        <span class="val" id="intervalVal">80 ms</span>
+      <div class="small">掃不到 / 太糊 → 調小(QR 模組變大更好掃)。相機好、光線穩、手機架著不晃 → 可以調到 2000+ 衝速度。</div>
+      <div class="row" style="margin-top:12px;">
+        <label>畫面節流</label>
+        <input type="range" id="throttle" min="0" max="150" step="10" value="0">
+        <span class="val" id="throttleVal">最快(每幀刷新)</span>
       </div>
-      <div class="small">間隔越小理論速度越快,但要對面相機拍得到才算數 — 建議先從預設值開始,掃不到就把間隔調大。</div>
+      <div class="small">預設每個螢幕刷新畫面就換一張(通常 ~60fps)。如果手機發燙/實測 fps 掉很低,可以拉高節流讓 QR 有時間畫完整。</div>
     </div>
 
     <div class="card">
       <div class="qrbox"><div id="qrTarget"></div></div>
       <div class="stat-grid">
         <div class="stat"><div class="k">目前畫面</div><div class="v" id="sFrame">–</div></div>
-        <div class="stat"><div class="k">已循環</div><div class="v blue" id="sLoop">0</div></div>
+        <div class="stat"><div class="k">已送 droplets</div><div class="v blue" id="sLoop">0</div></div>
         <div class="stat"><div class="k">理論速率</div><div class="v" id="sRate">–</div></div>
         <div class="stat"><div class="k">實際刷新率</div><div class="v blue" id="sFps">–</div></div>
       </div>
@@ -155,11 +157,12 @@
       <h2>接收進度</h2>
       <div class="stat-grid">
         <div class="stat"><div class="k">檔名</div><div class="v" id="rName" style="font-size:13px;">–</div></div>
-        <div class="stat"><div class="k">收到區塊</div><div class="v" id="rChunks">0 / –</div></div>
-        <div class="stat"><div class="k">即時速率</div><div class="v" id="rRate">0 KB/s</div></div>
+        <div class="stat"><div class="k">已解出區塊</div><div class="v" id="rChunks">0 / –</div></div>
+        <div class="stat"><div class="k">掃描速率</div><div class="v" id="rRate">0 KB/s</div></div>
         <div class="stat"><div class="k">已用時間</div><div class="v blue" id="rTime">0.0s</div></div>
       </div>
       <div class="progress-outer"><div class="progress-inner" id="rProgress"></div></div>
+      <div class="small" id="rHint">還沒收到檔頭資訊,先掃到一張含檔案資訊的畫面才會開始解碼。</div>
     </div>
 
     <div class="download" id="downloadCard">
@@ -193,6 +196,141 @@ function b64ToU8(b64){
   for(let i=0;i<s.length;i++) u8[i]=s.charCodeAt(i);
   return u8;
 }
+function xorInPlace(a,b){
+  for(let i=0;i<a.length;i++) a[i]^=b[i];
+}
+
+/* ============ Mulberry32 seeded PRNG(送收兩端必須算出一樣的序列) ============ */
+function mulberry32(seed){
+  let t = seed >>> 0;
+  return function(){
+    t += 0x6D2B79F5;
+    let r = Math.imul(t ^ (t >>> 15), 1 | t);
+    r = (r + Math.imul(r ^ (r >>> 7), 61 | r)) ^ r;
+    return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/* ============ Robust Soliton 分布(LT / Fountain code 度數分布) ============ */
+function robustSolitonCDF(K, c, delta){
+  c = c || 0.15; delta = delta || 0.5;
+  const rho = new Float64Array(K+1);
+  rho[1] = 1/K;
+  for(let d=2; d<=K; d++) rho[d] = 1/(d*(d-1));
+
+  const S = Math.max(1, c*Math.log(K/delta)*Math.sqrt(K));
+  const KS = Math.max(1, Math.floor(K/S));
+  const tau = new Float64Array(K+1);
+  for(let d=1; d<KS && d<=K; d++) tau[d] = S/(K*d);
+  if(KS<=K) tau[KS] += S*Math.log(S/delta)/K;
+
+  let Z=0;
+  for(let d=1; d<=K; d++) Z += rho[d]+tau[d];
+
+  const cdf = new Float64Array(K+1);
+  let cum=0;
+  for(let d=1; d<=K; d++){
+    cum += (rho[d]+tau[d])/Z;
+    cdf[d] = cum;
+  }
+  cdf[K] = 1;
+  return cdf;
+}
+function sampleDegree(cdf, K, rng){
+  const r = rng();
+  let lo=1, hi=K;
+  while(lo<hi){
+    const mid=(lo+hi)>>1;
+    if(cdf[mid]>=r) hi=mid; else lo=mid+1;
+  }
+  return lo;
+}
+function sampleIndices(K, degree, rng){
+  if(degree>=K) return Array.from({length:K},(_,i)=>i);
+  const set=new Set();
+  const maxGuard = degree*50+200;
+  let guard=0;
+  while(set.size<degree && guard<maxGuard){
+    set.add(Math.floor(rng()*K));
+    guard++;
+  }
+  if(set.size<degree){
+    let i=Math.floor(rng()*K);
+    while(set.size<degree){
+      if(!set.has(i)) set.add(i);
+      i=(i+1)%K;
+    }
+  }
+  return Array.from(set);
+}
+
+/* ============ LT Decoder(peeling / belief-propagation 解碼器) ============ */
+class LTDecoder{
+  constructor(K, blockSize, totalSize){
+    this.K=K; this.blockSize=blockSize; this.totalSize=totalSize;
+    this.blocks=new Array(K).fill(null);
+    this.solvedCount=0;
+    this.dropletsByIndex=new Map();
+    this.allDroplets=new Set();
+    this.solveQueue=[];
+    this.seenSeeds=new Set();
+  }
+  addDroplet(seedKey, indices, data){
+    if(this.seenSeeds.has(seedKey)) return false;
+    this.seenSeeds.add(seedKey);
+
+    let payload = data.slice();
+    const idxSet = new Set();
+    for(const i of indices){
+      if(this.blocks[i]){ xorInPlace(payload, this.blocks[i]); }
+      else idxSet.add(i);
+    }
+    if(idxSet.size===0) return false;
+
+    const droplet = {idxSet, payload};
+    if(idxSet.size===1){ this.solveQueue.push(droplet); }
+    else{
+      this.allDroplets.add(droplet);
+      for(const i of idxSet){
+        if(!this.dropletsByIndex.has(i)) this.dropletsByIndex.set(i, new Set());
+        this.dropletsByIndex.get(i).add(droplet);
+      }
+    }
+    this._propagate();
+    return true;
+  }
+  _propagate(){
+    while(this.solveQueue.length){
+      const droplet=this.solveQueue.pop();
+      const i=[...droplet.idxSet][0];
+      if(this.blocks[i]) continue;
+      this.blocks[i]=droplet.payload;
+      this.solvedCount++;
+      const refs=this.dropletsByIndex.get(i);
+      this.dropletsByIndex.delete(i);
+      if(!refs) continue;
+      for(const d of refs){
+        if(!this.allDroplets.has(d)) continue;
+        xorInPlace(d.payload, this.blocks[i]);
+        d.idxSet.delete(i);
+        if(d.idxSet.size===0){ this.allDroplets.delete(d); }
+        else if(d.idxSet.size===1){ this.allDroplets.delete(d); this.solveQueue.push(d); }
+      }
+    }
+  }
+  isComplete(){ return this.solvedCount===this.K; }
+  assemble(){
+    const buf=new Uint8Array(this.totalSize);
+    let offset=0;
+    for(let i=0;i<this.K;i++){
+      const take=Math.min(this.blockSize, this.totalSize-offset);
+      buf.set(this.blocks[i].subarray(0,take), offset);
+      offset+=take;
+      if(offset>=this.totalSize) break;
+    }
+    return buf;
+  }
+}
 
 /* ============ Tabs ============ */
 const tabSend=document.getElementById('tabSend');
@@ -206,10 +344,10 @@ tabRecv.onclick=()=>{tabRecv.classList.add('active');tabSend.classList.remove('a
 const fileBtn=document.getElementById('fileBtn');
 const fileInput=document.getElementById('fileInput');
 const fileInfo=document.getElementById('fileInfo');
-const chunkSizeInput=document.getElementById('chunkSize');
-const chunkSizeVal=document.getElementById('chunkSizeVal');
-const intervalInput=document.getElementById('interval');
-const intervalVal=document.getElementById('intervalVal');
+const blockSizeInput=document.getElementById('blockSize');
+const blockSizeVal=document.getElementById('blockSizeVal');
+const throttleInput=document.getElementById('throttle');
+const throttleVal=document.getElementById('throttleVal');
 const sendBtn=document.getElementById('sendBtn');
 const sFrame=document.getElementById('sFrame');
 const sLoop=document.getElementById('sLoop');
@@ -217,7 +355,7 @@ const sRate=document.getElementById('sRate');
 const sFps=document.getElementById('sFps');
 
 fileBtn.onclick=()=>fileInput.click();
-let currentFile=null, fileChunks=null, fileId=null;
+let currentFile=null;
 
 fileInput.onchange=async ()=>{
   const f=fileInput.files[0];
@@ -228,37 +366,57 @@ fileInput.onchange=async ()=>{
   stopSending();
 };
 
-chunkSizeInput.oninput=()=>{chunkSizeVal.textContent=chunkSizeInput.value+' B';};
-intervalInput.oninput=()=>{intervalVal.textContent=intervalInput.value+' ms';};
+blockSizeInput.oninput=()=>{blockSizeVal.textContent=blockSizeInput.value+' B';};
+throttleInput.oninput=()=>{throttleVal.textContent = throttleInput.value==='0' ? '最快(每幀刷新)' : throttleInput.value+' ms';};
 
 const qrTarget=document.getElementById('qrTarget');
 let qrcode=new QRCode(qrTarget,{text:'ready',width:280,height:280,correctLevel:QRCode.CorrectLevel.L});
+function drawFrame(text){ qrcode.clear(); qrcode.makeCode(text); }
 
-let sending=false, sendFrames=null, sendIdx=0, sendLoops=0, sendTimer=null;
-let lastFrameTime=0, frameTimes=[];
+let sending=false, sendTimer=null;
+let sendState=null; // {blocks,K,blockSize,fileSize,name,mime,id,cdf}
+let dropletCount=0, lastFrameTime=0, frameTimes=[];
+const META_EVERY_MS = 350;
+let lastMetaTime=0;
 
-async function buildFrames(){
-  const size=parseInt(chunkSizeInput.value,10);
+async function prepareBlocks(){
+  const size=parseInt(blockSizeInput.value,10);
   const buf=new Uint8Array(await currentFile.arrayBuffer());
-  fileId=Math.random().toString(36).slice(2,8);
-  const total=Math.ceil(buf.length/size)||1;
-  const meta=`M|${fileId}|${total}|${encodeURIComponent(currentFile.name)}|${encodeURIComponent(currentFile.type||'application/octet-stream')}|${buf.length}`;
-  const frames=[meta];
-  for(let i=0;i<total;i++){
-    const chunk=buf.subarray(i*size,Math.min((i+1)*size,buf.length));
-    frames.push(`D|${fileId}|${i}|${u8ToB64(chunk)}`);
+  const K=Math.max(1, Math.ceil(buf.length/size));
+  const blocks=new Array(K);
+  for(let i=0;i<K;i++){
+    const b=new Uint8Array(size);
+    const start=i*size, end=Math.min(start+size, buf.length);
+    b.set(buf.subarray(start,end));
+    blocks[i]=b;
   }
-  return frames;
+  const id=Math.random().toString(36).slice(2,8);
+  return {
+    blocks, K, blockSize:size, fileSize:buf.length,
+    name:currentFile.name, mime:currentFile.type||'application/octet-stream',
+    id, cdf: robustSolitonCDF(K)
+  };
 }
 
-function drawFrame(text){
-  qrcode.clear();
-  qrcode.makeCode(text);
+function metaFrameText(st){
+  return `M|${st.id}|${st.K}|${st.blockSize}|${st.fileSize}|${encodeURIComponent(st.name)}|${encodeURIComponent(st.mime)}`;
+}
+
+function makeDropletText(st){
+  const seedArr=new Uint32Array(1);
+  crypto.getRandomValues(seedArr);
+  const seed=seedArr[0];
+  const rng=mulberry32(seed);
+  const degree=sampleDegree(st.cdf, st.K, rng);
+  const indices=sampleIndices(st.K, degree, rng);
+  const payload=new Uint8Array(st.blockSize);
+  for(const idx of indices) xorInPlace(payload, st.blocks[idx]);
+  return {text:`D|${st.id}|${seed.toString(36)}|${u8ToB64(payload)}`, degree};
 }
 
 async function startSending(){
-  sendFrames=await buildFrames();
-  sendIdx=0; sendLoops=0; frameTimes=[];
+  sendState = await prepareBlocks();
+  dropletCount=0; frameTimes=[]; lastFrameTime=0; lastMetaTime=0;
   sending=true;
   sendBtn.textContent='停止傳送';
   sendBtn.classList.add('stop');
@@ -274,31 +432,34 @@ function scheduleNext(){
   }
   lastFrameTime=now;
 
-  const text=sendFrames[sendIdx];
-  drawFrame(text);
+  const st=sendState;
+  let label;
+  if(now-lastMetaTime > META_EVERY_MS){
+    drawFrame(metaFrameText(st));
+    lastMetaTime=now;
+    label='META (K='+st.K+')';
+  } else {
+    const {text,degree}=makeDropletText(st);
+    drawFrame(text);
+    dropletCount++;
+    label='droplet · degree '+degree;
+  }
 
-  const isMeta=text.startsWith('M|');
-  sFrame.textContent=isMeta ? 'META' : `${sendIdx} / ${sendFrames.length-1}`;
-  sLoop.textContent=sendLoops;
-
-  const chunkBytes=parseInt(chunkSizeInput.value,10);
-  const interval=Math.max(parseInt(intervalInput.value,10),1);
-  const theoretical=chunkBytes/(interval/1000);
-  sRate.textContent=fmtBytes(theoretical)+'/s';
+  sFrame.textContent=label;
+  sLoop.textContent=dropletCount;
 
   if(frameTimes.length>3){
     const avg=frameTimes.reduce((a,b)=>a+b,0)/frameTimes.length;
-    sFps.textContent=(1000/avg).toFixed(1)+' fps';
+    const fps=1000/avg;
+    sFps.textContent=fps.toFixed(1)+' fps';
+    sRate.textContent=fmtBytes(st.blockSize*fps)+'/s';
   }
 
-  sendIdx++;
-  if(sendIdx>=sendFrames.length){ sendIdx=0; sendLoops++; }
-
-  const delay=parseInt(intervalInput.value,10);
+  const delay=parseInt(throttleInput.value,10);
   if(delay<=0){
     sendTimer=requestAnimationFrame(scheduleNext);
   } else {
-    sendTimer=setTimeout(()=>requestAnimationFrame(scheduleNext),delay);
+    sendTimer=setTimeout(()=>{ sendTimer=requestAnimationFrame(scheduleNext); }, delay);
   }
 }
 
@@ -327,6 +488,7 @@ const rChunks=document.getElementById('rChunks');
 const rRate=document.getElementById('rRate');
 const rTime=document.getElementById('rTime');
 const rProgress=document.getElementById('rProgress');
+const rHint=document.getElementById('rHint');
 const downloadCard=document.getElementById('downloadCard');
 const dName=document.getElementById('dName');
 const dSize=document.getElementById('dSize');
@@ -334,16 +496,18 @@ const dLink=document.getElementById('dLink');
 const resetRecvBtn=document.getElementById('resetRecvBtn');
 
 let stream=null, scanning=false, scanRAF=null;
-let recvMeta=null, recvChunks=new Map(), recvId=null;
-let recvStartTime=0, rateWindow=[];
+let recvMeta=null, decoder=null, recvId=null;
+let pendingDroplets=[]; // 尚未收到 meta 前先暫存 {seed,data}
+let recvStartTime=0, scanRateWindow=[];
 let hiddenCanvas=document.createElement('canvas');
 let hctx=hiddenCanvas.getContext('2d',{willReadFrequently:true});
 
 function resetReceiveState(){
-  recvMeta=null; recvChunks=new Map(); recvId=null; rateWindow=[];
+  recvMeta=null; decoder=null; recvId=null; pendingDroplets=[]; scanRateWindow=[];
   rName.textContent='–'; rChunks.textContent='0 / –';
   rRate.textContent='0 KB/s'; rTime.textContent='0.0s';
   rProgress.style.width='0%';
+  rHint.textContent='還沒收到檔頭資訊,先掃到一張含檔案資訊的畫面才會開始解碼。';
   downloadCard.classList.remove('show');
   if(dLink.href){ URL.revokeObjectURL(dLink.href); dLink.removeAttribute('href'); }
 }
@@ -382,7 +546,7 @@ function scanLoop(){
   if(!scanning) return;
   if(video.readyState===video.HAVE_ENOUGH_DATA){
     const w=video.videoWidth, h=video.videoHeight;
-    if(w>0&&h>0){
+    if(w>0 && h>0){
       hiddenCanvas.width=w; hiddenCanvas.height=h;
       hctx.drawImage(video,0,0,w,h);
       const imgData=hctx.getImageData(0,0,w,h);
@@ -412,26 +576,56 @@ function drawBox(loc,vw,vh){
   octx.stroke();
 }
 
+function markScannedFrame(bytes){
+  const now=performance.now();
+  scanRateWindow.push({t:now,b:bytes});
+  while(scanRateWindow.length && now-scanRateWindow[0].t>1000) scanRateWindow.shift();
+}
+
+function processDroplet(K, cdf, seedStr, dataB64){
+  const seed=parseInt(seedStr,36) >>> 0;
+  const rng=mulberry32(seed);
+  const degree=sampleDegree(cdf, K, rng);
+  const indices=sampleIndices(K, degree, rng);
+  const payload=b64ToU8(dataB64);
+  decoder.addDroplet(seedStr, indices, payload);
+}
+
 function handleDecoded(text){
   const parts=text.split('|');
   const type=parts[0];
+
   if(type==='M'){
-    const [,, id, total, name, mime, size]=[null,null,parts[1],parts[2],parts[3],parts[4],parts[5]];
-    if(recvId!==id){ recvId=id; recvChunks=new Map(); recvStartTime=performance.now(); rateWindow=[]; }
-    recvMeta={id,total:parseInt(total,10),name:decodeURIComponent(name),mime:decodeURIComponent(mime),size:parseInt(size,10)};
-    rName.textContent=recvMeta.name;
-  } else if(type==='D'){
-    const id=parts[1], idx=parseInt(parts[2],10), b64=parts[3];
-    if(recvId===null){ recvId=id; recvStartTime=performance.now(); }
-    if(recvId!==id) return; // 不同傳輸,忽略(等 meta 重置)
-    if(!recvChunks.has(idx)){
-      const bytes=b64ToU8(b64);
-      recvChunks.set(idx,bytes);
-      const now=performance.now();
-      rateWindow.push({t:now, b:bytes.length});
-      while(rateWindow.length && now-rateWindow[0].t>1000) rateWindow.shift();
+    const id=parts[1], K=parseInt(parts[2],10), blockSize=parseInt(parts[3],10),
+          fileSize=parseInt(parts[4],10), name=decodeURIComponent(parts[5]), mime=decodeURIComponent(parts[6]);
+    if(recvId!==id){
+      recvId=id;
+      recvMeta={id,K,blockSize,fileSize,name,mime};
+      decoder=new LTDecoder(K, blockSize, fileSize);
+      recvStartTime=performance.now();
+      rName.textContent=name;
+      rHint.textContent='已取得檔案資訊,開始收集區塊…';
+      markScannedFrame(text.length);
+      // 處理先前緩存的 droplets
+      const buffered=pendingDroplets; pendingDroplets=[];
+      for(const d of buffered){ processDroplet(K, decoder.cdf||(decoder.cdf=robustSolitonCDF(K)), d.seed, d.data); }
+      if(!decoder.cdf) decoder.cdf=robustSolitonCDF(K);
     }
+  } else if(type==='D'){
+    const id=parts[1], seedStr=parts[2], dataB64=parts[3];
+    markScannedFrame(text.length);
+    if(recvId===null){
+      // 還沒收到 meta,先緩存
+      pendingDroplets.push({seed:seedStr,data:dataB64});
+      if(pendingDroplets.length>400) pendingDroplets.shift();
+      updateProgress();
+      return;
+    }
+    if(id!==recvId) return; // 不同傳輸的殘留幀,忽略
+    if(!decoder.cdf) decoder.cdf=robustSolitonCDF(decoder.K);
+    processDroplet(decoder.K, decoder.cdf, seedStr, dataB64);
   }
+
   updateProgress();
   checkComplete();
 }
@@ -441,32 +635,24 @@ function updateProgress(){
   const elapsed=(now-recvStartTime)/1000;
   rTime.textContent=elapsed.toFixed(1)+'s';
 
-  const bytesInWindow=rateWindow.reduce((a,c)=>a+c.b,0);
+  const bytesInWindow=scanRateWindow.reduce((a,c)=>a+c.b,0);
   rRate.textContent=fmtBytes(bytesInWindow)+'/s';
 
-  if(recvMeta){
-    rChunks.textContent=`${recvChunks.size} / ${recvMeta.total}`;
-    const pct=Math.min(100,(recvChunks.size/recvMeta.total)*100);
+  if(decoder){
+    rChunks.textContent=`${decoder.solvedCount} / ${decoder.K}`;
+    const pct=Math.min(100,(decoder.solvedCount/decoder.K)*100);
     rProgress.style.width=pct+'%';
+    rHint.textContent = decoder.solvedCount<decoder.K
+      ? '持續掃描中,對齊螢幕、盡量拿穩會更快收齊。'
+      : '已收集齊全部區塊,正在組回檔案…';
   } else {
-    rChunks.textContent=`${recvChunks.size} / –`;
+    rChunks.textContent=`已緩存 ${pendingDroplets.length} 筆 / 等待檔頭`;
   }
 }
 
 function checkComplete(){
-  if(!recvMeta) return;
-  if(recvChunks.size < recvMeta.total) return;
-  for(let i=0;i<recvMeta.total;i++){ if(!recvChunks.has(i)) return; }
-
-  // 全部收齊,組回檔案
-  const totalBytes=recvMeta.size;
-  const buf=new Uint8Array(totalBytes);
-  let offset=0;
-  for(let i=0;i<recvMeta.total;i++){
-    const c=recvChunks.get(i);
-    buf.set(c,offset);
-    offset+=c.length;
-  }
+  if(!decoder || !decoder.isComplete()) return;
+  const buf=decoder.assemble();
   const blob=new Blob([buf],{type:recvMeta.mime||'application/octet-stream'});
   const url=URL.createObjectURL(blob);
   dLink.href=url;
@@ -474,7 +660,6 @@ function checkComplete(){
   dName.textContent=recvMeta.name;
   dSize.textContent=fmtBytes(blob.size);
   downloadCard.classList.add('show');
-
   stopReceiving();
 }
 
