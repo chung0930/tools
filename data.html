@@ -1,428 +1,491 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>全螢幕光學檔案傳輸</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入穩定的 QR Code 生成與解析庫 -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
-    <style>
-        body { background-color: #0f172a; color: #f8fafc; overscroll-behavior: none; }
-        .pixelated { image-rendering: pixelated; }
-        /* 隱藏捲動條 */
-        ::-webkit-scrollbar { display: none; }
-        .tab-active { background-color: #0ea5e9; color: white; border-bottom: 2px solid #38bdf8;}
-        .tab-inactive { background-color: transparent; color: #94a3b8; border-bottom: 2px solid transparent;}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>光學檔案傳輸</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsqr/1.4.0/jsQR.js"></script>
+<style>
+  :root{
+    --bg:#0b0d12;
+    --panel:#151822;
+    --panel2:#1c202c;
+    --line:#2a2f3d;
+    --text:#eef0f4;
+    --sub:#8a90a2;
+    --accent:#5ee6c0;
+    --accent2:#7c9bff;
+    --warn:#ff8a65;
+    --mono:'SF Mono',ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC","Microsoft JhengHei",sans-serif;
+    -webkit-tap-highlight-color:transparent;}
+  body{min-height:100vh;padding:16px;padding-bottom:40px;}
+  .wrap{max-width:520px;margin:0 auto;}
+  h1{font-size:19px;font-weight:700;margin:4px 0 2px;letter-spacing:.2px}
+  .tagline{color:var(--sub);font-size:13px;margin-bottom:16px}
+
+  .tabs{display:flex;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px;margin-bottom:16px;}
+  .tab{flex:1;text-align:center;padding:10px 0;border-radius:10px;font-size:14px;font-weight:600;color:var(--sub);cursor:pointer;transition:.15s;}
+  .tab.active{background:var(--accent);color:#0b0d12;}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px;}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--sub);margin:0 0 12px;font-weight:700;}
+
+  .row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+  .row label{font-size:13px;color:var(--sub);flex-shrink:0;}
+  .row .val{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  input[type=range]{flex:1;accent-color:var(--accent);}
+
+  .filebtn{display:block;width:100%;text-align:center;padding:14px;border-radius:12px;border:1.5px dashed var(--line);
+    color:var(--sub);font-size:14px;cursor:pointer;background:var(--panel2);transition:.15s;}
+  .filebtn:hover{border-color:var(--accent);color:var(--text);}
+  #fileInput{display:none;}
+  .fileinfo{font-size:13px;color:var(--text);margin-top:8px;font-family:var(--mono);word-break:break-all;}
+
+  button.main{width:100%;padding:14px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;
+    background:var(--accent);color:#0b0d12;transition:.15s;}
+  button.main:active{transform:scale(.98);}
+  button.main.stop{background:var(--warn);}
+  button.main:disabled{background:var(--line);color:var(--sub);cursor:not-allowed;}
+  button.ghost{width:100%;padding:12px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;
+    background:transparent;border:1px solid var(--line);color:var(--sub);margin-top:8px;}
+
+  .qrbox{background:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;justify-content:center;
+    aspect-ratio:1/1;overflow:hidden;}
+  #qrTarget{width:100%;}
+  #qrTarget img,#qrTarget canvas{width:100% !important;height:100% !important;image-rendering:pixelated;}
+
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+  .stat{background:var(--panel2);border-radius:10px;padding:10px 12px;}
+  .stat .k{font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:.05em;}
+  .stat .v{font-size:17px;font-weight:700;font-family:var(--mono);color:var(--accent);margin-top:2px;}
+  .stat .v.blue{color:var(--accent2);}
+
+  .progress-outer{height:8px;background:var(--panel2);border-radius:6px;overflow:hidden;margin-top:10px;}
+  .progress-inner{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));width:0%;transition:width .15s;}
+
+  .camwrap{position:relative;border-radius:14px;overflow:hidden;background:#000;aspect-ratio:3/4;}
+  video{width:100%;height:100%;object-fit:cover;display:block;}
+  canvas.overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+  .scan-hint{position:absolute;top:10px;left:10px;right:10px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;
+    padding:6px 10px;border-radius:8px;text-align:center;backdrop-filter:blur(4px);}
+
+  .download{display:none;text-align:center;padding:20px;background:var(--panel2);border-radius:14px;margin-top:12px;}
+  .download.show{display:block;}
+  .download a{display:inline-block;margin-top:10px;padding:12px 22px;background:var(--accent);color:#0b0d12;
+    text-decoration:none;font-weight:700;border-radius:10px;font-size:14px;}
+  .download .fname{font-family:var(--mono);font-size:13px;color:var(--text);word-break:break-all;}
+  .download .fsize{color:var(--sub);font-size:12px;margin-top:2px;}
+
+  .hidden{display:none !important;}
+  .small{font-size:12px;color:var(--sub);line-height:1.5;margin-top:6px;}
+  select{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px;}
+</style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
+<div class="wrap">
+  <h1>📡 光學檔案傳輸</h1>
+  <div class="tagline">用一支手機的螢幕閃 QR code,另一支手機的相機拍 — 不需要網路連線</div>
 
-    <!-- 基礎設定頁面 -->
-    <div id="setupView" class="flex-1 flex flex-col p-4 max-w-lg mx-auto w-full">
-        <header class="text-center py-6">
-            <h1 class="text-3xl font-extrabold text-sky-400 drop-shadow-md">⚡ 光學快傳</h1>
-            <p class="text-sm text-slate-400 mt-2">全螢幕動態二維碼檔案傳輸協議</p>
-        </header>
+  <div class="tabs">
+    <div class="tab active" id="tabSend">傳送</div>
+    <div class="tab" id="tabRecv">接收</div>
+  </div>
 
-        <!-- 模式切換 -->
-        <div class="flex w-full mb-6 border-b border-slate-700">
-            <button id="btnTx" onclick="setMode('tx')" class="flex-1 py-3 font-bold tab-active transition-all">📤 我要發送</button>
-            <button id="btnRx" onclick="setMode('rx')" class="flex-1 py-3 font-bold tab-inactive transition-all">📥 我要接收</button>
-        </div>
-
-        <!-- 發送端設定 -->
-        <main id="txSetup" class="flex-1 flex flex-col gap-6">
-            <div class="bg-slate-800 p-5 rounded-2xl shadow-xl border border-slate-700">
-                <label class="block text-sm font-medium text-slate-300 mb-2">1. 選擇要傳輸的檔案</label>
-                <input type="file" id="fileInput" class="block w-full text-sm text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-sky-600 file:text-white hover:file:bg-sky-500 mb-4 transition-colors"/>
-                
-                <label class="block text-sm font-medium text-slate-300 mb-2">2. 調整閃爍速率 (FPS)</label>
-                <div class="flex items-center gap-4 text-sm text-slate-400 mb-2">
-                    <input type="range" id="fpsInput" min="2" max="25" value="12" class="w-full accent-sky-500" oninput="document.getElementById('fpsDisplay').innerText=this.value">
-                    <span class="w-16 text-right font-bold text-sky-400"><span id="fpsDisplay">12</span> FPS</span>
-                </div>
-                <p class="text-xs text-slate-500 mb-4">* 速率越快傳輸越快，但接收端手機若性能不足可能掉幀。</p>
-
-                <button onclick="startTxFullscreen()" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold text-lg shadow-[0_0_15px_rgba(5,150,105,0.4)] transition-all">
-                    ▶ 開始全螢幕發送
-                </button>
-            </div>
-        </main>
-
-        <!-- 接收端設定 -->
-        <main id="rxSetup" class="flex-1 flex flex-col gap-6 hidden">
-            <div class="bg-slate-800 p-5 rounded-2xl shadow-xl border border-slate-700 text-center">
-                <div class="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                </div>
-                <h3 class="text-lg font-bold text-slate-200 mb-2">準備接收檔案</h3>
-                <p class="text-sm text-slate-400 mb-6">請確認瀏覽器已允許相機權限，點擊下方按鈕後，將相機對準發送端螢幕。</p>
-                <button onclick="startRxFullscreen()" class="w-full py-4 bg-sky-600 hover:bg-sky-500 rounded-xl font-bold text-lg shadow-[0_0_15px_rgba(2,132,199,0.4)] transition-all">
-                    📷 開啟全螢幕掃描
-                </button>
-            </div>
-            <!-- 下載按鈕 (完成時顯示) -->
-            <div id="downloadArea" class="hidden bg-emerald-900/50 p-5 rounded-2xl border border-emerald-700/50 text-center mt-4">
-                <h3 class="text-emerald-400 font-bold mb-2">🎉 檔案接收完成！</h3>
-                <a id="downloadBtn" class="block w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-900 rounded-xl font-bold transition-all shadow-lg">
-                    💾 點擊儲存檔案
-                </a>
-            </div>
-        </main>
+  <!-- SEND -->
+  <div id="panelSend">
+    <div class="card">
+      <h2>選擇檔案</h2>
+      <label class="filebtn" id="fileBtn">點一下選擇要傳送的檔案</label>
+      <input type="file" id="fileInput">
+      <div class="fileinfo" id="fileInfo"></div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 全螢幕發送視圖 (Tx Fullscreen) -->
-    <!-- ========================================== -->
-    <div id="txFullscreen" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center hidden">
-        <!-- QR 碼顯示區 (利用 CSS 使其盡可能大，並保持像素化銳利邊緣) -->
-        <canvas id="qrCanvas" class="w-full h-full max-w-[95vw] max-h-[95vh] object-contain pixelated"></canvas>
-        
-        <!-- 浮動控制面板 (半透明) -->
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-black/80 backdrop-blur-md rounded-2xl p-4 border border-slate-700 shadow-2xl">
-            <div class="flex justify-between items-center mb-2">
-                <span class="text-sky-400 font-bold text-sm truncate" id="txFullFileName">filename.ext</span>
-                <span class="text-emerald-400 font-mono text-sm" id="txFullProgress">0 / 0</span>
-            </div>
-            <div class="w-full bg-slate-700 rounded-full h-1.5 mb-4">
-                <div id="txProgressBar" class="bg-sky-500 h-1.5 rounded-full transition-all duration-100" style="width: 0%"></div>
-            </div>
-            <button onclick="stopTxFullscreen()" class="w-full py-3 bg-rose-600/90 hover:bg-rose-500 text-white rounded-xl font-bold text-sm backdrop-blur-md">
-                ⏹ 停止發送並退出
-            </button>
-        </div>
+    <div class="card">
+      <h2>傳輸設定</h2>
+      <div class="row">
+        <label>每塊大小</label>
+        <input type="range" id="chunkSize" min="200" max="1200" step="50" value="500">
+        <span class="val" id="chunkSizeVal">500 B</span>
+      </div>
+      <div class="row">
+        <label>切換間隔</label>
+        <input type="range" id="interval" min="0" max="300" step="10" value="80">
+        <span class="val" id="intervalVal">80 ms</span>
+      </div>
+      <div class="small">間隔越小理論速度越快,但要對面相機拍得到才算數 — 建議先從預設值開始,掃不到就把間隔調大。</div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 全螢幕接收視圖 (Rx Fullscreen) -->
-    <!-- ========================================== -->
-    <div id="rxFullscreen" class="fixed inset-0 bg-black z-50 hidden">
-        <!-- 攝影機畫面 -->
-        <video id="videoElement" class="absolute inset-0 w-full h-full object-cover" playsinline></video>
-        <!-- 掃描與框線繪製層 -->
-        <canvas id="scanCanvas" class="absolute inset-0 w-full h-full object-cover pointer-events-none"></canvas>
-        
-        <!-- 浮動數據儀表板 -->
-        <div class="absolute top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-black/70 backdrop-blur-md rounded-2xl p-4 border border-slate-700 shadow-2xl pointer-events-none">
-            <div class="flex justify-between items-end mb-1">
-                <span class="text-slate-300 text-xs">接收進度</span>
-                <span id="rxFullPercent" class="text-2xl font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.8)]">0%</span>
-            </div>
-            <div class="w-full bg-slate-800 rounded-full h-2 mb-2 overflow-hidden shadow-inner">
-                <div id="rxFullProgressBar" class="bg-gradient-to-r from-sky-500 to-emerald-400 h-2 rounded-full transition-all duration-200" style="width: 0%"></div>
-            </div>
-            <div class="grid grid-cols-2 gap-2 text-xs text-slate-300">
-                <div>已解碼: <span id="rxFullChunks" class="text-sky-300 font-mono">0 / 0</span></div>
-                <div>速率: <span id="rxFullSpeed" class="text-emerald-300 font-mono font-bold">0 B/s</span></div>
-            </div>
-        </div>
+    <div class="card">
+      <div class="qrbox"><div id="qrTarget"></div></div>
+      <div class="stat-grid">
+        <div class="stat"><div class="k">目前畫面</div><div class="v" id="sFrame">–</div></div>
+        <div class="stat"><div class="k">已循環</div><div class="v blue" id="sLoop">0</div></div>
+        <div class="stat"><div class="k">理論速率</div><div class="v" id="sRate">–</div></div>
+        <div class="stat"><div class="k">實際刷新率</div><div class="v blue" id="sFps">–</div></div>
+      </div>
+      <button class="main" id="sendBtn" style="margin-top:14px;" disabled>開始傳送</button>
+    </div>
+  </div>
 
-        <!-- 停止按鈕 -->
-        <button onclick="stopRxFullscreen()" class="absolute bottom-8 left-1/2 -translate-x-1/2 w-[80%] max-w-xs py-4 bg-rose-600/90 hover:bg-rose-500 text-white rounded-2xl font-bold shadow-xl backdrop-blur-md">
-            ⏹ 停止掃描
-        </button>
+  <!-- RECEIVE -->
+  <div id="panelRecv" class="hidden">
+    <div class="card">
+      <h2>相機</h2>
+      <div class="row" style="margin-bottom:12px;">
+        <label>鏡頭</label>
+        <select id="cameraFacing">
+          <option value="environment">後鏡頭(對準另一支手機)</option>
+          <option value="user">前鏡頭</option>
+        </select>
+      </div>
+      <div class="camwrap">
+        <video id="video" playsinline muted></video>
+        <canvas class="overlay" id="overlay"></canvas>
+        <div class="scan-hint" id="scanHint">尚未啟動相機</div>
+      </div>
+      <button class="main" id="camBtn" style="margin-top:12px;">開啟相機開始接收</button>
     </div>
 
+    <div class="card" id="progressCard">
+      <h2>接收進度</h2>
+      <div class="stat-grid">
+        <div class="stat"><div class="k">檔名</div><div class="v" id="rName" style="font-size:13px;">–</div></div>
+        <div class="stat"><div class="k">收到區塊</div><div class="v" id="rChunks">0 / –</div></div>
+        <div class="stat"><div class="k">即時速率</div><div class="v" id="rRate">0 KB/s</div></div>
+        <div class="stat"><div class="k">已用時間</div><div class="v blue" id="rTime">0.0s</div></div>
+      </div>
+      <div class="progress-outer"><div class="progress-inner" id="rProgress"></div></div>
+    </div>
 
-    <script>
-        // --- 介面切換邏輯 ---
-        function setMode(mode) {
-            document.getElementById('txSetup').classList.toggle('hidden', mode !== 'tx');
-            document.getElementById('rxSetup').classList.toggle('hidden', mode !== 'rx');
-            document.getElementById('btnTx').className = mode === 'tx' ? 'flex-1 py-3 font-bold tab-active transition-all' : 'flex-1 py-3 font-bold tab-inactive transition-all';
-            document.getElementById('btnRx').className = mode === 'rx' ? 'flex-1 py-3 font-bold tab-active transition-all' : 'flex-1 py-3 font-bold tab-inactive transition-all';
-        }
+    <div class="download" id="downloadCard">
+      <div>✅ 傳輸完成</div>
+      <div class="fname" id="dName"></div>
+      <div class="fsize" id="dSize"></div>
+      <a id="dLink" download>下載檔案</a>
+      <button class="ghost" id="resetRecvBtn">重新接收下一個檔案</button>
+    </div>
+  </div>
+</div>
 
-        // --- 全螢幕 API 工具 ---
-        function requestNativeFullscreen(elem) {
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen().catch(err => console.log("Fullscreen API error:", err));
-            } else if (elem.webkitRequestFullscreen) { /* Safari */
-                elem.webkitRequestFullscreen();
-            }
-        }
-        function exitNativeFullscreen() {
-            if (document.fullscreenElement || document.webkitFullscreenElement) {
-                if (document.exitFullscreen) document.exitFullscreen();
-                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-            }
-        }
+<script>
+/* ============ 共用工具 ============ */
+function fmtBytes(n){
+  if(n<1024) return n+' B';
+  if(n<1024*1024) return (n/1024).toFixed(1)+' KB';
+  return (n/1024/1024).toFixed(2)+' MB';
+}
+function u8ToB64(u8){
+  let s='';
+  const CH=0x2000;
+  for(let i=0;i<u8.length;i+=CH){
+    s+=String.fromCharCode.apply(null,u8.subarray(i,i+CH));
+  }
+  return btoa(s);
+}
+function b64ToU8(b64){
+  const s=atob(b64);
+  const u8=new Uint8Array(s.length);
+  for(let i=0;i<s.length;i++) u8[i]=s.charCodeAt(i);
+  return u8;
+}
 
-        // --- Base64 / Buffer 工具 ---
-        function bufferToBase64(buffer) {
-            let binary = '';
-            const bytes = new Uint8Array(buffer);
-            const len = bytes.byteLength;
-            for (let i = 0; i < len; i++) binary += String.fromCharCode(bytes[i]);
-            return window.btoa(binary);
-        }
-        function base64ToBuffer(base64) {
-            const binary_string = window.atob(base64);
-            const len = binary_string.length;
-            const bytes = new Uint8Array(len);
-            for (let i = 0; i < len; i++) bytes[i] = binary_string.charCodeAt(i);
-            return bytes;
-        }
+/* ============ Tabs ============ */
+const tabSend=document.getElementById('tabSend');
+const tabRecv=document.getElementById('tabRecv');
+const panelSend=document.getElementById('panelSend');
+const panelRecv=document.getElementById('panelRecv');
+tabSend.onclick=()=>{tabSend.classList.add('active');tabRecv.classList.remove('active');panelSend.classList.remove('hidden');panelRecv.classList.add('hidden');stopReceiving();};
+tabRecv.onclick=()=>{tabRecv.classList.add('active');tabSend.classList.remove('active');panelRecv.classList.remove('hidden');panelSend.classList.add('hidden');stopSending();};
 
-        // ==========================================
-        // 發送端 (Tx) 邏輯
-        // ==========================================
-        let txInterval = null;
-        let qrFrames = [];
-        let currentFrameIdx = 0;
-        const CHUNK_SIZE = 120; // 每個區塊 120 Bytes，保證 QR 碼密度適中，易於手機辨識
+/* ============ SEND ============ */
+const fileBtn=document.getElementById('fileBtn');
+const fileInput=document.getElementById('fileInput');
+const fileInfo=document.getElementById('fileInfo');
+const chunkSizeInput=document.getElementById('chunkSize');
+const chunkSizeVal=document.getElementById('chunkSizeVal');
+const intervalInput=document.getElementById('interval');
+const intervalVal=document.getElementById('intervalVal');
+const sendBtn=document.getElementById('sendBtn');
+const sFrame=document.getElementById('sFrame');
+const sLoop=document.getElementById('sLoop');
+const sRate=document.getElementById('sRate');
+const sFps=document.getElementById('sFps');
 
-        async function startTxFullscreen() {
-            const fileInput = document.getElementById('fileInput');
-            if (!fileInput.files.length) return alert('請先選擇檔案');
-            
-            const file = fileInput.files[0];
-            const arrayBuffer = await file.arrayBuffer();
-            const uint8Array = new Uint8Array(arrayBuffer);
-            const totalChunks = Math.ceil(uint8Array.length / CHUNK_SIZE);
-            
-            document.getElementById('txFullFileName').innerText = file.name;
-            qrFrames = [];
+fileBtn.onclick=()=>fileInput.click();
+let currentFile=null, fileChunks=null, fileId=null;
 
-            // 打包資料: [總數]|[索引]|[檔名(僅索引0)]|[Base64資料]
-            for (let i = 0; i < totalChunks; i++) {
-                const chunkData = uint8Array.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
-                const base64Data = bufferToBase64(chunkData);
-                let payload = `${totalChunks}|${i}|`;
-                if (i === 0) payload += `${file.name}|`; 
-                payload += base64Data;
-                qrFrames.push(payload);
-            }
+fileInput.onchange=async ()=>{
+  const f=fileInput.files[0];
+  if(!f) return;
+  currentFile=f;
+  fileInfo.textContent=`${f.name} · ${fmtBytes(f.size)} · ${f.type||'application/octet-stream'}`;
+  sendBtn.disabled=false;
+  stopSending();
+};
 
-            // 開啟全螢幕 UI
-            const txView = document.getElementById('txFullscreen');
-            txView.classList.remove('hidden');
-            requestNativeFullscreen(document.documentElement);
+chunkSizeInput.oninput=()=>{chunkSizeVal.textContent=chunkSizeInput.value+' B';};
+intervalInput.oninput=()=>{intervalVal.textContent=intervalInput.value+' ms';};
 
-            // 開始輪播
-            currentFrameIdx = 0;
-            const fps = parseInt(document.getElementById('fpsInput').value);
-            const intervalMs = 1000 / fps;
-            const canvas = document.getElementById('qrCanvas');
+const qrTarget=document.getElementById('qrTarget');
+let qrcode=new QRCode(qrTarget,{text:'ready',width:280,height:280,correctLevel:QRCode.CorrectLevel.L});
 
-            txInterval = setInterval(() => {
-                const text = qrFrames[currentFrameIdx];
-                // 使用 qrcode.js 繪製 (設定 width 確保基礎解析度，再由 CSS 放至全螢幕)
-                QRCode.toCanvas(canvas, text, { 
-                    width: 400, 
-                    margin: 2, 
-                    color: { dark: '#000000', light: '#ffffff' }, 
-                    errorCorrectionLevel: 'L' // 容錯率 L (7%) 讓資料裝最多，方塊最大
-                }, function (error) {
-                    if (error) console.error(error);
-                });
-                
-                // 更新進度顯示
-                document.getElementById('txFullProgress').innerText = `${currentFrameIdx + 1} / ${totalChunks}`;
-                document.getElementById('txProgressBar').style.width = `${((currentFrameIdx + 1)/totalChunks)*100}%`;
-                
-                currentFrameIdx = (currentFrameIdx + 1) % totalChunks; 
-            }, intervalMs);
-        }
+let sending=false, sendFrames=null, sendIdx=0, sendLoops=0, sendTimer=null;
+let lastFrameTime=0, frameTimes=[];
 
-        function stopTxFullscreen() {
-            if (txInterval) clearInterval(txInterval);
-            txInterval = null;
-            document.getElementById('txFullscreen').classList.add('hidden');
-            exitNativeFullscreen();
-        }
+async function buildFrames(){
+  const size=parseInt(chunkSizeInput.value,10);
+  const buf=new Uint8Array(await currentFile.arrayBuffer());
+  fileId=Math.random().toString(36).slice(2,8);
+  const total=Math.ceil(buf.length/size)||1;
+  const meta=`M|${fileId}|${total}|${encodeURIComponent(currentFile.name)}|${encodeURIComponent(currentFile.type||'application/octet-stream')}|${buf.length}`;
+  const frames=[meta];
+  for(let i=0;i<total;i++){
+    const chunk=buf.subarray(i*size,Math.min((i+1)*size,buf.length));
+    frames.push(`D|${fileId}|${i}|${u8ToB64(chunk)}`);
+  }
+  return frames;
+}
 
+function drawFrame(text){
+  qrcode.clear();
+  qrcode.makeCode(text);
+}
 
-        // ==========================================
-        // 接收端 (Rx) 邏輯
-        // ==========================================
-        let videoStream = null;
-        let rxAnimFrame = null;
-        let receivedChunks = new Set();
-        let fileDataArray = [];
-        let expectedTotal = 0;
-        let incomingFileName = 'download.bin';
-        
-        let lastReceivedTime = performance.now();
-        let bytesReceivedSinceLastCalc = 0;
+async function startSending(){
+  sendFrames=await buildFrames();
+  sendIdx=0; sendLoops=0; frameTimes=[];
+  sending=true;
+  sendBtn.textContent='停止傳送';
+  sendBtn.classList.add('stop');
+  scheduleNext();
+}
 
-        async function startRxFullscreen() {
-            const video = document.getElementById('videoElement');
-            const canvas = document.getElementById('scanCanvas');
-            
-            try {
-                // 要求相機權限 (優先使用後置鏡頭，解析度設高有利於辨識)
-                videoStream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } } 
-                });
-                video.srcObject = videoStream;
-                video.play();
-                
-                // 重置狀態
-                receivedChunks.clear();
-                fileDataArray = [];
-                expectedTotal = 0;
-                document.getElementById('downloadArea').classList.add('hidden');
-                updateRxUI(0);
-                
-                // 開啟全螢幕 UI
-                document.getElementById('rxFullscreen').classList.remove('hidden');
-                requestNativeFullscreen(document.documentElement);
-                
-                // 開始解析迴圈
-                requestAnimationFrame(scanFrame);
-            } catch (err) {
-                alert('無法開啟相機，請確保網頁為 HTTPS 且允許相機權限。\n' + err.message);
-            }
-        }
+function scheduleNext(){
+  if(!sending) return;
+  const now=performance.now();
+  if(lastFrameTime){
+    frameTimes.push(now-lastFrameTime);
+    if(frameTimes.length>30) frameTimes.shift();
+  }
+  lastFrameTime=now;
 
-        function stopRxFullscreen() {
-            if (videoStream) {
-                videoStream.getTracks().forEach(track => track.stop());
-                videoStream = null;
-            }
-            if (rxAnimFrame) cancelAnimationFrame(rxAnimFrame);
-            document.getElementById('rxFullscreen').classList.add('hidden');
-            exitNativeFullscreen();
-        }
+  const text=sendFrames[sendIdx];
+  drawFrame(text);
 
-        function scanFrame() {
-            if (!videoStream) return;
-            const video = document.getElementById('videoElement');
-            const canvas = document.getElementById('scanCanvas');
-            const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  const isMeta=text.startsWith('M|');
+  sFrame.textContent=isMeta ? 'META' : `${sendIdx} / ${sendFrames.length-1}`;
+  sLoop.textContent=sendLoops;
 
-            if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                // 確保 Canvas 解析度與影片來源一致，才能準確畫出框線
-                if(canvas.width !== video.videoWidth || canvas.height !== video.videoHeight){
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                }
-                
-                // 將影像畫到 Canvas 以擷取像素
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                
-                // 執行 jsQR 解碼
-                const code = jsQR(imageData.data, imageData.width, imageData.height, {
-                    inversionAttempts: "dontInvert", // 關閉反轉以提升效能
-                });
+  const chunkBytes=parseInt(chunkSizeInput.value,10);
+  const interval=Math.max(parseInt(intervalInput.value,10),1);
+  const theoretical=chunkBytes/(interval/1000);
+  sRate.textContent=fmtBytes(theoretical)+'/s';
 
-                if (code && code.data) {
-                    // 畫出成功辨識的追蹤框 (UI回饋)
-                    ctx.beginPath();
-                    ctx.moveTo(code.location.topLeftCorner.x, code.location.topLeftCorner.y);
-                    ctx.lineTo(code.location.topRightCorner.x, code.location.topRightCorner.y);
-                    ctx.lineTo(code.location.bottomRightCorner.x, code.location.bottomRightCorner.y);
-                    ctx.lineTo(code.location.bottomLeftCorner.x, code.location.bottomLeftCorner.y);
-                    ctx.lineTo(code.location.topLeftCorner.x, code.location.topLeftCorner.y);
-                    ctx.lineWidth = 6;
-                    ctx.strokeStyle = "#10b981"; // Emerald green
-                    ctx.stroke();
+  if(frameTimes.length>3){
+    const avg=frameTimes.reduce((a,b)=>a+b,0)/frameTimes.length;
+    sFps.textContent=(1000/avg).toFixed(1)+' fps';
+  }
 
-                    // 處理資料
-                    processDecodedData(code.data);
-                }
-            }
-            rxAnimFrame = requestAnimationFrame(scanFrame);
-        }
+  sendIdx++;
+  if(sendIdx>=sendFrames.length){ sendIdx=0; sendLoops++; }
 
-        function processDecodedData(dataStr) {
-            const parts = dataStr.split('|');
-            if (parts.length < 3) return;
+  const delay=parseInt(intervalInput.value,10);
+  if(delay<=0){
+    sendTimer=requestAnimationFrame(scheduleNext);
+  } else {
+    sendTimer=setTimeout(()=>requestAnimationFrame(scheduleNext),delay);
+  }
+}
 
-            const total = parseInt(parts[0]);
-            const index = parseInt(parts[1]);
-            
-            if (expectedTotal === 0) {
-                expectedTotal = total;
-                fileDataArray = new Array(total);
-            }
+function stopSending(){
+  sending=false;
+  if(sendTimer){ clearTimeout(sendTimer); cancelAnimationFrame(sendTimer); }
+  sendBtn.textContent='開始傳送';
+  sendBtn.classList.remove('stop');
+}
 
-            if (!receivedChunks.has(index)) {
-                let base64Data = "";
-                if (index === 0 && parts.length >= 4) {
-                    incomingFileName = parts[2];
-                    base64Data = parts[3];
-                } else {
-                    base64Data = parts[2];
-                }
+sendBtn.onclick=()=>{
+  if(sending){ stopSending(); }
+  else { startSending(); }
+};
 
-                fileDataArray[index] = base64Data;
-                receivedChunks.add(index);
-                
-                // 速率計算輔助
-                bytesReceivedSinceLastCalc += base64Data.length;
-                updateRxUI();
+/* ============ RECEIVE ============ */
+const video=document.getElementById('video');
+const overlay=document.getElementById('overlay');
+const octx=overlay.getContext('2d');
+const camBtn=document.getElementById('camBtn');
+const scanHint=document.getElementById('scanHint');
+const cameraFacing=document.getElementById('cameraFacing');
 
-                // 判斷是否接收完成
-                if (receivedChunks.size === expectedTotal) {
-                    finishReceiving();
-                }
-            }
-        }
+const rName=document.getElementById('rName');
+const rChunks=document.getElementById('rChunks');
+const rRate=document.getElementById('rRate');
+const rTime=document.getElementById('rTime');
+const rProgress=document.getElementById('rProgress');
+const downloadCard=document.getElementById('downloadCard');
+const dName=document.getElementById('dName');
+const dSize=document.getElementById('dSize');
+const dLink=document.getElementById('dLink');
+const resetRecvBtn=document.getElementById('resetRecvBtn');
 
-        // 速率計算計時器 (每秒更新一次)
-        setInterval(() => {
-            if(receivedChunks.size > 0 && expectedTotal > 0 && receivedChunks.size < expectedTotal) {
-                const now = performance.now();
-                const diff = (now - lastReceivedTime) / 1000;
-                if(diff >= 1) {
-                    let speed = bytesReceivedSinceLastCalc / diff;
-                    // 單位轉換
-                    let speedStr = speed > 1024 ? (speed/1024).toFixed(1) + ' KB/s' : speed.toFixed(0) + ' B/s';
-                    document.getElementById('rxFullSpeed').innerText = speedStr;
-                    
-                    bytesReceivedSinceLastCalc = 0;
-                    lastReceivedTime = now;
-                }
-            }
-        }, 1000);
+let stream=null, scanning=false, scanRAF=null;
+let recvMeta=null, recvChunks=new Map(), recvId=null;
+let recvStartTime=0, rateWindow=[];
+let hiddenCanvas=document.createElement('canvas');
+let hctx=hiddenCanvas.getContext('2d',{willReadFrequently:true});
 
-        function updateRxUI() {
-            if (expectedTotal === 0) return;
-            const percent = (receivedChunks.size / expectedTotal) * 100;
-            document.getElementById('rxFullPercent').innerText = `${percent.toFixed(1)}%`;
-            document.getElementById('rxFullProgressBar').style.width = `${percent}%`;
-            document.getElementById('rxFullChunks').innerText = `${receivedChunks.size} / ${expectedTotal}`;
-        }
+function resetReceiveState(){
+  recvMeta=null; recvChunks=new Map(); recvId=null; rateWindow=[];
+  rName.textContent='–'; rChunks.textContent='0 / –';
+  rRate.textContent='0 KB/s'; rTime.textContent='0.0s';
+  rProgress.style.width='0%';
+  downloadCard.classList.remove('show');
+  if(dLink.href){ URL.revokeObjectURL(dLink.href); dLink.removeAttribute('href'); }
+}
 
-        function finishReceiving() {
-            stopRxFullscreen();
-            
-            // 組合資料
-            let totalLength = 0;
-            const buffers = [];
-            for (let i = 0; i < expectedTotal; i++) {
-                // 防呆：如果有漏掉的區塊 (邏輯上不會發生，因為 size === expectedTotal 才會進來)
-                if(!fileDataArray[i]) continue; 
-                const buf = base64ToBuffer(fileDataArray[i]);
-                buffers.push(buf);
-                totalLength += buf.length;
-            }
+async function startCamera(){
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:{ideal:cameraFacing.value}, width:{ideal:1280}, height:{ideal:960}}
+    });
+  }catch(e){
+    scanHint.textContent='無法取得相機權限:'+e.message+'(需在 HTTPS 或 localhost 開啟)';
+    return;
+  }
+  video.srcObject=stream;
+  await video.play();
+  resetReceiveState();
+  recvStartTime=performance.now();
+  scanning=true;
+  camBtn.textContent='停止相機';
+  camBtn.classList.add('stop');
+  scanHint.textContent='掃描中… 請將相機對準另一支手機螢幕';
+  scanLoop();
+}
 
-            const completeArray = new Uint8Array(totalLength);
-            let offset = 0;
-            for (const buf of buffers) {
-                completeArray.set(buf, offset);
-                offset += buf.length;
-            }
+function stopReceiving(){
+  scanning=false;
+  if(scanRAF) cancelAnimationFrame(scanRAF);
+  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
+  camBtn.textContent='開啟相機開始接收';
+  camBtn.classList.remove('stop');
+  scanHint.textContent='尚未啟動相機';
+  octx.clearRect(0,0,overlay.width,overlay.height);
+}
 
-            // 產生 Blob 與下載連結
-            const blob = new Blob([completeArray], { type: "application/octet-stream" });
-            const url = URL.createObjectURL(blob);
-            
-            // 顯示下載區塊
-            const dlArea = document.getElementById('downloadArea');
-            const dlBtn = document.getElementById('downloadBtn');
-            dlArea.classList.remove('hidden');
-            dlBtn.href = url;
-            dlBtn.download = incomingFileName || 'received_file.bin';
-        }
-    </script>
+function scanLoop(){
+  if(!scanning) return;
+  if(video.readyState===video.HAVE_ENOUGH_DATA){
+    const w=video.videoWidth, h=video.videoHeight;
+    if(w>0&&h>0){
+      hiddenCanvas.width=w; hiddenCanvas.height=h;
+      hctx.drawImage(video,0,0,w,h);
+      const imgData=hctx.getImageData(0,0,w,h);
+      const code=jsQR(imgData.data,w,h,{inversionAttempts:'dontInvert'});
+
+      overlay.width=overlay.clientWidth; overlay.height=overlay.clientHeight;
+      octx.clearRect(0,0,overlay.width,overlay.height);
+
+      if(code){
+        drawBox(code.location, w, h);
+        handleDecoded(code.data);
+      }
+    }
+  }
+  scanRAF=requestAnimationFrame(scanLoop);
+}
+
+function drawBox(loc,vw,vh){
+  const sx=overlay.width/vw, sy=overlay.height/vh;
+  octx.strokeStyle='#5ee6c0'; octx.lineWidth=4;
+  octx.beginPath();
+  octx.moveTo(loc.topLeftCorner.x*sx, loc.topLeftCorner.y*sy);
+  octx.lineTo(loc.topRightCorner.x*sx, loc.topRightCorner.y*sy);
+  octx.lineTo(loc.bottomRightCorner.x*sx, loc.bottomRightCorner.y*sy);
+  octx.lineTo(loc.bottomLeftCorner.x*sx, loc.bottomLeftCorner.y*sy);
+  octx.closePath();
+  octx.stroke();
+}
+
+function handleDecoded(text){
+  const parts=text.split('|');
+  const type=parts[0];
+  if(type==='M'){
+    const [,, id, total, name, mime, size]=[null,null,parts[1],parts[2],parts[3],parts[4],parts[5]];
+    if(recvId!==id){ recvId=id; recvChunks=new Map(); recvStartTime=performance.now(); rateWindow=[]; }
+    recvMeta={id,total:parseInt(total,10),name:decodeURIComponent(name),mime:decodeURIComponent(mime),size:parseInt(size,10)};
+    rName.textContent=recvMeta.name;
+  } else if(type==='D'){
+    const id=parts[1], idx=parseInt(parts[2],10), b64=parts[3];
+    if(recvId===null){ recvId=id; recvStartTime=performance.now(); }
+    if(recvId!==id) return; // 不同傳輸,忽略(等 meta 重置)
+    if(!recvChunks.has(idx)){
+      const bytes=b64ToU8(b64);
+      recvChunks.set(idx,bytes);
+      const now=performance.now();
+      rateWindow.push({t:now, b:bytes.length});
+      while(rateWindow.length && now-rateWindow[0].t>1000) rateWindow.shift();
+    }
+  }
+  updateProgress();
+  checkComplete();
+}
+
+function updateProgress(){
+  const now=performance.now();
+  const elapsed=(now-recvStartTime)/1000;
+  rTime.textContent=elapsed.toFixed(1)+'s';
+
+  const bytesInWindow=rateWindow.reduce((a,c)=>a+c.b,0);
+  rRate.textContent=fmtBytes(bytesInWindow)+'/s';
+
+  if(recvMeta){
+    rChunks.textContent=`${recvChunks.size} / ${recvMeta.total}`;
+    const pct=Math.min(100,(recvChunks.size/recvMeta.total)*100);
+    rProgress.style.width=pct+'%';
+  } else {
+    rChunks.textContent=`${recvChunks.size} / –`;
+  }
+}
+
+function checkComplete(){
+  if(!recvMeta) return;
+  if(recvChunks.size < recvMeta.total) return;
+  for(let i=0;i<recvMeta.total;i++){ if(!recvChunks.has(i)) return; }
+
+  // 全部收齊,組回檔案
+  const totalBytes=recvMeta.size;
+  const buf=new Uint8Array(totalBytes);
+  let offset=0;
+  for(let i=0;i<recvMeta.total;i++){
+    const c=recvChunks.get(i);
+    buf.set(c,offset);
+    offset+=c.length;
+  }
+  const blob=new Blob([buf],{type:recvMeta.mime||'application/octet-stream'});
+  const url=URL.createObjectURL(blob);
+  dLink.href=url;
+  dLink.download=recvMeta.name||'received_file';
+  dName.textContent=recvMeta.name;
+  dSize.textContent=fmtBytes(blob.size);
+  downloadCard.classList.add('show');
+
+  stopReceiving();
+}
+
+camBtn.onclick=()=>{
+  if(scanning){ stopReceiving(); }
+  else { startCamera(); }
+};
+resetRecvBtn.onclick=()=>{
+  resetReceiveState();
+  if(!scanning) startCamera();
+};
+</script>
 </body>
 </html>
-
-
