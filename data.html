@@ -110,10 +110,11 @@
       <h2>傳輸設定</h2>
       <div class="row">
         <label>每格資料量</label>
-        <input type="range" id="blockSize" min="200" max="2100" step="50" value="1200">
-        <span class="val" id="blockSizeVal">1200 B</span>
+        <input type="range" id="blockSize" min="60" max="2100" step="20" value="220">
+        <span class="val" id="blockSizeVal">220 B</span>
       </div>
-      <div class="small">掃不到 / 太糊 → 調小(QR 模組變大更好掃)。相機好、光線穩、手機架著不晃 → 可以調到 2000+ 衝速度。</div>
+      <div class="small" id="qrDensityHint">QR 版本 – · – × – 模組</div>
+      <div class="small">⚠️ 先從很小(150~250B)開始測,確認接收端真的掃得到,再慢慢往上加。手機相機在有點距離、環境不夠亮時,格子一密就整片糊掉、完全掃不到 — 你剛剛截圖那樣就是密度太高了。</div>
       <div class="row" style="margin-top:12px;">
         <label>畫面節流</label>
         <input type="range" id="throttle" min="0" max="150" step="10" value="0">
@@ -366,7 +367,29 @@ fileInput.onchange=async ()=>{
   stopSending();
 };
 
-blockSizeInput.oninput=()=>{blockSizeVal.textContent=blockSizeInput.value+' B';};
+// QR byte-mode capacity table (Error Correction Level L), version 1~40 — 標準 ISO/IEC 18004 數值
+const QR_CAPACITY_L=[17,32,53,78,106,134,154,192,230,271,321,367,425,458,520,586,644,718,792,858,
+  929,1003,1091,1171,1273,1367,1465,1528,1628,1732,1840,1952,2068,2188,2303,2431,2563,2699,2809,2953];
+function estimateQRVersion(charLen){
+  for(let v=1; v<=40; v++){ if(QR_CAPACITY_L[v-1]>=charLen) return v; }
+  return 40;
+}
+function updateDensityHint(){
+  const size=parseInt(blockSizeInput.value,10);
+  // 近似 data frame 長度: "D|" + id(6) + "|" + seed(最多7碼) + "|" + base64
+  const approxLen = 2+6+1+7+1 + Math.ceil(size/3)*4;
+  const v=estimateQRVersion(approxLen);
+  const modules=(v-1)*4+21;
+  const hint=document.getElementById('qrDensityHint');
+  let level='';
+  if(v<=8) level='(很稀疏,超好掃)';
+  else if(v<=15) level='(適中)';
+  else if(v<=25) level='(偏密,需要好對焦)';
+  else level='(非常密,建議手機架穩+近距離+高解析相機)';
+  hint.textContent=`QR 版本 ${v} · ${modules}×${modules} 模組 ${level}`;
+}
+blockSizeInput.oninput=()=>{blockSizeVal.textContent=blockSizeInput.value+' B';updateDensityHint();};
+updateDensityHint();
 throttleInput.oninput=()=>{throttleVal.textContent = throttleInput.value==='0' ? '最快(每幀刷新)' : throttleInput.value+' ms';};
 
 const qrTarget=document.getElementById('qrTarget');
@@ -515,8 +538,20 @@ function resetReceiveState(){
 async function startCamera(){
   try{
     stream=await navigator.mediaDevices.getUserMedia({
-      video:{facingMode:{ideal:cameraFacing.value}, width:{ideal:1280}, height:{ideal:960}}
+      video:{
+        facingMode:{ideal:cameraFacing.value},
+        width:{ideal:1920}, height:{ideal:1080},
+        advanced:[{focusMode:'continuous'}]
+      }
     });
+    // 部分瀏覽器(尤其 Android Chrome)支援明確設定連續對焦,失敗就靜默忽略
+    try{
+      const track=stream.getVideoTracks()[0];
+      const caps=track.getCapabilities ? track.getCapabilities() : {};
+      if(caps.focusMode && caps.focusMode.includes('continuous')){
+        await track.applyConstraints({advanced:[{focusMode:'continuous'}]});
+      }
+    }catch(e){ /* 不支援就算了,不影響主流程 */ }
   }catch(e){
     scanHint.textContent='無法取得相機權限:'+e.message+'(需在 HTTPS 或 localhost 開啟)';
     return;
@@ -528,7 +563,7 @@ async function startCamera(){
   scanning=true;
   camBtn.textContent='停止相機';
   camBtn.classList.add('stop');
-  scanHint.textContent='掃描中… 請將相機對準另一支手機螢幕';
+  scanHint.textContent='掃描中… 距離約 10~20cm、點一下畫面對焦、盡量拿穩';
   scanLoop();
 }
 
@@ -662,6 +697,19 @@ function checkComplete(){
   downloadCard.classList.add('show');
   stopReceiving();
 }
+
+// 點一下畫面手動觸發對焦(支援的裝置才有效果,不支援就不會出錯)
+video.addEventListener('click', async (e)=>{
+  if(!stream) return;
+  try{
+    const track=stream.getVideoTracks()[0];
+    const caps=track.getCapabilities ? track.getCapabilities() : {};
+    if(caps.focusMode && caps.focusMode.includes('single-shot')){
+      await track.applyConstraints({advanced:[{focusMode:'single-shot'}]});
+      setTimeout(()=>{ track.applyConstraints({advanced:[{focusMode:'continuous'}]}).catch(()=>{}); }, 800);
+    }
+  }catch(err){ /* 裝置不支援手動對焦控制,忽略 */ }
+});
 
 camBtn.onclick=()=>{
   if(scanning){ stopReceiving(); }
