@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>動態公告欄</title>
+  <style>
+    /* 基礎樣式重置 */
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #fff; /* 預設背景白 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #board-container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center; /* 垂直置中 */
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 滾動內容容器：使用硬體加速優化 */
+    #scroller {
+      display: inline-block;
+      position: absolute;
+      will-change: transform;
+      transition-timing-function: linear !important; /* 確保勻速滾動 */
+    }
+
+    /* 文字樣式：預設自適應大小 */
+    .msg-text {
+      font-family: "Microsoft JhengHei", "Heiti TC", "PingFang TC", sans-serif;
+      font-weight: bold;
+      line-height: 1;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* 隱藏卷軸 */
+    ::-webkit-scrollbar { display: none; }
+  </style>
+</head>
+<body>
+
+  <div id="board-container">
+    <div id="scroller" class="msg-text"></div>
+  </div>
+
+<script>
+  /** * 配置參數 
+   */
+  const API_URL = "https://script.google.com/macros/s/AKfycbyDYC6XEqGW6TSaQuS-erMnDbGPqNCq22fdKdxs6ukDicWJGfUxrCfTnCLD68hcP-KmWA/exec";
+  
+  let currentPlaylist = []; // 目前播放清單
+  let nextPlaylist = null;  // 待更新清單
+  let settings = {};        // 後端設定參數
+  let currentIndex = 0;     // 播放索引
+  let refreshTimer = null;  // 定時檢查器
+
+  const container = document.getElementById('board-container');
+  const scroller = document.getElementById('scroller');
+
+  // 初始化
+  window.onload = () => {
+    fetchData(true);
+  };
+
+  /**
+   * 從後端 GAS 獲取資料
+   * @param {boolean} isFirstLoad 是否為初次載入
+   */
+  function fetchData(isFirstLoad) {
+    fetch(API_URL)
+      .then(res => res.json())
+      .then(data => {
+        if (!data || !data.items) {
+          if (isFirstLoad) scroller.innerHTML = ""; // 未受訊息顯示空白
+          return;
+        }
+
+        if (isFirstLoad) {
+          settings = data.settings;
+          currentPlaylist = data.items;
+          applySettings();
+          startRefreshCycle();
+          playNext(); // 開始輪播
+        } else {
+          // 檢查內容是否有變動
+          const newDataStr = JSON.stringify(data.items);
+          const oldDataStr = JSON.stringify(currentPlaylist);
+          
+          if (newDataStr !== oldDataStr) {
+            console.log("偵測到新資料，將在當前輪播結束後更新。");
+            nextPlaylist = data.items; 
+          }
+
+          // 如果全域設定有變(如背景色、字體大小)，立即更新樣式
+          if (JSON.stringify(data.settings) !== JSON.stringify(settings)) {
+            settings = data.settings;
+            applySettings();
+            startRefreshCycle(); // 重設計時器
+          }
+        }
+      })
+      .catch(err => {
+        console.error("資料獲取失敗:", err);
+        // 若通訊失敗，不顯示錯誤訊息，保持當前狀態或顯示空白
+      });
+  }
+
+  /**
+   * 套用後端設定的樣式
+   */
+  function applySettings() {
+    document.body.style.backgroundColor = settings.BgColor || '#fff';
+    scroller.style.fontSize = settings.FontSize || '10vh'; // 預設 10% 視窗高度
+  }
+
+  /**
+   * 啟動定時抓取任務
+   */
+  function startRefreshCycle() {
+    const time = (parseInt(settings.RefreshTime) || 10) * 1000;
+    if (refreshTimer) clearInterval(refreshTimer);
+    refreshTimer = setInterval(() => fetchData(false), time);
+  }
+
+  /**
+   * 播放邏輯：核心控制
+   */
+  function playNext() {
+    // 1. 檢查是否整輪公告都播完了
+    if (currentIndex >= currentPlaylist.length) {
+      currentIndex = 0;
+      // 若有新資料在等待，顯示更新中訊息
+      if (nextPlaylist !== null) {
+        showUpdateScreen();
+        return;
+      }
+    }
+
+    // 2. 如果目前沒公告可播，顯示空白並靜候
+    if (currentPlaylist.length === 0) {
+      scroller.innerHTML = "";
+      setTimeout(playNext, 2000);
+      return;
+    }
+
+    // 3. 取出當前公告項目
+    const item = currentPlaylist[currentIndex];
+    scroller.innerText = item.text;
+    scroller.style.color = item.color || settings.DefaultColor || '#fff';
+    
+    // 執行滾動動畫
+    const speed = item.speed || settings.DefaultSpeed || 100;
+    runMarquee(speed, () => {
+      currentIndex++;
+      playNext();
+    });
+  }
+
+  /**
+   * 跑馬燈動畫執行
+   */
+  function runMarquee(speed, onComplete) {
+    const containerWidth = container.offsetWidth;
+    const textWidth = scroller.offsetWidth;
+    
+    const startPos = containerWidth;   // 從右側邊緣外開始
+    const endPos = -textWidth;         // 滾到左側邊緣外結束
+    const distance = startPos - endPos;
+    const duration = distance / speed; // 秒 = 距離 / 速度
+
+    // 初始化位置 (不帶過渡)
+    scroller.style.transition = 'none';
+    scroller.style.transform = `translateX(${startPos}px)`;
+
+    // 透過 requestAnimationFrame 確保瀏覽器已重設位置再啟動動畫
+    requestAnimationFrame(() => {
+      // 些微延遲確保渲染
+      setTimeout(() => {
+        scroller.style.transition = `transform ${duration}s linear`;
+        scroller.style.transform = `translateX(${endPos}px)`;
+      }, 50);
+    });
+
+    // 監聽結束事件
+    const handleEnd = () => {
+      scroller.removeEventListener('transitionend', handleEnd);
+      onComplete();
+    };
+    scroller.addEventListener('transitionend', handleEnd);
+  }
+
+  /**
+   * 顯示更新中過渡
+   */
+  function showUpdateScreen() {
+    const updateMsg = settings.UpdateMsg || "更新中...";
+    scroller.innerText = updateMsg;
+    scroller.style.color = settings.DefaultColor || '#fff';
+    
+    // 過渡文字也跑一次動畫
+    runMarquee(settings.DefaultSpeed || 100, () => {
+      // 動畫結束後正式切換資料
+      currentPlaylist = nextPlaylist;
+      nextPlaylist = null;
+      currentIndex = 0;
+      playNext();
+    });
+  }
+</script>
+</body>
+</html>
