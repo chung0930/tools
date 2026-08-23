@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>充電效率檢測</title>
+    <style>
+        :root {
+            --bg-color: #0f0f0f;
+            --card-bg: #1e1e1e;
+            --accent-color: #00e676;
+            --text-color: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 自適應容器 */
+        .container {
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+            border: 1px solid #333;
+        }
+
+        h2 { margin-bottom: 1.5rem; color: var(--accent-color); font-size: 1.5rem; }
+
+        .info-box {
+            background: #252525;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .label { font-size: 0.9rem; color: #aaa; margin-bottom: 0.5rem; }
+        .value { font-size: 1.8rem; font-weight: bold; font-family: monospace; }
+
+        .status-tag {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .charging { background: #2e7d32; color: #fff; }
+        .discharging { background: #c62828; color: #fff; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>充電效能監測</h2>
+    
+    <div class="info-box">
+        <div class="label">目前電量</div>
+        <div id="battery-level" class="value">--%</div>
+    </div>
+
+    <div class="info-box">
+        <div class="label">充電耗時</div>
+        <div id="timer" class="value">00:00:00</div>
+    </div>
+
+    <div class="info-box">
+        <div class="label">預估狀態</div>
+        <div id="status-text" style="font-size: 0.9rem;">偵測中...</div>
+    </div>
+
+    <div id="charging-status" class="status-tag">未知狀態</div>
+</div>
+
+<script>
+    let startTime = null;
+    let timerInterval = null;
+    let isTracking = false;
+
+    async function initBattery() {
+        if (!navigator.getBattery) {
+            document.getElementById('status-text').innerText = "您的瀏覽器不支援 Battery API";
+            return;
+        }
+
+        const battery = await navigator.getBattery();
+
+        // 更新 UI 函數
+        const updateUI = () => {
+            const level = Math.round(battery.level * 100);
+            document.getElementById('battery-level').innerText = level + "%";
+            
+            const statusTag = document.getElementById('charging-status');
+            if (battery.charging) {
+                statusTag.innerText = "正在充電";
+                statusTag.className = "status-tag charging";
+                
+                // 如果開始充電且未滿100%，開啟計時器
+                if (!isTracking && level < 100) {
+                    startTracking();
+                }
+            } else {
+                statusTag.innerText = "未接通電源";
+                statusTag.className = "status-tag discharging";
+                stopTracking();
+            }
+
+            if (level === 100 && isTracking) {
+                stopTracking();
+                document.getElementById('status-text').innerText = "✅ 已充滿至 100%！";
+            }
+        };
+
+        const startTracking = () => {
+            isTracking = true;
+            startTime = Date.now();
+            document.getElementById('status-text').innerText = "正在計算充電至 100% 的時間...";
+            
+            timerInterval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                document.getElementById('timer').innerText = formatTime(elapsed);
+            }, 1000);
+        };
+
+        const stopTracking = () => {
+            isTracking = false;
+            clearInterval(timerInterval);
+        };
+
+        const formatTime = (ms) => {
+            let totalSeconds = Math.floor(ms / 1000);
+            let hours = Math.floor(totalSeconds / 3600);
+            let minutes = Math.floor((totalSeconds % 3600) / 60);
+            let seconds = totalSeconds % 60;
+            return [hours, minutes, seconds].map(v => v < 10 ? "0" + v : v).join(":");
+        };
+
+        // 監聽事件
+        battery.addEventListener('chargingchange', updateUI);
+        battery.addEventListener('levelchange', updateUI);
+        
+        // 初始執行一次
+        updateUI();
+    }
+
+    // 啟動程式
+    initBattery();
+</script>
+
+</body>
+</html>
