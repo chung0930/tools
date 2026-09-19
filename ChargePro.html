@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電量充電檢測器</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            500: '#22c55e',
+                            600: '#16a34a',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 2s infinite alternate',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { boxShadow: '0 0 15px rgba(34, 197, 94, 0.2)' },
+                            '100%': { boxShadow: '0 0 30px rgba(34, 197, 94, 0.6)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #090d16;
+            color: #f8fafc;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between p-4 sm:p-8">
+
+    <div class="max-w-5xl mx-auto w-full space-y-8 my-auto">
+        
+        <!-- Header Title -->
+        <header class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-4 border-b border-slate-800/80">
+            <div class="flex items-center gap-3">
+                <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/20 shadow-lg">
+                    <i class="fa-solid fa-bolt-lightning text-2xl animate-pulse"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-extrabold text-white tracking-tight">電量充電檢測器</h1>
+                    <p class="text-xs text-slate-400">即時監測電池狀態與充電耗時</p>
+                </div>
+            </div>
+
+            <!-- Auto Sync Indicator -->
+            <div id="sync-status" class="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-slate-900 border border-slate-800 text-slate-400">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                <span id="sync-text">自動偵測監控中</span>
+            </div>
+        </header>
+
+        <!-- Main 4-Block Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- BLOCK 1: 目前電量 (Current Level) -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group hover:border-emerald-500/40 transition-all duration-300">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-2 text-slate-400 font-semibold text-sm">
+                        <i class="fa-solid fa-battery-half text-emerald-400 text-lg"></i>
+                        <span>目前電量</span>
+                    </div>
+                    <span id="current-badge" class="px-2.5 py-1 text-xs font-mono font-bold rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        +0%
+                    </span>
+                </div>
+
+                <div class="my-4 flex items-baseline gap-2">
+                    <span id="current-level-text" class="text-6xl sm:text-7xl font-extrabold font-mono text-white tracking-tight">--%</span>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full space-y-2">
+                    <div class="w-full bg-slate-800/80 rounded-full h-3.5 p-0.5 border border-slate-700/50">
+                        <div id="current-progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-2.5 rounded-full transition-all duration-500 shadow-lg" style="width: 0%;"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-slate-500 font-mono">
+                        <span>0%</span>
+                        <span>50%</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCK 2: 起始電量 (Start Level) -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group hover:border-sky-500/40 transition-all duration-300">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-2 text-slate-400 font-semibold text-sm">
+                        <i class="fa-solid fa-play text-sky-400 text-base"></i>
+                        <span>起始電量</span>
+                    </div>
+                    <button id="btn-reset-start" title="以目前電量重新鎖定起點" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 border border-sky-500/20 transition flex items-center gap-1">
+                        <i class="fa-solid fa-rotate text-xs"></i> 重置起點
+                    </button>
+                </div>
+
+                <div class="my-4">
+                    <div id="start-level-text" class="text-6xl sm:text-7xl font-extrabold font-mono text-sky-400 tracking-tight">--%</div>
+                </div>
+
+                <div class="flex items-center justify-between pt-3 border-t border-slate-800/80 text-xs font-mono text-slate-400">
+                    <span>紀錄點時間：</span>
+                    <span id="start-time-text" class="text-slate-200">等待插上充電器...</span>
+                </div>
+            </div>
+
+            <!-- BLOCK 3: 充電耗時 (Charging Duration) -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group hover:border-amber-500/40 transition-all duration-300">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-2 text-slate-400 font-semibold text-sm">
+                        <i class="fa-regular fa-clock text-amber-400 text-lg"></i>
+                        <span>充電耗時</span>
+                    </div>
+                    <span id="timer-status-tag" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-800 text-slate-400 border border-slate-700">
+                        未計時
+                    </span>
+                </div>
+
+                <div class="my-4">
+                    <div id="duration-timer-text" class="text-5xl sm:text-6xl font-extrabold font-mono text-amber-400 tracking-wider">00:00:00</div>
+                </div>
+
+                <div class="flex items-center justify-between pt-3 border-t border-slate-800/80 text-xs font-mono text-slate-400">
+                    <span>充電速率估計：</span>
+                    <span id="charging-rate-text" class="text-amber-300 font-bold">0.0 % / 分鐘</span>
+                </div>
+            </div>
+
+            <!-- BLOCK 4: 充電狀態 (Charging Status) -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group hover:border-purple-500/40 transition-all duration-300">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-2 text-slate-400 font-semibold text-sm">
+                        <i class="fa-solid fa-plug text-purple-400 text-lg"></i>
+                        <span>充電狀態</span>
+                    </div>
+                    <span id="power-source-tag" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-800 text-slate-400 border border-slate-700">
+                        未連接電源
+                    </span>
+                </div>
+
+                <div class="my-3 flex items-center gap-4">
+                    <div id="status-icon-box" class="w-14 h-14 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-slate-400 text-2xl transition-all">
+                        <i id="status-icon" class="fa-solid fa-plug-circle-xmark"></i>
+                    </div>
+                    <div>
+                        <div id="status-main-text" class="text-2xl font-bold text-white">未在充電</div>
+                        <div id="status-sub-text" class="text-xs text-slate-400 mt-1">請插上充電器以開始檢測</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-3 border-t border-slate-800/80 text-xs font-mono text-slate-400">
+                    <span>預估充滿時間：</span>
+                    <span id="time-to-full-text" class="text-purple-300 font-bold">--</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Subtle Fallback Control for Mobile / iOS Safari without Battery API -->
+        <div id="demo-controls" class="hidden glass-card p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3 text-xs border border-amber-500/20 bg-amber-500/5">
+            <div class="text-amber-300 flex items-center gap-2">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>您的瀏覽器不支援 Battery API（已啟用模擬模式）</span>
+            </div>
+            <button id="btn-toggle-sim-plug" class="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/30 rounded-lg font-medium transition">
+                模擬插上 / 拔除充電器
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center text-xs text-slate-500 pt-4">
+            電量充電檢測器 &copy; 自動監測與計時系統
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // State variables
+            let battery = null;
+            let isCharging = false;
+            let currentLevel = 0;
+            let startLevel = null;
+            let startTime = null;
+            let timerInterval = null;
+            let elapsedSeconds = 0;
+
+            // Simulated state for fallback mode (e.g. iOS Safari)
+            let isSimulatedMode = false;
+            let simLevel = 45;
+
+            // DOM Elements
+            const currentLevelText = document.getElementById('current-level-text');
+            const currentProgressBar = document.getElementById('current-progress-bar');
+            const currentBadge = document.getElementById('current-badge');
+
+            const startLevelText = document.getElementById('start-level-text');
+            const startTimeText = document.getElementById('start-time-text');
+            const btnResetStart = document.getElementById('btn-reset-start');
+
+            const durationTimerText = document.getElementById('duration-timer-text');
+            const timerStatusTag = document.getElementById('timer-status-tag');
+            const chargingRateText = document.getElementById('charging-rate-text');
+
+            const statusMainText = document.getElementById('status-main-text');
+            const statusSubText = document.getElementById('status-sub-text');
+            const statusIconBox = document.getElementById('status-icon-box');
+            const statusIcon = document.getElementById('status-icon');
+            const powerSourceTag = document.getElementById('power-source-tag');
+            const timeToFullText = document.getElementById('time-to-full-text');
+
+            const demoControls = document.getElementById('demo-controls');
+            const btnToggleSimPlug = document.getElementById('btn-toggle-sim-plug');
+
+            async function initBatterySystem() {
+                if ('getBattery' in navigator) {
+                    try {
+                        battery = await navigator.getBattery();
+                        
+                        // Initial update
+                        updateAllData();
+
+                        // Battery Event Listeners
+                        battery.addEventListener('chargingchange', () => {
+                            updateChargingState();
+                        });
+                        battery.addEventListener('levelchange', () => {
+                            updateLevelData();
+                        });
+                        battery.addEventListener('chargingtimechange', () => {
+                            updateTimeToFull();
+                        });
+
+                    } catch (err) {
+                        enableSimulationMode("Battery API 存取受限");
+                    }
+                } else {
+                    enableSimulationMode("瀏覽器未提供 Battery API");
+                }
+            }
+
+            function updateAllData() {
+                updateLevelData();
+                updateChargingState();
+                updateTimeToFull();
+            }
+
+            function updateLevelData() {
+                if (battery) {
+                    currentLevel = Math.round(battery.level * 100);
+                } else {
+                    currentLevel = simLevel;
+                }
+
+                // Block 1 Update: Current Level
+                currentLevelText.textContent = `${currentLevel}%`;
+                currentProgressBar.style.width = `${currentLevel}%`;
+
+                // If charging and start level is locked, calculate diff
+                if (startLevel !== null) {
+                    const diff = currentLevel - startLevel;
+                    currentBadge.textContent = diff >= 0 ? `+${diff}%` : `${diff}%`;
+                    currentBadge.className = diff >= 0 
+                        ? "px-2.5 py-1 text-xs font-mono font-bold rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                        : "px-2.5 py-1 text-xs font-mono font-bold rounded-lg bg-rose-500/10 text-rose-400 border border-rose-500/20";
+                } else {
+                    currentBadge.textContent = "待檢測";
+                }
+
+                // Update charging rate speed estimate
+                calculateChargingRate();
+            }
+
+            function updateChargingState() {
+                const nowCharging = battery ? battery.charging : isSimulatedMode;
+
+                if (nowCharging !== isCharging) {
+                    isCharging = nowCharging;
+
+                    if (isCharging) {
+                        // Just Plugged In -> Auto record start level & start timer
+                        onStartCharging();
+                    } else {
+                        // Unplugged -> Stop timer
+                        onStopCharging();
+                    }
+                }
+
+                // Block 4 Update: Status Card
+                if (isCharging) {
+                    if (currentLevel >= 100) {
+                        statusMainText.textContent = "已充滿電";
+                        statusSubText.textContent = "可安全拔除充電器";
+                        statusIconBox.className = "w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 text-2xl animate-bounce";
+                        statusIcon.className = "fa-solid fa-battery-full";
+                        powerSourceTag.textContent = "電源正常運作";
+                        powerSourceTag.className = "px-2.5 py-1 text-xs font-semibold rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+                    } else {
+                        statusMainText.textContent = "⚡ 充電中";
+                        statusSubText.textContent = "正在持續補充電量與監控耗時";
+                        statusIconBox.className = "w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 text-2xl animate-pulse";
+                        statusIcon.className = "fa-solid fa-bolt-lightning";
+                        powerSourceTag.textContent = "已連接電源";
+                        powerSourceTag.className = "px-2.5 py-1 text-xs font-semibold rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+                    }
+                } else {
+                    statusMainText.textContent = "未在充電";
+                    statusSubText.textContent = "請插上充電器以自動開啟檢測";
+                    statusIconBox.className = "w-14 h-14 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-slate-500 text-2xl";
+                    statusIcon.className = "fa-solid fa-plug-circle-xmark";
+                    powerSourceTag.textContent = "未連接電源";
+                    powerSourceTag.className = "px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-800 text-slate-400 border border-slate-700";
+                }
+            }
+
+            function onStartCharging() {
+                // Record Start Battery & Time (Block 2)
+                startLevel = currentLevel;
+                startTime = new Date();
+
+                startLevelText.textContent = `${startLevel}%`;
+                startTimeText.textContent = formatTimeString(startTime);
+
+                // Start Timer (Block 3)
+                elapsedSeconds = 0;
+                durationTimerText.textContent = "00:00:00";
+                timerStatusTag.textContent = "⚡ 計時中";
+                timerStatusTag.className = "px-2.5 py-1 text-xs font-semibold rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 animate-pulse";
+
+                clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    elapsedSeconds++;
+                    durationTimerText.textContent = formatDurationSeconds(elapsedSeconds);
+
+                    // Simulation mode level increment test
+                    if (isSimulatedMode && elapsedSeconds % 3 === 0 && simLevel < 100) {
+                        simLevel++;
+                        updateLevelData();
+                    }
+
+                    calculateChargingRate();
+                }, 1000);
+            }
+
+            function onStopCharging() {
+                clearInterval(timerInterval);
+                timerStatusTag.textContent = "已暫停";
+                timerStatusTag.className = "px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-800 text-slate-400 border border-slate-700";
+            }
+
+            function updateTimeToFull() {
+                if (battery && battery.charging && battery.chargingTime && battery.chargingTime !== Infinity) {
+                    const mins = Math.round(battery.chargingTime / 60);
+                    timeToFullText.textContent = `約 ${mins} 分鐘`;
+                } else if (isCharging) {
+                    timeToFullText.textContent = "估算中...";
+                } else {
+                    timeToFullText.textContent = "未充電";
+                }
+            }
+
+            function calculateChargingRate() {
+                if (startLevel !== null && elapsedSeconds > 0) {
+                    const gainedPercent = currentLevel - startLevel;
+                    const elapsedMinutes = elapsedSeconds / 60;
+                    
+                    if (gainedPercent > 0 && elapsedMinutes > 0) {
+                        const rate = (gainedPercent / elapsedMinutes).toFixed(2);
+                        chargingRateText.textContent = `+${rate} % / 分鐘`;
+                        return;
+                    }
+                }
+                chargingRateText.textContent = `0.00 % / 分鐘`;
+            }
+
+            // Reset start point manually to current battery
+            btnResetStart.addEventListener('click', () => {
+                startLevel = currentLevel;
+                startTime = new Date();
+                startLevelText.textContent = `${startLevel}%`;
+                startTimeText.textContent = formatTimeString(startTime);
+                updateLevelData();
+            });
+
+            // Fallback for browsers that don't support battery status API
+            function enableSimulationMode(reason) {
+                demoControls.classList.remove('hidden');
+                updateLevelData();
+
+                btnToggleSimPlug.addEventListener('click', () => {
+                    isSimulatedMode = !isSimulatedMode;
+                    updateChargingState();
+                    btnToggleSimPlug.textContent = isSimulatedMode ? "拔除模擬充電器" : "模擬插上充電器";
+                });
+            }
+
+            function formatTimeString(d) {
+                const hrs = String(d.getHours()).padStart(2, '0');
+                const mins = String(d.getMinutes()).padStart(2, '0');
+                const secs = String(d.getSeconds()).padStart(2, '0');
+                return `${hrs}:${mins}:${secs}`;
+            }
+
+            function formatDurationSeconds(sec) {
+                const hrs = String(Math.floor(sec / 3600)).padStart(2, '0');
+                const mins = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
+                const secs = String(sec % 60).padStart(2, '0');
+                return `${hrs}:${mins}:${secs}`;
+            }
+
+            // Initialize app
+            initBatterySystem();
+        });
+    </script>
+</body>
+</html>
