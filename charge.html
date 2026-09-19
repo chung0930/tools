@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>充電時間檢測器</title>
+    <title>電量充電檢測器</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -206,68 +206,88 @@
 
     </div>
 
-    <!-- Off-screen Clean 3-Block Export Template (No reset button, no timer status tag) -->
-    <div id="export-card" class="fixed -left-[9999px] top-0 w-[680px] p-8 rounded-3xl bg-slate-950 text-slate-100 border border-emerald-500/30 font-sans shadow-2xl space-y-6">
-        <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
-            <div class="flex items-center gap-3">
-                <div class="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
-                    <i class="fa-solid fa-bolt-lightning text-xl"></i>
+    <!-- Off-screen Clean 3-Block Export Template (Fixed 3480x2160 UHD rendering target) -->
+    <div id="export-card-container" class="fixed top-0 left-0 -z-50 opacity-0 pointer-events-none overflow-hidden">
+        <div id="export-card" class="w-[1160px] h-[720px] p-12 bg-slate-950 text-slate-100 border-2 border-emerald-500/30 font-sans shadow-2xl flex flex-col justify-between rounded-[36px] box-border">
+            
+            <!-- Header -->
+            <div class="flex items-center justify-between border-b border-slate-800/80 pb-6">
+                <div class="flex items-center gap-4">
+                    <div class="p-4 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/30">
+                        <svg class="w-8 h-8 fill-emerald-400" viewBox="0 0 24 24">
+                            <path d="M13 2L3 14h7v8l10-12h-7V2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-extrabold text-white tracking-tight">電量充電檢測報告</h2>
+                        <p class="text-sm text-slate-400 mt-1">即時數據監測紀錄</p>
+                    </div>
                 </div>
-                <div>
-                    <h2 class="text-xl font-bold text-white tracking-tight">電量充電檢測報告</h2>
-                    <p class="text-xs text-slate-400">即時數據監測紀錄</p>
-                </div>
-            </div>
-            <div id="export-date-text" class="text-xs font-mono text-slate-400">--</div>
-        </div>
-
-        <!-- 3 Clean Blocks Grid -->
-        <div class="grid grid-cols-3 gap-4">
-            <!-- 1. 目前電量 -->
-            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-semibold text-slate-400 flex items-center gap-1.5">
-                        <i class="fa-solid fa-battery-half text-emerald-400"></i> 目前電量
-                    </span>
-                    <span id="export-current-badge" class="px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">+0%</span>
-                </div>
-                <div id="export-current-level" class="text-4xl font-extrabold font-mono text-white my-3">--%</div>
-                <div class="w-full bg-slate-800 rounded-full h-2 p-0.5 border border-slate-700/50">
-                    <div id="export-progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-1.5 rounded-full" style="width: 0%;"></div>
-                </div>
+                <div id="export-date-text" class="text-base font-mono text-slate-400 bg-slate-900/80 px-4 py-2 rounded-xl border border-slate-800">--</div>
             </div>
 
-            <!-- 2. 起始電量 (純淨顯示，無重置按鈕) -->
-            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-semibold text-slate-400 flex items-center gap-1.5">
-                        <i class="fa-solid fa-play text-sky-400"></i> 起始電量
-                    </span>
+            <!-- 3 Clean Blocks Grid -->
+            <div class="grid grid-cols-3 gap-6 my-auto">
+                <!-- 1. 目前電量 -->
+                <div class="bg-slate-900/90 border border-slate-800/90 rounded-3xl p-7 flex flex-col justify-between h-[360px]">
+                    <div class="flex justify-between items-center">
+                        <span class="text-base font-bold text-slate-300 flex items-center gap-2.5">
+                            <svg class="w-5 h-5 fill-emerald-400" viewBox="0 0 24 24">
+                                <path d="M17 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm1 10H3V8h14v8zm5-7v6h-2V9h2z"/>
+                            </svg>
+                            目前電量
+                        </span>
+                        <span id="export-current-badge" class="px-3 py-1 text-xs font-mono font-bold rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">+0%</span>
+                    </div>
+                    <div id="export-current-level" class="text-7xl font-extrabold font-mono text-white tracking-tight my-auto">--%</div>
+                    <div class="w-full bg-slate-800/80 rounded-full h-3 p-0.5 border border-slate-700/60">
+                        <div id="export-progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-2 rounded-full transition-all duration-300" style="width: 0%;"></div>
+                    </div>
                 </div>
-                <div id="export-start-level" class="text-4xl font-extrabold font-mono text-sky-400 my-3">--%</div>
-                <div class="text-[11px] font-mono text-slate-400 border-t border-slate-800/80 pt-2">
-                    紀錄時間：<span id="export-start-time" class="text-slate-200">--:--:--</span>
+
+                <!-- 2. 起始電量 -->
+                <div class="bg-slate-900/90 border border-slate-800/90 rounded-3xl p-7 flex flex-col justify-between h-[360px]">
+                    <div class="flex justify-between items-center">
+                        <span class="text-base font-bold text-slate-300 flex items-center gap-2.5">
+                            <svg class="w-5 h-5 fill-sky-400" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                            起始電量
+                        </span>
+                    </div>
+                    <div id="export-start-level" class="text-7xl font-extrabold font-mono text-sky-400 tracking-tight my-auto">--%</div>
+                    <div class="text-sm font-mono text-slate-400 border-t border-slate-800/80 pt-3 flex justify-between">
+                        <span>紀錄點時間</span>
+                        <span id="export-start-time" class="text-slate-200 font-bold">--:--:--</span>
+                    </div>
+                </div>
+
+                <!-- 3. 充電耗時 -->
+                <div class="bg-slate-900/90 border border-slate-800/90 rounded-3xl p-7 flex flex-col justify-between h-[360px]">
+                    <div class="flex justify-between items-center">
+                        <span class="text-base font-bold text-slate-300 flex items-center gap-2.5">
+                            <svg class="w-5 h-5 fill-amber-400" viewBox="0 0 24 24">
+                                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                            </svg>
+                            充電耗時
+                        </span>
+                    </div>
+                    <div id="export-duration" class="text-6xl font-extrabold font-mono text-amber-400 tracking-wider my-auto">00:00:00</div>
+                    <div class="text-sm font-mono text-slate-400 border-t border-slate-800/80 pt-3 flex justify-between">
+                        <span>充電速率</span>
+                        <span id="export-charging-rate" class="text-amber-300 font-bold">0.00 % / 分</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- 3. 充電耗時 (純淨顯示，無計時標籤) -->
-            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-semibold text-slate-400 flex items-center gap-1.5">
-                        <i class="fa-regular fa-clock text-amber-400"></i> 充電耗時
-                    </span>
-                </div>
-                <div id="export-duration" class="text-3xl font-extrabold font-mono text-amber-400 my-3">00:00:00</div>
-                <div class="text-[11px] font-mono text-slate-400 border-t border-slate-800/80 pt-2">
-                    充電速率：<span id="export-charging-rate" class="text-amber-300 font-bold">0.0 %/分</span>
-                </div>
+            <!-- Export Footer -->
+            <div class="flex justify-between items-center text-xs text-slate-500 font-mono border-t border-slate-800/80 pt-4">
+                <span>自動生成的檢測圖卡</span>
+                <span class="flex items-center gap-1.5 text-slate-400">
+                    <svg class="w-4 h-4 fill-emerald-400" viewBox="0 0 24 24"><path d="M13 2L3 14h7v8l10-12h-7V2z"/></svg>
+                    ⚡ 電量充電檢測器
+                </span>
             </div>
-        </div>
-
-        <!-- Export Footer -->
-        <div class="flex justify-between items-center text-[10px] text-slate-500 font-mono border-t border-slate-800/60 pt-3">
-            <span>自動生成的檢測圖卡</span>
-            <span>⚡ 電量充電檢測器</span>
         </div>
     </div>
 
@@ -477,10 +497,11 @@
                     if (gainedPercent > 0 && elapsedMinutes > 0) {
                         const rate = (gainedPercent / elapsedMinutes).toFixed(2);
                         chargingRateText.textContent = `+${rate} % / 分鐘`;
-                        return;
+                        return rate;
                     }
                 }
                 chargingRateText.textContent = `0.00 % / 分鐘`;
+                return "0.00";
             }
 
             // Reset start point manually to current battery
@@ -492,9 +513,14 @@
                 updateLevelData();
             });
 
-            // Export Image Event Listener (3-Block clean snapshot without reset button or timer status)
+            // Export Image Event Listener (Exact 3480x2160 Output Resolution)
             btnExportImg.addEventListener('click', async () => {
-                // Fill current exact data into 3 export blocks
+                // Ensure web fonts are fully loaded
+                if (document.fonts) {
+                    await document.fonts.ready;
+                }
+
+                // Fill current exact data into export template
                 exportCurrentLevel.textContent = `${currentLevel}%`;
                 exportProgressBar.style.width = `${currentLevel}%`;
 
@@ -502,8 +528,8 @@
                     const diff = currentLevel - startLevel;
                     exportCurrentBadge.textContent = diff >= 0 ? `+${diff}%` : `${diff}%`;
                     exportCurrentBadge.className = diff >= 0 
-                        ? "px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                        : "px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-rose-500/10 text-rose-400 border border-rose-500/20";
+                        ? "px-3 py-1 text-xs font-mono font-bold rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                        : "px-3 py-1 text-xs font-mono font-bold rounded-lg bg-rose-500/10 text-rose-400 border border-rose-500/20";
                 } else {
                     exportCurrentBadge.textContent = "未起算";
                 }
@@ -511,7 +537,12 @@
                 exportStartLevel.textContent = startLevel !== null ? `${startLevel}%` : '--%';
                 exportStartTime.textContent = startTime ? formatTimeString(startTime) : '未起算';
                 exportDuration.textContent = formatDurationSeconds(elapsedSeconds);
-                exportChargingRate.textContent = chargingRateText.textContent.replace(' / 分鐘', '%/分');
+
+                // Format rate cleanly without duplicate '%' symbol
+                const currentRate = calculateChargingRate();
+                exportChargingRate.textContent = (currentRate && parseFloat(currentRate) > 0) 
+                    ? `+${currentRate} % / 分` 
+                    : `0.00 % / 分`;
 
                 const now = new Date();
                 const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${formatTimeString(now)}`;
@@ -519,26 +550,40 @@
 
                 // Button loading animation
                 const origBtnHtml = btnExportImg.innerHTML;
-                btnExportImg.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-emerald-400"></i><span>產生圖片中...</span>`;
+                btnExportImg.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-emerald-400"></i><span>產生 4K 圖片中...</span>`;
                 btnExportImg.disabled = true;
 
                 try {
-                    // Capture export card with html2canvas
-                    const canvas = await html2canvas(exportCard, {
-                        backgroundColor: '#020617',
-                        scale: 2,
+                    // Capture snapshot at 3x scaling (1160x720 * 3 = 3480x2160)
+                    const renderedCanvas = await html2canvas(exportCard, {
+                        backgroundColor: '#030712',
+                        width: 1160,
+                        height: 720,
+                        scale: 3,
                         logging: false,
-                        useCORS: true
+                        useCORS: true,
+                        allowTaint: true,
+                        windowWidth: 1160,
+                        windowHeight: 720
                     });
+
+                    // Render onto dedicated 3480 x 2160 canvas
+                    const finalCanvas = document.createElement('canvas');
+                    finalCanvas.width = 3480;
+                    finalCanvas.height = 2160;
+                    const ctx = finalCanvas.getContext('2d');
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    ctx.drawImage(renderedCanvas, 0, 0, 3480, 2160);
 
                     // Trigger automatic file download
                     const link = document.createElement('a');
                     const timestamp = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
-                    link.download = `充電檢測報告_${timestamp}.png`;
-                    link.href = canvas.toDataURL('image/png');
+                    link.download = `充電檢測報告_4K_${timestamp}.png`;
+                    link.href = finalCanvas.toDataURL('image/png', 1.0);
                     link.click();
 
-                    btnExportImg.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i><span>已匯出圖片！</span>`;
+                    btnExportImg.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i><span>已匯出 4K 圖片！</span>`;
                 } catch (err) {
                     btnExportImg.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-rose-400"></i><span>匯出失敗</span>`;
                 } finally {
