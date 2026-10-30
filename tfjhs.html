@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src https:; img-src data:; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
+<title>學生資料查詢</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='7' fill='%23585d68'/%3E%3Cpath d='M12 5 3 9.5l9 4.5 7-3.5V15h2V9.5L12 5zm-5 8.7v3L12 19l5-2.3v-3L12 16l-5-2.3z' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+/* ============ Design tokens (Material You · 灰白) ============ */
+:root{
+  --p:#575c67; --on-p:#ffffff; --pc:#e1e3eb; --on-pc:#191c24;
+  --sc:#e2e3e9; --on-sc:#1b1d23;
+  --bg:#fafafc; --s-lo:#f4f4f7; --s:#eeeef2; --s-hi:#e8e8ed; --s-hst:#e2e2e7;
+  --on-s:#1b1b1f; --on-sv:#46484f; --ol:#767880; --olv:#c8c8cf;
+  --err:#ba1a1a; --on-err:#ffffff; --errc:#ffdad6; --on-errc:#410002;
+  --tag-m-bg:#dde2ed; --tag-m-fg:#2a3140; --tag-f-bg:#eadfe4; --tag-f-fg:#3b2d34;
+  --blob:rgba(110,116,132,.20);
+  --sh1:0 1px 2px rgb(0 0 0/.07),0 1px 3px 1px rgb(0 0 0/.06);
+  --sh2:0 2px 6px 2px rgb(0 0 0/.08),0 1px 2px rgb(0 0 0/.10);
+  --sh3:0 6px 18px 4px rgb(0 0 0/.10),0 2px 6px rgb(0 0 0/.12);
+  --r-s:12px; --r-m:16px; --r-l:24px; --r-xl:28px;
+  --ease:cubic-bezier(.2,0,0,1);
+  --spring:cubic-bezier(.34,1.56,.64,1);
+  --spring-soft:cubic-bezier(.3,1.3,.5,1);
+  --font:"Google Sans","Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --p:#c5c7d1; --on-p:#2c2f38; --pc:#42454e; --on-pc:#e0e2ec;
+    --sc:#40434b; --on-sc:#e2e3ea;
+    --bg:#121316; --s-lo:#1a1b1f; --s:#1f2024; --s-hi:#292a2e; --s-hst:#343439;
+    --on-s:#e4e2e6; --on-sv:#c6c6cd; --ol:#90909a; --olv:#45464d;
+    --err:#ffb4ab; --on-err:#690005; --errc:#93000a; --on-errc:#ffdad6;
+    --tag-m-bg:#323a4a; --tag-m-fg:#d6dcec; --tag-f-bg:#47383f; --tag-f-fg:#ecdde4;
+    --blob:rgba(190,196,214,.07);
+    --sh1:0 1px 2px rgb(0 0 0/.4),0 1px 3px 1px rgb(0 0 0/.3);
+    --sh2:0 2px 6px 2px rgb(0 0 0/.4),0 1px 2px rgb(0 0 0/.5);
+    --sh3:0 6px 18px 4px rgb(0 0 0/.5),0 2px 6px rgb(0 0 0/.5);
+  }
+}
+:root[data-theme="dark"]{
+  --p:#c5c7d1; --on-p:#2c2f38; --pc:#42454e; --on-pc:#e0e2ec;
+  --sc:#40434b; --on-sc:#e2e3ea;
+  --bg:#121316; --s-lo:#1a1b1f; --s:#1f2024; --s-hi:#292a2e; --s-hst:#343439;
+  --on-s:#e4e2e6; --on-sv:#c6c6cd; --ol:#90909a; --olv:#45464d;
+  --err:#ffb4ab; --on-err:#690005; --errc:#93000a; --on-errc:#ffdad6;
+  --tag-m-bg:#323a4a; --tag-m-fg:#d6dcec; --tag-f-bg:#47383f; --tag-f-fg:#ecdde4;
+  --blob:rgba(190,196,214,.07);
+  --sh1:0 1px 2px rgb(0 0 0/.4),0 1px 3px 1px rgb(0 0 0/.3);
+  --sh2:0 2px 6px 2px rgb(0 0 0/.4),0 1px 2px rgb(0 0 0/.5);
+  --sh3:0 6px 18px 4px rgb(0 0 0/.5),0 2px 6px rgb(0 0 0/.5);
+}
+
+/* ============ Base ============ */
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;color-scheme:light dark}
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"]{color-scheme:dark}
+body{margin:0;min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--on-s);font:400 1rem/1.5 var(--font);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background-color .4s var(--ease),color .4s var(--ease)}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+h1,h2,p{margin:0}
+.ic{width:24px;height:24px;fill:currentColor;flex:none;display:block}
+:focus-visible{outline:2px solid var(--p);outline-offset:2px}
+
+/* 背景柔光（灰白） */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bg i{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--blob),transparent 70%);filter:blur(40px);will-change:transform;animation:drift 26s var(--ease) infinite alternate}
+.bg i:nth-child(1){width:60vmax;height:60vmax;left:-18vmax;top:-22vmax}
+.bg i:nth-child(2){width:50vmax;height:50vmax;right:-16vmax;top:12vmax;animation-duration:32s;animation-delay:-8s}
+.bg i:nth-child(3){width:44vmax;height:44vmax;left:18vmax;bottom:-26vmax;animation-duration:38s;animation-delay:-14s}
+@keyframes drift{to{transform:translate3d(6vmax,4vmax,0) scale(1.12)}}
+
+/* ============ Views ============ */
+.view{min-height:100vh;min-height:100dvh}
+.view.center{display:grid;place-items:center;padding:24px 16px}
+.view.enter{animation:view-in .6s var(--spring-soft) both}
+@keyframes view-in{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+
+/* ============ Components ============ */
+.card{background:var(--s-lo);border-radius:var(--r-xl);box-shadow:var(--sh1)}
+.spinner{width:44px;height:44px;border-radius:50%;border:4px solid var(--s-hst);border-top-color:var(--p);animation:spin .9s linear infinite}
+.spinner.sm{width:20px;height:20px;border-width:3px;border-color:color-mix(in srgb,var(--on-p) 30%,transparent);border-top-color:var(--on-p);display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.icon-btn{position:relative;overflow:hidden;width:48px;height:48px;border:0;border-radius:50%;background:transparent;color:var(--on-sv);display:grid;place-items:center;flex:none;
+  transition:background-color .25s var(--ease),transform .5s var(--spring),color .25s}
+.icon-btn:hover{background:color-mix(in srgb,var(--on-s) 8%,transparent)}
+.icon-btn:active{transform:scale(.86)}
+.icon-btn.sm{width:36px;height:36px}
+.icon-btn.sm .ic{width:20px;height:20px}
+
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 28px;border:0;border-radius:999px;
+  font-weight:500;letter-spacing:.02em;transition:transform .55s var(--spring),box-shadow .3s var(--ease),background-color .25s var(--ease),opacity .2s}
+.btn.filled{background:var(--p);color:var(--on-p);box-shadow:var(--sh1)}
+.btn.filled:hover{box-shadow:var(--sh2)}
+.btn.tonal{background:var(--sc);color:var(--on-sc)}
+.btn.text{background:transparent;color:var(--p);padding:0 16px}
+.btn.text:hover,.btn.tonal:hover{background:color-mix(in srgb,var(--p) 10%,var(--sc))}
+.btn:active{transform:scale(.96)}
+.btn[disabled]{opacity:.62;cursor:progress}
+.btn.busy .spinner.sm{display:block}
+.btn.busy .label{opacity:.9}
+
+.ripple-wave{position:absolute;border-radius:50%;background:currentColor;opacity:.22;transform:scale(0);pointer-events:none;animation:ripple .7s var(--ease) forwards}
+@keyframes ripple{to{transform:scale(1);opacity:0}}
+
+/* Text field (outlined) */
+.field{position:relative;display:block;margin-top:18px}
+.field input{width:100%;height:56px;padding:0 16px;border:1px solid var(--ol);border-radius:var(--r-s);background:transparent;outline:0;color:var(--on-s);
+  transition:border-color .2s,box-shadow .25s var(--ease)}
+.field:has(.icon-btn) input{padding-right:56px}
+.field input:hover{border-color:var(--on-s)}
+.field input:focus{border-color:var(--p);box-shadow:0 0 0 1px var(--p)}
+.field input[aria-invalid="true"]{border-color:var(--err);box-shadow:0 0 0 1px var(--err)}
+.field > span{position:absolute;left:12px;top:16px;padding:0 4px;background:var(--s-lo);color:var(--on-sv);pointer-events:none;border-radius:4px;
+  transform-origin:left top;transition:transform .35s var(--spring),color .2s}
+.field input:focus + span,.field input:not(:placeholder-shown) + span{transform:translate(0,-26px) scale(.78)}
+.field input:focus + span{color:var(--p)}
+.field .icon-btn{position:absolute;right:10px;top:10px}
+.helper{min-height:1.4em;margin-top:8px;font-size:.8125rem;line-height:1.4;color:var(--on-sv)}
+.helper.error{color:var(--err)}
+
+/* ============ Login ============ */
+.login-card{width:100%;max-width:420px;padding:40px 32px 28px;display:flex;flex-direction:column;box-shadow:var(--sh2)}
+.login-card h1{font-size:1.75rem;font-weight:500;letter-spacing:-.01em;margin-top:20px}
+.login-card .sub{color:var(--on-sv);margin-top:4px;font-size:.9375rem}
+.login-card .btn.filled{width:100%;height:52px;margin-top:6px;font-size:1rem}
+.login-card .btn.text{align-self:center;margin-top:10px;height:40px;font-size:.875rem}
+.logo{width:64px;height:64px;border-radius:22px;background:var(--p);color:var(--on-p);display:grid;place-items:center;box-shadow:var(--sh2);animation:logo-pop .9s var(--spring) both .1s}
+.logo .ic{width:34px;height:34px}
+.logo.sm{width:40px;height:40px;border-radius:14px;box-shadow:none;animation:none}
+.logo.sm .ic{width:22px;height:22px}
+@keyframes logo-pop{from{transform:scale(.4) rotate(-14deg);opacity:0}to{transform:none;opacity:1}}
+.shake{animation:shake .5s var(--ease)}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-8px)}40%,60%{transform:translateX(8px)}}
+.corner{position:fixed;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));z-index:5}
+
+/* ============ App bar ============ */
+.appbar{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px 16px;
+  padding:max(10px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) 10px max(16px,env(safe-area-inset-left));
+  background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);
+  border-bottom:1px solid color-mix(in srgb,var(--olv) 55%,transparent)}
+.brand{display:flex;align-items:center;gap:12px;font-size:1.125rem;font-weight:500;white-space:nowrap}
+.searchbar{display:flex;align-items:center;gap:8px;height:52px;padding:0 8px 0 18px;max-width:640px;width:100%;justify-self:center;border-radius:999px;background:var(--s-hi);color:var(--on-sv);
+  transition:background-color .3s var(--ease),box-shadow .35s var(--ease),transform .5s var(--spring)}
+.searchbar:focus-within{background:var(--s-lo);box-shadow:var(--sh2);transform:scale(1.012)}
+.searchbar input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;color:var(--on-s);font-size:1rem}
+.searchbar input::placeholder{color:var(--on-sv);opacity:.8}
+.searchbar input::-webkit-search-cancel-button{display:none}
+.actions{display:flex;align-items:center;gap:4px}
+.user-chip{display:flex;align-items:center;gap:8px;height:40px;padding:0 14px 0 4px;margin:0 4px;border-radius:999px;background:var(--sc);color:var(--on-sc);font-size:.875rem;font-weight:500;max-width:180px}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--p);color:var(--on-p);display:grid;place-items:center;font-size:.875rem;flex:none}
+.uname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ============ Content ============ */
+.content{max-width:1120px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-right)) 56px max(16px,env(safe-area-inset-left))}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative;overflow:hidden;display:inline-flex;align-items:center;height:40px;padding:0 16px;border:1px solid var(--ol);border-radius:var(--r-s);background:transparent;color:var(--on-sv);font-weight:500;font-size:.875rem;
+  animation:chip-in .55s var(--spring) both;animation-delay:calc(var(--i,0)*28ms);
+  transition:background-color .3s var(--ease),border-color .3s,color .3s,padding .45s var(--spring),transform .5s var(--spring)}
+.chip:hover{background:color-mix(in srgb,var(--on-s) 8%,transparent)}
+.chip:active{transform:scale(.93)}
+.chip .chip-check{width:0;height:18px;margin-right:0;opacity:0;transform:scale(.3);transition:width .45s var(--spring),margin .45s var(--spring),opacity .25s,transform .5s var(--spring)}
+.chip .chip-n{margin-left:8px;padding:1px 8px;border-radius:999px;font-size:.75rem;background:color-mix(in srgb,var(--on-s) 8%,transparent)}
+.chip[aria-pressed="true"]{background:var(--p);border-color:var(--p);color:var(--on-p)}
+.chip[aria-pressed="true"] .chip-check{width:18px;margin-right:6px;opacity:1;transform:none}
+.chip[aria-pressed="true"] .chip-n{background:color-mix(in srgb,var(--on-p) 20%,transparent)}
+@keyframes chip-in{from{opacity:0;transform:translateY(10px) scale(.85)}to{opacity:1;transform:none}}
+
+.summary{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:28px 4px 14px;animation:rise .6s var(--spring-soft) both}
+.summary h2{font-size:1.75rem;font-weight:500;letter-spacing:-.01em;line-height:1.2}
+.summary .sub{color:var(--on-sv);font-size:.9375rem;margin-top:2px}
+.summary .sub b{color:var(--on-s);font-weight:600;font-variant-numeric:tabular-nums}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag{display:inline-flex;align-items:center;padding:3px 12px;border-radius:999px;font-size:.8125rem;font-weight:500;font-variant-numeric:tabular-nums}
+.tag[data-g="男"]{background:var(--tag-m-bg);color:var(--tag-m-fg)}
+.tag[data-g="女"]{background:var(--tag-f-bg);color:var(--tag-f-fg)}
+.tag[data-g=""]{background:var(--sc);color:var(--on-sc)}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.table-card{overflow:hidden;animation:rise .6s var(--spring-soft) both .05s}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;padding:14px 20px;font-size:.75rem;font-weight:600;letter-spacing:.08em;color:var(--on-sv);background:var(--s)}
+.tbl td{padding:14px 20px;border-top:1px solid color-mix(in srgb,var(--olv) 60%,transparent);vertical-align:middle}
+.tbl tbody tr{animation:row-in .6s var(--spring) both;animation-delay:calc(var(--i,0)*24ms);transition:background-color .25s var(--ease)}
+.tbl tbody tr:hover{background:color-mix(in srgb,var(--on-s) 5%,transparent)}
+@keyframes row-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.c-seat{font-variant-numeric:tabular-nums;color:var(--on-sv);width:84px}
+.c-cls{font-variant-numeric:tabular-nums;font-weight:500;width:84px}
+.c-name{font-weight:500;font-size:1.0625rem}
+.c-id,.c-pid{font-variant-numeric:tabular-nums;letter-spacing:.03em;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.9375rem}
+.muted{color:var(--ol)}
+mark{background:color-mix(in srgb,var(--p) 26%,transparent);color:inherit;border-radius:4px;padding:0 2px}
+
+.state{display:grid;place-items:center;gap:10px;padding:56px 24px;text-align:center;color:var(--on-sv)}
+.state .ic{width:44px;height:44px;opacity:.7}
+.state h3{margin:0;font-size:1.125rem;font-weight:500;color:var(--on-s)}
+.skel{padding:8px 0}
+.skel div{height:52px;margin:10px 20px;border-radius:14px;background:linear-gradient(90deg,var(--s) 25%,var(--s-hi) 50%,var(--s) 75%);background-size:300% 100%;animation:shimmer 1.4s linear infinite}
+@keyframes shimmer{from{background-position:100% 0}to{background-position:-100% 0}}
+.note{margin:12px 8px 0;color:var(--on-sv);font-size:.8125rem}
+
+/* ============ Mobile cards ============ */
+@media (max-width:760px){
+  .appbar{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand actions" "search search"}
+  .brand{grid-area:brand}.actions{grid-area:actions}.searchbar{grid-area:search;max-width:none;height:48px}
+  .user-chip .uname{display:none}.user-chip{padding:0 4px;margin:0}
+  .chips{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px;padding:2px 16px 8px;scroll-snap-type:x proximity;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{scroll-snap-align:start;flex:none}
+  .summary h2{font-size:1.5rem}
+  .tbl,.tbl tbody{display:block}
+  .tbl thead{display:none}
+  .tbl tr{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;grid-template-areas:"cls seat name g" "sid sid pid pid";align-items:center;gap:10px 10px;padding:16px;border-top:1px solid color-mix(in srgb,var(--olv) 60%,transparent)}
+  .tbl tbody tr:first-child{border-top:0}
+  .tbl td{display:block;padding:0;border:0;width:auto}
+  .c-cls{grid-area:cls;padding:2px 10px;border-radius:999px;background:var(--sc);color:var(--on-sc);font-size:.8125rem}
+  .c-seat{grid-area:seat;display:grid!important;place-items:center;min-width:34px;height:34px;border-radius:50%;background:var(--s-hi);color:var(--on-s);font-weight:600;font-size:.875rem}
+  .c-name{grid-area:name;font-size:1.125rem}
+  .c-g{grid-area:g;justify-self:end}
+  .c-id{grid-area:sid}.c-pid{grid-area:pid;text-align:right}
+  .c-id::before,.c-pid::before{content:attr(data-label);display:block;font-family:var(--font);font-size:.6875rem;letter-spacing:.06em;color:var(--on-sv);margin-bottom:1px}
+  .c-pid{justify-self:end}
+  .tbl.no-cls tr{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"seat name g" "sid sid pid"}
+  .login-card{padding:32px 22px 22px}
+}
+
+/* ============ Dialog / Snackbar ============ */
+#snackbar{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom));z-index:50;max-width:min(92vw,520px);padding:14px 20px;border-radius:var(--r-s);
+  background:var(--on-s);color:var(--bg);font-size:.9375rem;box-shadow:var(--sh3);opacity:0;transform:translate(-50%,24px) scale(.94);pointer-events:none;
+  transition:opacity .25s var(--ease),transform .5s var(--spring)}
+#snackbar.show{opacity:1;transform:translate(-50%,0) scale(1)}
+#snackbar.err{background:var(--errc);color:var(--on-errc)}
+
+.lockbox{position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;margin-top:10px;padding:14px 16px 18px;border-radius:var(--r-m);background:var(--errc);color:var(--on-errc);animation:pop-in .55s var(--spring) both}
+.lockbox .t{font-variant-numeric:tabular-nums;font-size:1.875rem;font-weight:500;line-height:1;min-width:3.2ch}
+.lockbox .d{font-size:.8125rem;line-height:1.4}
+.lockbox .bar{position:absolute;left:0;bottom:0;height:4px;width:100%;background:currentColor;opacity:.45;transform-origin:left center;transition:transform .25s linear}
+@keyframes pop-in{from{opacity:0;transform:scale(.9) translateY(6px)}to{opacity:1;transform:none}}
+form.locked .field input{opacity:.55}
+.privacy{margin-top:14px;font-size:.75rem;line-height:1.55;color:var(--on-sv);text-align:center}
+noscript{display:block;padding:24px;text-align:center}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<noscript>請啟用JavaScript</noscript>
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<!-- 啟動中：只顯示載入圈，不會預先載入任何資料 -->
+<section id="splash" class="view center" aria-label="載入中"><div class="spinner"></div></section>
+
+<!-- 登入 -->
+<section id="login" class="view center" hidden>
+  <button type="button" class="icon-btn ripple corner theme-toggle" aria-label="切換深淺色"><span data-icon="moon"></span></button>
+  <form id="loginForm" class="card login-card" novalidate>
+    <div class="logo"><span data-icon="school"></span></div>
+    <h1>學生資料查詢</h1>
+    <p class="sub">請使用管理員提供的帳號登入</p>
+    <label class="field"><input id="acc" name="username" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="64" placeholder=" " required><span>帳號</span></label>
+    <label class="field"><input id="pw" name="password" type="password" autocomplete="current-password" maxlength="128" placeholder=" " required><span>密碼</span>
+      <button type="button" id="togglePw" class="icon-btn sm ripple" aria-label="顯示密碼"><span data-icon="eye"></span></button></label>
+    <p id="loginMsg" class="helper" role="alert" aria-live="polite"></p>
+    <div id="lockBox" class="lockbox" role="alert" hidden><span class="t" id="lockTime">0:00</span><span class="d">輸入錯誤次數過多，已暫時鎖定。倒數結束後才能再次登入。</span><i class="bar" id="lockBar"></i></div>
+    <button id="loginBtn" class="btn filled ripple" type="submit"><span class="spinner sm"></span><span class="label">登入</span></button>
+    <p class="privacy">為保護資料安全，連續輸入錯誤會暫時鎖定。</p>
+  </form>
+</section>
+
+<!-- 主畫面（登入且通過伺服器驗證後才會顯示、才會載入資料） -->
+<div id="app" class="view" hidden>
+  <header class="appbar">
+    <div class="brand"><span class="logo sm" data-icon="school"></span><span>學生資料查詢</span></div>
+    <label class="searchbar"><span data-icon="search"></span>
+      <input id="q" type="search" placeholder="搜尋姓名、學號、身分證、班級" maxlength="30" autocomplete="off" spellcheck="false" aria-label="搜尋">
+      <button type="button" id="qClear" class="icon-btn sm ripple" hidden aria-label="清除搜尋"><span data-icon="close"></span></button></label>
+    <div class="actions">
+      <button type="button" class="icon-btn ripple theme-toggle" aria-label="切換深淺色"><span data-icon="moon"></span></button>
+      <div class="user-chip" title=""><span class="avatar" id="avatar"></span><span class="uname" id="uname"></span></div>
+      <button type="button" id="logoutBtn" class="icon-btn ripple" aria-label="登出" title="登出"><span data-icon="logout"></span></button>
+    </div>
+  </header>
+  <main class="content">
+    <nav id="chips" class="chips" aria-label="班級"></nav>
+    <section id="result" aria-live="polite"></section>
+  </main>
+</div>
+
+<div id="snackbar" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+'use strict';
+
+/* ================================================================
+ * 設定（只需要在這裡填一次）
+ *
+ * API_URL     ★ 必填：Google Apps Script 部署後的「網頁應用程式網址」（結尾是 /exec）。
+ *             網頁上不提供讓使用者填寫的欄位，避免被人改成別的網址。
+ * IP_API_URL  選填，預設空白：IP 偵測服務。填入後登入時會取得「外網 IP」與「所在地區」，
+ *             用於 IP 鎖定與警告信。空白＝不偵測，這兩項顯示「未知」（仍會用裝置與帳號鎖定）。
+ *             回傳 JSON（含 ip / city / region / country）或純文字 IP 皆可，例如：
+ *               'https://api.ipify.org?format=json'   （只有 IP）
+ *               'https://ipapi.co/json/'              （IP + 地區）
+ * ================================================================ */
+const CONFIG = {
+  API_URL: 'https://script.google.com/macros/s/AKfycbxiukb7XEJIB--BTXt7fV-W8rvfVqYkcn3I1bXeRtVwH7isBzxWqGBNxnG_SF7JpXbCTQ/exec',      // 例：'https://script.google.com/macros/s/AKfycb.../exec'
+  IP_API_URL: ''
+};
+
+const API_RE   = /^https:\/\/script\.google\.com\/(?:a\/macros\/[\w.-]+\/|macros\/)s\/[\w-]+\/exec$/;
+const IDLE_MS  = 15 * 60 * 1000;   // 前端閒置自動登出
+const CACHE_MS = 45 * 1000;        // 同一班級短時間內不重複請求
+const TIMEOUT  = 30 * 1000;
+
+/* ---------------- 小工具 ---------------- */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const NS = 'http://www.w3.org/2000/svg';
+const ICONS = {
+  school:'M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3 1 9l11 6 9-4.91V17h2V9L12 3z',
+  search:'M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z',
+  close:'M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z',
+  check:'M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z',
+  eye:'M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
+  eyeoff:'M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92A11.8 11.8 0 0 0 23 12c-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46A11.8 11.8 0 0 0 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z',
+  logout:'M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8v-2H4V5z',
+  moon:'M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.39 5.39 0 0 1-4.4 2.26 5.4 5.4 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z',
+  sun:'M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM2 13h2a1 1 0 1 0 0-2H2a1 1 0 1 0 0 2zm18 0h2a1 1 0 1 0 0-2h-2a1 1 0 1 0 0 2zM11 2v2a1 1 0 1 0 2 0V2a1 1 0 1 0-2 0zm0 18v2a1 1 0 1 0 2 0v-2a1 1 0 1 0-2 0zM5.99 4.58a1 1 0 0 0-1.41 1.41l1.06 1.06a1 1 0 0 0 1.41-1.41L5.99 4.58zm12.37 12.37a1 1 0 0 0-1.41 1.41l1.06 1.06a1 1 0 0 0 1.41-1.41l-1.06-1.06zm1.06-10.96a1 1 0 0 0-1.41-1.41l-1.06 1.06a1 1 0 0 0 1.41 1.41l1.06-1.06zM7.05 18.36a1 1 0 0 0-1.41-1.41l-1.06 1.06a1 1 0 0 0 1.41 1.41l1.06-1.06z',
+  empty:'M20 6h-8l-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zm0 12H4V6h5.17l2 2H20v10z',
+  warn:'M12 2 1 21h22L12 2zm1 15h-2v-2h2v2zm0-4h-2V9h2v4z'
+};
+function icon(name){
+  const s = document.createElementNS(NS, 'svg');
+  s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('aria-hidden', 'true'); s.setAttribute('class', 'ic');
+  const p = document.createElementNS(NS, 'path'); p.setAttribute('d', ICONS[name] || ''); s.append(p);
+  return s;
+}
+/** 建立 DOM。只用 textContent / 節點，不使用 innerHTML，伺服器回來的資料永遠不會被當成 HTML。 */
+function el(tag, attrs, ...kids){
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k === 'class') n.className = v; else n.setAttribute(k, v === true ? '' : String(v));
+  }
+  for (const k of kids) if (k != null) n.append(k);
+  return n;
+}
+const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const store = (kind) => ({
+  get(k){ try { return window[kind].getItem(k); } catch { return null; } },
+  set(k, v){ try { window[kind].setItem(k, v); } catch {} },
+  del(k){ try { window[kind].removeItem(k); } catch {} }
+});
+const local = store('localStorage'), session = store('sessionStorage');
+
+/* ---------------- 狀態 ---------------- */
+const state = { token: null, user: '', classes: [], current: null, mode: 'class', seq: 0, last: Date.now(), cache: new Map() };
+
+/* ---------------- 圖示 / 漣漪 / 主題 ---------------- */
+$$('[data-icon]').forEach(n => n.replaceChildren(icon(n.dataset.icon)));
+document.addEventListener('pointerdown', ev => {
+  if (reduceMotion()) return;
+  const t = ev.target.closest && ev.target.closest('.ripple');
+  if (!t || t.disabled) return;
+  const r = t.getBoundingClientRect(), d = Math.max(r.width, r.height) * 2;
+  const w = el('span', { class: 'ripple-wave' });
+  w.style.cssText = `width:${d}px;height:${d}px;left:${ev.clientX - r.left - d / 2}px;top:${ev.clientY - r.top - d / 2}px`;
+  t.append(w); w.addEventListener('animationend', () => w.remove());
+}, { passive: true });
+
+function applyTheme(t){
+  if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
+  const dark = (t === 'dark') || (t !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+  $$('.theme-toggle').forEach(b => b.replaceChildren(icon(dark ? 'sun' : 'moon')));
+}
+applyTheme(local.get('slk.theme'));
+$$('.theme-toggle').forEach(b => b.addEventListener('click', () => {
+  const dark = document.documentElement.dataset.theme === 'dark' || (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+  const next = dark ? 'light' : 'dark'; local.set('slk.theme', next); applyTheme(next);
+}));
+
+/* ---------------- 畫面切換 / Snackbar ---------------- */
+function show(id){
+  $$('.view').forEach(v => {
+    const on = v.id === id; v.hidden = !on;
+    if (on) { v.classList.remove('enter'); void v.offsetWidth; v.classList.add('enter'); }
+  });
+}
+let toastTimer;
+function toast(msg, isErr){
+  const s = $('#snackbar'); s.textContent = msg; s.classList.toggle('err', !!isErr); s.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => s.classList.remove('show'), 4200);
+}
+
+/* ---------------- API ---------------- */
+class ApiErr extends Error { constructor(code, message, data){ super(message); this.code = code; this.data = data || {}; } }
+function getApiUrl(){
+  const u = (CONFIG.API_URL || '').trim();
+  return API_RE.test(u) ? u : '';
+}
+async function api(action, params = {}, opts = {}){
+  const url = getApiUrl();
+  if (!url) throw new ApiErr('NO_API', '系統尚未完成設定（缺少 API 網址），請聯絡管理員。');
+  const body = { action, ...params };
+  if (opts.auth !== false) body.token = state.token;
+  const ctrl = new AbortController(); const timer = setTimeout(() => ctrl.abort(), TIMEOUT);
+  let res;
+  try {
+    // text/plain 是「簡單請求」：不會觸發 CORS preflight（Apps Script 不支援 OPTIONS）
+    res = await fetch(url, { method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      redirect: 'follow', credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer', signal: ctrl.signal });
+  } catch (e) {
+    throw new ApiErr('NETWORK', e && e.name === 'AbortError' ? '連線逾時，請稍後再試。' : '無法連線到伺服器，請確認網路後再試。');
+  } finally { clearTimeout(timer); }
+  let data;
+  try { data = await res.json(); } catch { throw new ApiErr('BAD_RESPONSE', '伺服器回應格式不正確，請聯絡管理員。'); }
+  if (!data || data.ok !== true) {
+    const code = (data && typeof data.code === 'string') ? data.code : 'UNKNOWN';
+    if (code === 'AUTH' && opts.auth !== false) { endSession('登入已失效，請重新登入。'); }
+    throw new ApiErr(code, (data && typeof data.message === 'string' && data.message) || '發生未知錯誤。',
+      { retryAfter: Number(data && data.retryAfter) || 0, left: Number(data && data.left) || 0 });
+  }
+  return data;
+}
+
+/* ---------------- 三重儲存：Cookie + localStorage + sessionStorage ---------------- */
+const COOKIE_MAX = 60 * 60 * 24 * 365;
+const cookie = {
+  get(k){ try { const m = document.cookie.split('; ').find(c => c.startsWith(k + '=')); return m ? decodeURIComponent(m.slice(k.length + 1)) : null; } catch { return null; } },
+  set(k, v, maxAge){ try { document.cookie = `${k}=${encodeURIComponent(v)}; path=/; max-age=${Math.max(1, Math.floor(maxAge))}; SameSite=Strict${location.protocol === 'https:' ? '; Secure' : ''}`; } catch {} },
+  del(k){ try { document.cookie = `${k}=; path=/; max-age=0; SameSite=Strict`; } catch {} }
+};
+const tri = {
+  get(k){ return [local.get(k), session.get(k), cookie.get(k)].filter(v => v != null && v !== ''); },
+  set(k, v, maxAge = COOKIE_MAX){ local.set(k, v); session.set(k, v); cookie.set(k, v, maxAge); },
+  del(k){ local.del(k); session.del(k); cookie.del(k); }
+};
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+function newUuid(){
+  if (crypto.randomUUID) return crypto.randomUUID();
+  const b = crypto.getRandomValues(new Uint8Array(16)); b[6] = (b[6] & 15) | 64; b[8] = (b[8] & 63) | 128;
+  const h = Array.from(b, x => x.toString(16).padStart(2, '0')).join('');
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
+}
+/** 裝置識別碼：三個地方各存一份，任何一處被清掉都會從其他處補回來。 */
+function deviceId(){
+  let id = tri.get('slk_dev').find(v => UUID_RE.test(v));
+  if (!id) id = newUuid();
+  tri.set('slk_dev', id);
+  return id;
+}
+
+/* ---------------- 鎖定狀態（同樣三處儲存；伺服器端另有獨立的鎖定，這裡只是即時回饋） ---------------- */
+function readLock(){
+  const now = Date.now(); let best = 0;
+  tri.get('slk_lock').forEach(v => { const u = parseInt(v, 10); if (u > best && u <= now + 86400000) best = u; });
+  return best > now ? best : 0;
+}
+function writeLock(until){ tri.set('slk_lock', String(until), Math.ceil((until - Date.now()) / 1000) + 30); }
+function clearLock(){ tri.del('slk_lock'); }
+
+/* ---------------- 裝置 / 連線資訊偵測（只用於登入防護與警告信） ---------------- */
+const IP_OK = /^[0-9a-fA-F:.]{3,45}$/;
+function browserName(){
+  const ua = navigator.userAgent || ''; let m;
+  const v = x => x.split('.')[0];
+  if ((m = /Edg(?:e|A|iOS)?\/([\d.]+)/.exec(ua))) return 'Edge ' + v(m[1]);
+  if ((m = /OPR\/([\d.]+)/.exec(ua))) return 'Opera ' + v(m[1]);
+  if ((m = /SamsungBrowser\/([\d.]+)/.exec(ua))) return 'Samsung Internet ' + v(m[1]);
+  if ((m = /(?:Firefox|FxiOS)\/([\d.]+)/.exec(ua))) return 'Firefox ' + v(m[1]);
+  if ((m = /(?:Chrome|CriOS)\/([\d.]+)/.exec(ua))) return 'Chrome ' + v(m[1]);
+  if ((m = /Version\/([\d.]+).*Safari/.exec(ua))) return 'Safari ' + v(m[1]);
+  return '';
+}
+async function deviceNameLookup(info){
+  const ua = navigator.userAgent || ''; let model = '';
+  try {
+    if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) model = String((await navigator.userAgentData.getHighEntropyValues(['model'])).model || '').trim();
+  } catch {}
+  if (/Android/.test(ua)) {
+    if (!model) { const m = /Android[^;]*;\s*([^;)]+)/.exec(ua); if (m) model = m[1].trim(); }
+    // Chrome 的精簡 User-Agent 會把機型一律寫成「K」，等於隱藏了真正機型
+    if (model === 'K') info.dn = '已由 Chrome 隱藏'; else if (model) info.dn = model;
+  } else if (/iPhone/.test(ua)) info.dn = 'iPhone';
+  else if (/iPad/.test(ua)) info.dn = 'iPad';
+  else if (/CrOS/.test(ua)) info.dn = 'Chromebook';
+  else if (/Windows/.test(ua)) info.dn = 'Windows 電腦';
+  else if (/Macintosh/.test(ua)) info.dn = 'Mac 電腦';
+  else if (/Linux/.test(ua)) info.dn = 'Linux 電腦';
+}
+async function ipLookup(info){
+  const u = (CONFIG.IP_API_URL || '').trim();
+  if (!/^https:\/\//i.test(u)) return;           // 空白＝不偵測
+  const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 3500);
+  try {
+    const res = await fetch(u, { credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer', signal: ctrl.signal });
+    const txt = (await res.text()).slice(0, 4000); let ip = '', parts = [];
+    try {
+      const j = JSON.parse(txt);
+      ip = String(j.ip || j.query || j.ipAddress || '').trim();
+      parts = [j.country_name || j.country || j.countryName, j.region || j.regionName || j.region_name, j.city]
+        .filter(x => typeof x === 'string' && x.trim()).map(x => x.trim());
+    } catch { ip = txt.trim(); }
+    if (IP_OK.test(ip)) info.pub = ip;
+    if (parts.length) info.rg = parts.filter((x, i, a) => a.indexOf(x) === i).join(' ').slice(0, 80);
+  } catch {} finally { clearTimeout(t); }
+}
+function lanLookup(info){
+  return new Promise(resolve => {
+    const RTC = window.RTCPeerConnection; if (!RTC) return resolve();
+    let pc, fin = false;
+    const done = () => { if (fin) return; fin = true; clearTimeout(timer); try { pc && pc.close(); } catch {} resolve(); };
+    const timer = setTimeout(done, 1500);
+    try {
+      pc = new RTC({ iceServers: [] });                // 不連任何外部 STUN，只讀本機候選位址
+      pc.createDataChannel('x');
+      pc.onicecandidate = ev => {
+        if (!ev.candidate) return done();
+        const m = /(?:^|\s)(\d{1,3}(?:\.\d{1,3}){3})(?=\s)/.exec(ev.candidate.candidate || '');
+        if (m && /^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|169\.254\.)/.test(m[1])) { info.lan = m[1]; done(); }
+      };
+      pc.createOffer().then(o => pc.setLocalDescription(o)).catch(done);
+    } catch { done(); }
+  });
+}
+async function batteryLookup(info){
+  try { if (navigator.getBattery) { const b = await navigator.getBattery(); info.bat = Math.round(b.level * 100) + '%' + (b.charging ? ' 充電中' : ''); } } catch {}
+}
+const clientInfo = { dev: '', ua: '', br: '', dn: '', pub: '', lan: '', rg: '', bat: '' };
+const clientReady = (async () => {
+  clientInfo.dev = deviceId(); clientInfo.ua = String(navigator.userAgent || '').slice(0, 300); clientInfo.br = browserName();
+  await Promise.allSettled([deviceNameLookup(clientInfo), ipLookup(clientInfo), lanLookup(clientInfo), batteryLookup(clientInfo)]);
+})();
+/** 取得最新偵測結果（最多等 2.5 秒）；取不到的欄位直接省略，後端會顯示「未知」。 */
+async function clientPayload(){
+  await Promise.race([clientReady, new Promise(r => setTimeout(r, 2500))]);
+  clientInfo.dev = deviceId(); await batteryLookup(clientInfo);
+  const out = {}; for (const [k, v] of Object.entries(clientInfo)) if (v) out[k] = v;
+  return out;
+}
+
+/* ---------------- 登入 / 登出 ---------------- */
+const form = $('#loginForm'), acc = $('#acc'), pw = $('#pw'), msg = $('#loginMsg'), loginBtn = $('#loginBtn');
+let busy = false;
+const lockBox = $('#lockBox'), lockTime = $('#lockTime'), lockBar = $('#lockBar');
+let lockUntil = 0, lockTotal = 1, lockTimer = null;
+const locked = () => lockUntil > Date.now();
+function setBusy(b){ busy = b; const off = b || locked(); loginBtn.disabled = off; loginBtn.classList.toggle('busy', b); acc.readOnly = off; pw.readOnly = off; }
+function lockTick(){
+  const left = Math.max(0, lockUntil - Date.now()), sec = Math.ceil(left / 1000);
+  lockTime.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+  lockBar.style.transform = `scaleX(${Math.min(1, left / (lockTotal * 1000))})`;
+  if (left <= 0) {
+    clearInterval(lockTimer); clearLock(); lockUntil = 0; lockBox.hidden = true; form.classList.remove('locked'); setBusy(false);
+    toast('已可再次嘗試登入'); pw.focus({ preventScroll: true });
+  }
+}
+function applyLock(until){
+  lockUntil = until; lockTotal = Math.max(1, Math.ceil((until - Date.now()) / 1000));
+  writeLock(until);                                   // 三處儲存都補齊
+  loginClear(); lockBox.hidden = false; form.classList.add('locked'); setBusy(false);
+  clearInterval(lockTimer); lockTimer = setInterval(lockTick, 250); lockTick();
+}
+function loginError(text){
+  msg.textContent = text; msg.classList.add('error');
+  [acc, pw].forEach(i => i.setAttribute('aria-invalid', 'true'));
+  form.classList.remove('shake'); void form.offsetWidth; form.classList.add('shake');
+}
+function loginClear(){ msg.textContent = ''; msg.classList.remove('error'); [acc, pw].forEach(i => i.removeAttribute('aria-invalid')); }
+[acc, pw].forEach(i => i.addEventListener('input', loginClear));
+
+$('#togglePw').addEventListener('click', ev => {
+  const b = ev.currentTarget, showing = pw.type === 'text';
+  pw.type = showing ? 'password' : 'text';
+  b.replaceChildren(icon(showing ? 'eye' : 'eyeoff')); b.setAttribute('aria-label', showing ? '顯示密碼' : '隱藏密碼');
+});
+
+form.addEventListener('submit', async ev => {
+  ev.preventDefault();
+  if (busy) return;
+  const stored = readLock();                            // Cookie / localStorage / sessionStorage 任一處有鎖定就不送出
+  if (stored) { applyLock(stored); return; }
+  const account = acc.value.trim(), password = pw.value;
+  // 前端先擋空白（後端同樣會擋；這裡只是少一次來回）
+  if (!account || !password.trim()) { loginError('請完整輸入帳號與密碼。'); (account ? pw : acc).focus(); return; }
+  if (!getApiUrl()) { loginError('系統尚未完成設定（缺少 API 網址），請聯絡管理員。'); return; }
+  setBusy(true); loginClear();
+  try {
+    const client = await clientPayload();
+    const r = await api('login', { account, password, client }, { auth: false });
+    pw.value = ''; pw.type = 'password'; $('#togglePw').replaceChildren(icon('eye'));
+    clearLock();
+    state.token = r.token; session.set('slk.tok', r.token);
+    await enterApp(r.user);
+  } catch (e) {
+    if (e.code === 'LOCKED') {
+      applyLock(Date.now() + Math.max(1, e.data.retryAfter || 15) * 1000);
+      form.classList.remove('shake'); void form.offsetWidth; form.classList.add('shake');
+    } else {
+      const hint = (e.code === 'BAD_CREDENTIALS' && e.data.left > 0 && e.data.left <= 2) ? `再輸入錯誤 ${e.data.left} 次就會被暫時鎖定。` : '';
+      loginError(e.message + (hint ? ' ' + hint : '')); pw.select();
+    }
+  } finally { setBusy(false); }
+});
+
+function wipeUI(){
+  state.token = null; state.user = ''; state.classes = []; state.current = null; state.mode = 'class'; state.seq++; state.cache.clear();
+  session.del('slk.tok');
+  $('#chips').replaceChildren(); $('#result').replaceChildren(); $('#q').value = ''; $('#qClear').hidden = true;
+  acc.value = ''; pw.value = '';
+}
+function endSession(note){
+  const had = !!state.token; wipeUI();
+  show('login'); loginClear();
+  if (had && note) toast(note, true);
+}
+async function logout(note){
+  const tok = state.token;
+  if (tok) { api('logout', {}, { auth: true }).catch(() => {}); }  // 盡力通知後端；不等待
+  endSession(note || '已登出');
+  if (!note) toast('已登出');
+}
+$('#logoutBtn').addEventListener('click', () => logout());
+
+['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(e => addEventListener(e, () => { state.last = Date.now(); }, { passive: true, capture: true }));
+setInterval(() => { if (state.token && Date.now() - state.last > IDLE_MS) logout('閒置過久，已自動登出。'); }, 15000);
+
+/* ---------------- 主畫面 ---------------- */
+async function enterApp(user){
+  state.user = user || '';
+  $('#uname').textContent = state.user; $('#avatar').textContent = (state.user || '?').slice(0, 1).toUpperCase();
+  $('.user-chip').title = state.user;
+  state.last = Date.now();
+  show('app');
+  showSkeleton();
+  try {
+    const r = await api('classes');
+    state.classes = Array.isArray(r.classes) ? r.classes : [];
+    renderChips();
+    if (!state.classes.length) { renderState('empty', '尚無學生資料', '請確認「學生資料」工作表已有內容。'); return; }
+    await selectClass(state.classes[0].c);
+  } catch (e) { if (state.token) renderState('warn', '載入失敗', e.message, () => enterApp(user)); }
+}
+
+function renderChips(){
+  const nav = $('#chips'); nav.replaceChildren();
+  state.classes.forEach((c, i) => {
+    const b = el('button', { class: 'chip ripple', type: 'button', 'aria-pressed': 'false', 'data-c': c.c, title: `${c.c} 班（${c.total} 人）` },
+      icon('check'), el('span', {}, c.c), el('span', { class: 'chip-n' }, String(c.total)));
+    b.firstChild.classList.add('chip-check');
+    b.style.setProperty('--i', Math.min(i, 20));
+    b.addEventListener('click', () => { $('#q').value = ''; $('#qClear').hidden = true; selectClass(c.c); });
+    nav.append(b);
+  });
+}
+function markChip(c){
+  $$('.chip').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.c === c)));
+  const on = $('.chip[aria-pressed="true"]'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduceMotion() ? 'auto' : 'smooth' });
+}
+async function cached(key, fn){
+  const hit = state.cache.get(key);
+  if (hit && Date.now() - hit.t < CACHE_MS) return hit.v;
+  const v = await fn(); state.cache.set(key, { t: Date.now(), v }); return v;
+}
+
+function showSkeleton(){
+  const box = el('div', { class: 'card table-card skel', 'aria-label': '載入中' });
+  for (let i = 0; i < 7; i++) box.append(el('div'));
+  $('#result').replaceChildren(box);
+}
+function renderState(ic, title, text, retry){
+  const s = el('div', { class: 'card state' }, icon(ic), el('h3', {}, title), el('p', {}, text));
+  if (retry) { const b = el('button', { class: 'btn tonal ripple', type: 'button' }, '重試'); b.addEventListener('click', retry); s.append(b); }
+  $('#result').replaceChildren(s);
+}
+
+async function selectClass(c){
+  state.mode = 'class'; state.current = c; markChip(c);
+  const seq = ++state.seq; showSkeleton();
+  try {
+    const data = await cached('c:' + c, () => api('students', { class: c }));
+    if (seq !== state.seq) return;
+    renderClass(data);
+  } catch (e) { if (seq === state.seq && state.token) renderState('warn', '載入失敗', e.message, () => selectClass(c)); }
+}
+
+function tween(node, to){
+  if (reduceMotion()) { node.textContent = to; return; }
+  const t0 = performance.now(), d = 650;
+  const step = now => { const k = Math.min(1, (now - t0) / d); node.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+function hl(text, q){
+  const f = document.createDocumentFragment();
+  const i = q ? text.toLowerCase().indexOf(q.toLowerCase()) : -1;
+  if (i < 0) { f.append(text); return f; }
+  f.append(text.slice(0, i), el('mark', {}, text.slice(i, i + q.length)), text.slice(i + q.length));
+  return f;
+}
+function blank(v, cls){ return v ? v : el('span', { class: 'muted' }, '—'); }
+
+function buildTable(rows, { withClass, q }){
+  const cols = (withClass ? [['cls', '班級']] : []).concat([['seat', '座號'], ['name', '姓名'], ['g', '性別'], ['id', '學號'], ['pid', '身分證']]);
+  const head = el('tr'); cols.forEach(([, t]) => head.append(el('th', { scope: 'col' }, t)));
+  const body = el('tbody');
+  rows.forEach((r, i) => {
+    const tr = el('tr'); tr.style.setProperty('--i', Math.min(i, 22));
+    if (withClass) tr.append(el('td', { class: 'c-cls', 'data-label': '班級' }, hl(r.c, q)));
+    tr.append(el('td', { class: 'c-seat', 'data-label': '座號' }, r.s || '—'));
+    tr.append(el('td', { class: 'c-name', 'data-label': '姓名' }, hl(r.n, q)));
+    const g = el('td', { class: 'c-g', 'data-label': '性別' }, el('span', { class: 'tag', 'data-g': r.g === '男' || r.g === '女' ? r.g : '' }, r.g || '—'));
+    tr.append(g);
+    tr.append(el('td', { class: 'c-id', 'data-label': '學號' }, r.id ? hl(r.id, q) : blank('')));
+    tr.append(el('td', { class: 'c-pid', 'data-label': '身分證' }, r.pid ? hl(r.pid, q) : blank('')));
+    body.append(tr);
+  });
+  return el('table', { class: withClass ? 'tbl' : 'tbl no-cls' }, el('thead', {}, head), body);
+}
+function summary(titleNode, subNode, tags){
+  return el('div', { class: 'summary' }, el('div', {}, el('h2', {}, titleNode), subNode), tags);
+}
+function renderClass(d){
+  const num = el('b', {}, '0');
+  const sub = el('p', { class: 'sub' }, '共 ', num, ' 位學生');
+  const tags = el('div', { class: 'tags' }, el('span', { class: 'tag', 'data-g': '男' }, `男 ${d.male}`), el('span', { class: 'tag', 'data-g': '女' }, `女 ${d.female}`));
+  $('#result').replaceChildren(summary(`${d.class} 班`, sub, tags), el('div', { class: 'card table-card' }, buildTable(d.rows, { withClass: false, q: '' })));
+  tween(num, d.total);
+}
+function renderSearch(d, q){
+  state.mode = 'search'; markChip(null);
+  const out = [summary(`搜尋「${q}」`, el('p', { class: 'sub' }, `找到 ${d.total} 筆`), el('div'))];
+  if (!d.rows.length) { $('#result').replaceChildren(...out); renderStateAppend('empty', '沒有符合的資料', '換個關鍵字試試，例如姓名、學號或班級。'); return; }
+  out.push(el('div', { class: 'card table-card' }, buildTable(d.rows, { withClass: true, q })));
+  if (d.truncated) out.push(el('p', { class: 'note' }, `符合的資料超過 ${d.rows.length} 筆，只顯示前 ${d.rows.length} 筆，請輸入更完整的關鍵字。`));
+  $('#result').replaceChildren(...out);
+}
+function renderStateAppend(ic, title, text){
+  $('#result').append(el('div', { class: 'card state' }, icon(ic), el('h3', {}, title), el('p', {}, text)));
+}
+
+/* ---------------- 搜尋 ---------------- */
+const qInput = $('#q'), qClear = $('#qClear');
+const runSearch = debounce(async () => {
+  if (!state.token) return;
+  const q = qInput.value.trim();
+  qClear.hidden = !qInput.value;
+  if (!q) { if (state.current) selectClass(state.current); return; }
+  if (!/[\p{L}\p{N}]/u.test(q)) { state.seq++; renderState('search', '請輸入文字或數字', '標點符號或空白無法搜尋。'); return; }
+  const seq = ++state.seq; showSkeleton(); markChip(null);
+  try {
+    const data = await api('search', { q });
+    if (seq === state.seq) renderSearch(data, q);
+  } catch (e) { if (seq === state.seq && state.token) renderState('warn', '搜尋失敗', e.message, runSearch); }
+}, 320);
+qInput.addEventListener('input', () => { qClear.hidden = !qInput.value; runSearch(); });
+qInput.addEventListener('keydown', e => { if (e.key === 'Escape') { qInput.value = ''; qClear.hidden = true; runSearch(); } });
+qClear.addEventListener('click', () => { qInput.value = ''; qClear.hidden = true; qInput.focus(); runSearch(); });
+
+/* ---------------- 啟動：先驗證身分，通過才載入任何資料 ---------------- */
+async function boot(){
+  show('splash');
+  if (!getApiUrl()) {                                   // 管理員尚未設定 API 網址
+    show('login'); loginError('系統尚未完成設定，請聯絡管理員。');
+    loginBtn.disabled = true; acc.readOnly = pw.readOnly = true; return;
+  }
+  const lk = readLock();
+  const tok = session.get('slk.tok');
+  if (tok) {
+    state.token = tok;
+    try { const r = await api('session'); await enterApp(r.user); return; }     // 只驗證，不取資料
+    catch { wipeUI(); }
+  }
+  show('login');
+  if (lk) applyLock(lk); else acc.focus({ preventScroll: true });
+}
+addEventListener('pageshow', e => { if (e.persisted && !state.token) { wipeUI(); show('login'); } });
+boot();
+})();
+</script>
+</body>
+</html>
